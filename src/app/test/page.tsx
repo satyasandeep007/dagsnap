@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export default function SnapPage() {
   const [snapInstalled, setSnapInstalled] = useState(false);
@@ -10,18 +10,13 @@ export default function SnapPage() {
     snapId: string = defaultSnapOrigin,
     params: Record<'version' | string, unknown> = {},
   ) => {
-    // await window.ethereum?.request({
-    //   method: 'wallet_requestSnaps',
-    //   params: {
-    //     [snapId]: params,
-    //   },
-    // });
     await window.ethereum?.request({
       method: 'wallet_requestSnaps',
       params: {
-        'local:http://localhost:8080': {},
+        [snapId]: {},
       },
     });
+    setSnapInstalled(true);
   };
 
   return (
