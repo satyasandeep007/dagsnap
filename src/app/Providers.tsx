@@ -1,5 +1,5 @@
-import "@/styles/globals.css";
-import type { AppProps } from "next/app";
+'use client'
+
 import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
@@ -22,11 +22,11 @@ const wagmiClient = createClient({
   provider,
 });
 
-export default function App({ Component, pageProps }: AppProps) {
+export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
-        <Component {...pageProps} />
+        {children}
       </RainbowKitProvider>
     </WagmiConfig>
   );
