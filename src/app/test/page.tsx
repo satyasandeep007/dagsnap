@@ -31,7 +31,6 @@ const Card = ({ content, disabled, fullWidth }: any) => (
 const Index = () => {
   const { error, provider }: any = useMetaMaskContext();
   const { isFlask, snapsDetected, installedSnap } = useMetaMask();
-  console.log(isFlask, 'isFlask');
 
   const requestSnap = useRequestSnap();
   const invokeSnap = useInvokeSnap();
@@ -41,15 +40,6 @@ const Index = () => {
 
   const handleSendHelloClick = async () => {
     await invokeSnap({ method: 'hello' });
-  };
-
-  const handleGetAccountClick = async () => {
-    try {
-      const response = await invokeSnap({ method: 'getAccount' });
-      setUserAddress(response);
-    } catch (error) {
-      console.error('Error getting account:', error);
-    }
   };
 
   async function getAccount() {
@@ -70,6 +60,59 @@ const Index = () => {
     setUserAddress(account);
     return account;
   }
+
+  const sendCrypto = async (recipientAddress: string, amountInWei: string) => {
+    if (!userAddress) {
+      console.error(
+        'User address not available. Please connect your wallet first.',
+      );
+      return;
+    }
+
+    if (!recipientAddress || !amountInWei) {
+      console.error('Recipient address and amount are required.');
+      return;
+    }
+
+    try {
+      const txHash = await provider.request({
+        method: 'eth_sendTransaction',
+        params: [
+          {
+            from: userAddress,
+            to: recipientAddress,
+            value: amountInWei,
+            gasLimit: '0x5028',
+            maxPriorityFeePerGas: '0x3b9aca00',
+            maxFeePerGas: '0x2540be400',
+          },
+        ],
+      });
+      console.log('Transaction sent:', txHash);
+      return txHash;
+    } catch (error: any) {
+      if (error.code === 4001) {
+        console.log('Transaction rejected by user');
+      } else {
+        console.error('Error sending transaction:', error);
+      }
+      throw error;
+    }
+  };
+
+  // Example usage in a button click handler:
+  const handleSendCryptoClick = async () => {
+    try {
+      const recipientAddress = '0x5B4d77e199FE8e5090009C72d2a5581C74FEbE89'; // Replace with actual recipient address
+      const amountInWei = '0x5AF3107A4000';
+      const txHash = await sendCrypto(recipientAddress, amountInWei);
+      if (txHash) {
+        console.log('Transaction sent:', txHash);
+      }
+    } catch (error) {
+      console.error('Error sending transaction:', error);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center flex-1 mt-[7.6rem] mb-[7.6rem] sm:px-6 sm:mt-8 sm:mb-8 sm:w-auto">
@@ -161,6 +204,22 @@ const Index = () => {
             button: (
               <SendHelloButton onClick={getAccount} disabled={!installedSnap}>
                 Get Address
+              </SendHelloButton>
+            ),
+          }}
+          disabled={!installedSnap}
+        />
+
+        <Card
+          content={{
+            title: 'Send Crypto',
+            description: 'Send crypto to a recipient address using Snaps.',
+            button: (
+              <SendHelloButton
+                onClick={handleSendCryptoClick}
+                disabled={!installedSnap}
+              >
+                Send Crypto
               </SendHelloButton>
             ),
           }}
