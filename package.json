@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"next dev\" \"cd src/snap && yarn start\"",
+    "dev": "next dev",
+    "dev-snap": "concurrently \"next dev\" \"cd src/snap && yarn start\"",
     "watch": "mm-snap watch",
     "build": "next build",
     "start": "next start",

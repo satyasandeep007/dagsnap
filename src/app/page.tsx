@@ -1,7 +1,7 @@
 'use client';
 
-import Header from '@/app/layout/Header';
-import LandingPage from '@/app/components/LandingPage';
+import Header from '@/layout/Header';
+import LandingPage from '@/components/LandingPage';
 
 export default function Home() {
   return (
