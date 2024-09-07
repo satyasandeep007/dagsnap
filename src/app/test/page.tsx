@@ -31,25 +31,15 @@ const Card = ({ content, disabled, fullWidth }: any) => (
 const Index = () => {
   const { error, provider }: any = useMetaMaskContext();
   const { isFlask, snapsDetected, installedSnap } = useMetaMask();
-  console.log(isFlask, 'isFlask');
 
   const requestSnap = useRequestSnap();
-  const invokeSnap = useInvokeSnap();
+  const invokeSnap = useInvokeSnap(defaultSnapOrigin);
   const [userAddress, setUserAddress]: any = useState<string | null>(null);
 
   const isMetaMaskReady = isLocalSnap(defaultSnapOrigin) ? true : snapsDetected;
 
   const handleSendHelloClick = async () => {
     await invokeSnap({ method: 'hello' });
-  };
-
-  const handleGetAccountClick = async () => {
-    try {
-      const response = await invokeSnap({ method: 'getAccount' });
-      setUserAddress(response);
-    } catch (error) {
-      console.error('Error getting account:', error);
-    }
   };
 
   async function getAccount() {
@@ -70,6 +60,70 @@ const Index = () => {
     setUserAddress(account);
     return account;
   }
+
+  const sendCrypto = async (recipientAddress: string, amountInWei: string) => {
+    if (!userAddress) {
+      console.error(
+        'User address not available. Please connect your wallet first.',
+      );
+      return;
+    }
+
+    if (!recipientAddress || !amountInWei) {
+      console.error('Recipient address and amount are required.');
+      return;
+    }
+
+    try {
+      const txHash = await provider.request({
+        method: 'eth_sendTransaction',
+        params: [
+          {
+            from: userAddress,
+            to: recipientAddress,
+            value: amountInWei,
+            gasLimit: '0x5028',
+            maxPriorityFeePerGas: '0x3b9aca00',
+            maxFeePerGas: '0x2540be400',
+          },
+        ],
+      });
+      console.log('Transaction sent:', txHash);
+      return txHash;
+    } catch (error: any) {
+      if (error.code === 4001) {
+        console.log('Transaction rejected by user');
+      } else {
+        console.error('Error sending transaction:', error);
+      }
+      throw error;
+    }
+  };
+
+  // Example usage in a button click handler:
+  const handleSendCryptoClick = async () => {
+    try {
+      const recipientAddress = '0x5B4d77e199FE8e5090009C72d2a5581C74FEbE89'; // Replace with actual recipient address
+      const amountInWei = '0x5AF3107A4000';
+      const txHash = await sendCrypto(recipientAddress, amountInWei);
+      if (txHash) {
+        console.log('Transaction sent:', txHash);
+      }
+    } catch (error) {
+      console.error('Error sending transaction:', error);
+    }
+  };
+
+  const handleHelloClick = async () => {
+    try {
+      const result = await invokeSnap({
+        method: 'hello',
+      });
+      console.log('Snap hello result:', result);
+    } catch (error) {
+      console.error('Error calling hello method:', error);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center flex-1 mt-[7.6rem] mb-[7.6rem] sm:px-6 sm:mt-8 sm:mb-8 sm:w-auto">
@@ -167,6 +221,36 @@ const Index = () => {
           disabled={!installedSnap}
         />
 
+        <Card
+          content={{
+            title: 'Send Crypto',
+            description: 'Send crypto to a recipient address using Snaps.',
+            button: (
+              <SendHelloButton
+                onClick={handleSendCryptoClick}
+                disabled={!installedSnap}
+              >
+                Send Crypto
+              </SendHelloButton>
+            ),
+          }}
+          disabled={!installedSnap}
+        />
+        <Card
+          content={{
+            title: 'Show Snap Dialog',
+            description: 'Display a dialog using the snap_dialog method.',
+            button: (
+              <SendHelloButton
+                onClick={handleHelloClick}
+                disabled={!installedSnap}
+              >
+                Show Dialog
+              </SendHelloButton>
+            ),
+          }}
+          disabled={!installedSnap}
+        />
         <div className="bg-background-alternative border border-border text-text-alternative rounded p-6 mt-6 max-w-[60rem] w-full sm:mt-3 sm:p-4">
           <p className="m-0">
             Please note that the <b>snap.manifest.json</b> and{' '}
