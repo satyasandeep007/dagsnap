@@ -1,136 +1,43 @@
-import { OnRpcRequestHandler } from '@metamask/snaps-types';
-import { panel, text, divider, heading, copyable } from '@metamask/snaps-ui';
-import { OnTransactionHandler } from '@metamask/snaps-types';
+import type { OnRpcRequestHandler } from '@metamask/snaps-sdk';
+import { Box, Text, Bold } from '@metamask/snaps-sdk/jsx';
 
-async function simul(from: string, to: string, value: string, data: string) {
-  const options = {
-    method: 'POST',
-    headers: { accept: 'application/json', 'content-type': 'application/json' },
-    body: JSON.stringify({
-      id: 1,
-      jsonrpc: '2.0',
-      method: 'alchemy_simulateAssetChanges',
-      params: [
-        {
-          from: `${from}`,
-          to: `${to}`,
-          value: `${value}`,
-          data: `${data}`,
-        },
-      ],
-    }),
-  };
-
-  const res = await fetch(
-    'https://eth-goerli.g.alchemy.com/v2/gh4d1-dAT4B_1Khy86s7JUbFhQIclYqO',
-    options,
-  );
-  return res;
-}
-async function generateResult(tokens: any) {
-  let result = ``;
-  let tokenres: string[] = [];
-  tokens = JSON.parse(tokens);
-  tokens.forEach((token: any) => {
-    result = `\n🔵 ${Number(token.amount).toFixed(2)} ${token.symbol} ${
-      token.changeType
-    } from ${token.from.toString().slice(0, 5)} to ${token.to
-      .toString()
-      .slice(0, 5)}\n`;
-    tokenres.push(result);
-  });
-  return tokenres;
-}
-export const onTransaction: OnTransactionHandler = ({
-  transactionOrigin,
-  transaction,
-}) => {
-  const { from, to, value, data } = transaction;
-  return simul(from, to, value, data).then(async (txdetails) => {
-    const res = await txdetails.json();
-    const tokens = JSON.stringify(res.result.changes);
-    const error = JSON.stringify(res.result.error);
-    if (error === 'null') {
-      let tokenchange = await generateResult(tokens);
-      const insights = tokenchange;
-      const content = panel([
-        heading('Alert heading'),
-        text('Something happened in the system.'),
-      ]);
-      return {
-        content: panel([
-          heading('My Transaction Insights'),
-          text(`Transaction Details : ${transactionOrigin}`),
-          text('Asset Changes :'),
-          ...insights.map((insight) => text(insight)),
-        ]),
-      };
-    } else {
-      return {
-        insights: {
-          message: `API Limit reached, please try again later`,
-        },
-      };
-    }
-  });
-};
-
+/**
+ * Handle incoming JSON-RPC requests, sent through `wallet_invokeSnap`.
+ *
+ * @param args - The request handler args as object.
+ * @param args.origin - The origin of the request, e.g., the website that
+ * invoked the snap.
+ * @param args.request - A validated JSON-RPC request object.
+ * @returns The result of `snap_dialog`.
+ * @throws If the request method is not valid for this snap.
+ */
 export const onRpcRequest: OnRpcRequestHandler = async ({
   origin,
   request,
 }) => {
   switch (request.method) {
-    case 'confirmTransaction': {
-      const res = await snap.request({
+    case 'hello':
+      return snap.request({
         method: 'snap_dialog',
         params: {
-          type: 'Confirmation',
-          content: panel([
-            heading('Confirm Transaction'),
-            text(`Do you want to approve transaction from ${origin} ?`),
-            divider(),
-            text(
-              'An **OTP** will be sent to you registered account via PUSH, after that you will be taken to approve transaction.',
-            ),
-          ]),
+          type: 'confirmation',
+          content: (
+            <Box>
+              <Text>
+                Hello, <Bold>{origin}</Bold>!
+              </Text>
+              <Text>
+                This custom confirmation is just for display purposes.
+              </Text>
+              <Text>
+                But you can edit the snap source code to make it do something,
+                if you want to!
+              </Text>
+            </Box>
+          ),
         },
       });
-      return { res, origin };
-    }
-
-    case 'requestOtp': {
-      const number = Math.floor(Math.random() * (999 - 100 + 1) + 100);
-      const res = await enterotp();
-      return res;
-    }
-
-    case 'wrongOtp': {
-      const response = await snap.request({
-        method: 'snap_dialog',
-        params: {
-          type: 'Alert',
-          content: panel([
-            heading('Wrong OTP'),
-            text('A notification has been sent to the wallet owner'),
-          ]),
-        },
-      });
-      return response;
-    }
-
     default:
       throw new Error('Method not found.');
   }
 };
-
-async function enterotp() {
-  const response = await snap.request({
-    method: 'snap_dialog',
-    params: {
-      type: 'Prompt',
-      content: panel([heading('Enter OTP'), copyable('Enter OTP')]),
-      placeholder: 'Enter OTP...',
-    },
-  });
-  return response;
-}

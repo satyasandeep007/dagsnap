@@ -33,7 +33,7 @@ const Index = () => {
   const { isFlask, snapsDetected, installedSnap } = useMetaMask();
 
   const requestSnap = useRequestSnap();
-  const invokeSnap = useInvokeSnap();
+  const invokeSnap = useInvokeSnap(defaultSnapOrigin);
   const [userAddress, setUserAddress]: any = useState<string | null>(null);
 
   const isMetaMaskReady = isLocalSnap(defaultSnapOrigin) ? true : snapsDetected;
@@ -111,6 +111,17 @@ const Index = () => {
       }
     } catch (error) {
       console.error('Error sending transaction:', error);
+    }
+  };
+
+  const handleHelloClick = async () => {
+    try {
+      const result = await invokeSnap({
+        method: 'hello',
+      });
+      console.log('Snap hello result:', result);
+    } catch (error) {
+      console.error('Error calling hello method:', error);
     }
   };
 
@@ -225,7 +236,21 @@ const Index = () => {
           }}
           disabled={!installedSnap}
         />
-
+        <Card
+          content={{
+            title: 'Show Snap Dialog',
+            description: 'Display a dialog using the snap_dialog method.',
+            button: (
+              <SendHelloButton
+                onClick={handleHelloClick}
+                disabled={!installedSnap}
+              >
+                Show Dialog
+              </SendHelloButton>
+            ),
+          }}
+          disabled={!installedSnap}
+        />
         <div className="bg-background-alternative border border-border text-text-alternative rounded p-6 mt-6 max-w-[60rem] w-full sm:mt-3 sm:p-4">
           <p className="m-0">
             Please note that the <b>snap.manifest.json</b> and{' '}
