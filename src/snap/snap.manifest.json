@@ -1,18 +1,18 @@
 {
   "version": "0.1.0",
-  "description": "An example Snap written in TypeScript.",
-  "proposedName": "Constellation Snap",
+  "description": "DAG Snap: Interact with the DAG",
+  "proposedName": "DAG Snap",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MetaMask/template-snap-monorepo.git"
+    "url": "https://github.com/satyasandeep007/dagsnap"
   },
   "source": {
-    "shasum": "2lCHt/Uh4vU7oOY0oszAeFLfLh/ELF81w0f70NfNCE8=",
+    "shasum": "YcdMCZFBgS47enOKLMO3uE0b9mJdiXTYtVUdh33tldI=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
-        "iconPath": "images/icon1.svg",
-        "packageName": "constellation-snap",
+        "iconPath": "images/icon.svg",
+        "packageName": "dagsnap",
         "registry": "https://registry.npmjs.org/"
       }
     }
@@ -24,8 +24,7 @@
     "endowment:rpc": {
       "dapps": true,
       "snaps": false
-    },
-    "snap_confirm": {}
+    }
   },
   "manifestVersion": "0.1"
 }
