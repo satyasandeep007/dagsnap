@@ -1,5 +1,5 @@
 {
-  "name": "snap",
+  "name": "constellation-snap",
   "version": "0.1.0",
   "description": "The 'Hello, world!' of MetaMask Snaps, now written in TypeScript.",
   "repository": {
@@ -10,6 +10,7 @@
   "main": "./dist/bundle.js",
   "files": [
     "dist/",
+    "images/",
     "snap.manifest.json"
   ],
   "scripts": {
@@ -45,7 +46,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "~2.26.0",
     "eslint-plugin-jest": "^27.1.5",
-    "eslint-plugin-jsdoc": "^41.1.2",
+    "eslint-plugin-jsdoc": "^46.4.3",
     "eslint-plugin-n": "^15.7.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.1.1",
@@ -53,10 +54,10 @@
     "prettier": "^2.7.1",
     "prettier-plugin-packagejson": "^2.2.11",
     "rimraf": "^3.0.2",
+    "tailwindcss": "^3.2.7",
     "ts-jest": "^29.1.0",
     "typescript": "^4.7.4"
   },
-  "packageManager": "yarn@3.2.1",
   "engines": {
     "node": ">=18.6.0"
   },
