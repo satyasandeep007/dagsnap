@@ -1,6 +1,9 @@
 import React from 'react';
 
-export default function BalanceCard() {
+export default function BalanceCard({
+  toggleSendModal,
+  toggleReceiveModal,
+}: any) {
   return (
     <div className="grid grid-cols-5 gap-6 mb-6">
       <div className="col-span-3 bg-gray-900 text-white p-6 rounded-xl relative overflow-hidden">
@@ -22,7 +25,7 @@ export default function BalanceCard() {
       <div className="col-span-2 space-y-4">
         <button
           className="w-full bg-gray-100 p-4 rounded-xl flex items-center justify-between"
-        //   onClick={toggleSendModal}
+          onClick={toggleSendModal}
         >
           <div className="flex items-center text-gray-700">
             <svg
@@ -52,7 +55,7 @@ export default function BalanceCard() {
         </button>
         <button
           className="w-full bg-gray-100 p-4 rounded-xl flex items-center justify-between"
-        //   onClick={toggleReceiveModal}
+          onClick={toggleReceiveModal}
         >
           <div className="flex items-center text-gray-700">
             <svg

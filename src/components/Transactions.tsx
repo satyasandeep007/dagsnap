@@ -3,7 +3,6 @@ import React from 'react';
 export default function Transactions({
   isDropdownOpen,
   toggleDropdown,
-  toggleSlider,
   toggleMenu,
   isMenuOpen,
   toggleConnectModal
@@ -17,7 +16,7 @@ export default function Transactions({
               onClick={toggleDropdown}
               className="bg-black text-white px-3 py-1 rounded-full text-sm flex items-center"
             >
-              MainNet 2.0
+              DevNet 1.0
               <svg
                 className={`w-4 h-8 ml-1 transform ${
                   isDropdownOpen ? 'rotate-180' : ''
@@ -38,42 +37,31 @@ export default function Transactions({
             {isDropdownOpen && (
               <div className="absolute mt-2 w-40 bg-white rounded-md shadow-lg z-10">
                 <a
-                  href="#"
+                  href=""
                   className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100"
                 >
-                  MainNet 1.0
+                  DevNet 1.0
                 </a>
                 <a
                   href="#"
-                  className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100"
+                  className="block px-4 py-3 text-sm text-gray-400 hover:bg-gray-100"
                 >
-                  TestNet
+                  TestNet <span className="text-xs text-red-400 ml-1">coming soon</span>
                 </a>
                 <a
                   href="#"
-                  className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-100"
+                  className="block px-4 py-3 text-sm text-gray-400 hover:bg-gray-100"
                 >
-                  DevNet
+                  MainNet <span className="text-xs text-red-400 ml-1">coming soon</span>
                 </a>
               </div>
             )}
           </div>
           <button
-            onClick={toggleSlider}
-            className="text-gray-600 bg-white px-3 py-1 rounded-full text-sm flex items-center ml-4"
+            onClick={() => window.open('https://mainnet.dagexplorer.io/', '_blank')}
+            className="text-blue-600 bg-white px-3 py-1 rounded-full text-sm flex items-center ml-4 h-11"
           >
             DAG Explorer
-            <svg
-              className={`w-4 h-8 ml-1 transform ${
-                isDropdownOpen ? 'rotate-180' : ''
-              } transition-transform`}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0-18c4.411 0 8 3.589 8 8s-3.589 8-8 8-8-3.589-8-8 3.589-8 8-8zm-5 8l5-5 5 5-5 5-5-5z"></path>{' '}
-            </svg>
           </button>
           <div className="relative">
             <button

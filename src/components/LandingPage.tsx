@@ -45,7 +45,7 @@ const DagSnapUI = () => {
         {/* LEFT SIDE */}
         <div className="flex-grow p-6">
           <Header />
-          <BalanceCard />
+          <BalanceCard toggleSendModal={toggleSendModal} toggleReceiveModal={toggleReceiveModal} />
           <Portfolio />
           <MarketPrice />
         </div>
