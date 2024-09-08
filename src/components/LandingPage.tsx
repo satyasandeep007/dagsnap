@@ -131,11 +131,11 @@ const DagSnapUI = () => {
           
           <div className="flex justify-between items-center">
             <div className="text-gray-500">Market Price: <span className="text-blue-500 font-medium">0 USD</span></div>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded-lg flex items-center">
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <button className="bg-white text-gray-700 px-4 py-2 rounded-full flex items-center border border-gray-300 shadow-sm hover:bg-gray-50 transition-colors duration-200">
+              <svg className="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
               </svg>
-              Buy Now
+              <span className="font-medium">Buy Now</span>
             </button>
           </div>
         </div>
@@ -219,7 +219,7 @@ const DagSnapUI = () => {
           </div>
           <div className="flex justify-between items-center text-sm text-gray-600">
             <span>View all transactions</span>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg className="w-2 h-" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
             </svg>
           </div>
@@ -305,13 +305,22 @@ const DagSnapUI = () => {
             <p className="text-gray-600 mb-4 text-center text-sm">
               If you do not have DAGsnap installed, you will be prompted to do so.
             </p>
-            <a href="#" className="text-blue-500 hover:underline mb-6 text-sm block text-center">What is Snaps &gt;</a>
-            <button className="w-full bg-gray-800 text-white py-3 rounded-lg flex items-center justify-center font-medium">
-              <svg className="w-5 h-5 mr-2 text-orange-500" viewBox="0 0 24 24" fill="currentColor">
-                {/* Add MetaMask fox icon SVG path here */}
-              </svg>
-              Connect to Metamask
-            </button>
+            <a href="https://docs.metamask.io/snaps/#what-is-snaps" target={'_blank'} className="text-blue-500 hover:underline mb-6 text-sm block text-center">What is Snaps &gt;</a>
+            <button 
+  className="w-full bg-gray-800 text-white py-3 rounded-lg flex items-center justify-center font-medium"
+  onClick={(e) => {
+    e.preventDefault(); // Prevent default link behavior
+    // Open the MetaMask Flask extension page in a new tab
+    window.open("#", "_blank");
+    // Add any additional MetaMask connection logic here
+    console.log("Connecting to MetaMask...");
+  }}
+>
+  <svg className="w-5 h-5 mr-2 text-orange-500" viewBox="0 0 24 24" fill="currentColor">
+    {/* Add MetaMask fox icon SVG path here */}
+  </svg>
+  Connect to Metamask
+</button>
           </div>
         </div>
       )}
