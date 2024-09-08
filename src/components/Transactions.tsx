@@ -46,20 +46,20 @@ export default function Transactions({
                   href="#"
                   className="block px-4 py-3 text-sm text-gray-400 hover:bg-gray-100"
                 >
-                  TestNet <span className="text-xs text-red-400 ml-1">coming soon</span>
+                 TestNet <span className="text-xs text-red-400 ml-1 italic">coming soon</span>
                 </a>
                 <a
                   href="#"
                   className="block px-4 py-3 text-sm text-gray-400 hover:bg-gray-100"
                 >
-                  MainNet <span className="text-xs text-red-400 ml-1">coming soon</span>
+                  MainNet <span className="text-xs text-red-400 ml-1 italic">coming soon</span>
                 </a>
               </div>
             )}
           </div>
           <button
             onClick={() => window.open('https://mainnet.dagexplorer.io/', '_blank')}
-            className="text-blue-600 bg-white px-3 py-1 rounded-full text-sm flex items-center ml-4 h-11"
+            className="text-blue bg-white px-3 py-1 rounded-full text-sm flex items-center ml-4 h-11"
           >
             DAG Explorer
           </button>

@@ -40,7 +40,7 @@ const DagSnapUI = () => {
   };
 
   return (
-    <div className="bg-gray-100 p-6 h-screen flex justify-center items-center flex-col">
+    <div className="bg-indigo-50 bg-gray-100 p-6 h-screen flex justify-center items-center flex-col">
       <div className="max-w-6xl m-auto bg-white w-4/6 rounded-2xl shadow-lg overflow-hidden flex relative  ">
         {/* LEFT SIDE */}
         <div className="flex-grow p-6">
@@ -54,13 +54,13 @@ const DagSnapUI = () => {
         <Transactions
           isDropdownOpen={isDropdownOpen}
           toggleDropdown={toggleDropdown}
-          toggleSlider={toggleSlider}
+          // toggleSlider={toggleSlider}
           toggleMenu={toggleMenu}
           isMenuOpen={isMenuOpen}
           toggleConnectModal={toggleConnectModal}
         />
       </div>
-      <div className="text-center text-gray-500 text-sm mt-4">
+      <div className="text-center text-gray-400 text-sm mt-4">
         Powered by MetaMask Snaps
       </div>
 
