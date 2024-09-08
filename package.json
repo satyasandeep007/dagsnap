@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev-snap": "concurrently \"next dev\" \"cd src/snap && yarn start\"",
-    "watch": "mm-snap watch",
+    "dev-snap": "concurrently \"next dev\" \"cd snap && yarn start\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
