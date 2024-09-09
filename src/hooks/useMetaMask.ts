@@ -5,7 +5,6 @@ import type { GetSnapsResponse } from '@/types';
 import { useMetaMaskContext } from './MetamaskContext';
 import { useRequest } from './useRequest';
 import { useInvokeSnap } from './useInvokeSnap';
-import { getDagBalanceApi, getDagTransactionsApi } from '@/utils/dag/api';
 
 /**
  * A Hook to retrieve useful data from MetaMask.
@@ -51,30 +50,16 @@ export const useMetaMask = () => {
     return account;
   };
 
-  // const getBalance = async () => {
-  //   const balance = await invokeSnap({ method: 'dag_getBalance' });
-  //   console.log(balance, 'balance ugadi');
-
-  //   setBalance(balance as string);
-  //   return balance;
-  // };
-
-  // const getTransactions = async () => {
-  //   const transactions: any = await invokeSnap({ method: 'dag_getTransactions' });
-  //   console.log(transactions, 'transactions ugadi');
-
-  //   setTransactions(transactions);
-  //   return transactions;
-  // };
-
   const getBalance = async () => {
-    const balance: any = await getDagBalanceApi(userAddress);
+    const balance = await invokeSnap({ method: 'dag_getBalance' });
+
     setBalance(balance as string);
     return balance;
   };
 
   const getTransactions = async () => {
-    const transactions: any = await getDagTransactionsApi(userAddress);
+    const transactions: any = await invokeSnap({ method: 'dag_getTransactions' });
+
     setTransactions(transactions);
     return transactions;
   };
@@ -93,7 +78,6 @@ export const useMetaMask = () => {
   useEffect(() => {
     const detect = async () => {
       if (installedSnap) {
-        console.log('detect installedSnap');
         await getAccount();
       }
     };

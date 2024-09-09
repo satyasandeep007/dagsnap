@@ -1,7 +1,7 @@
 export const getDagTransactionsApi = async (address: string) => {
   try {
     const response = await fetch(
-      `https://be-testnet.constellationnetwork.io/addresses/${address}/transactions`,
+      `http://localhost:9090/api/dag?address=${address}`,
       { method: 'GET' },
     );
 
@@ -11,7 +11,7 @@ export const getDagTransactionsApi = async (address: string) => {
 
     const data = await response.json();
     console.log(data, 'rpc');
-    return data?.data;
+    return data?.transactions;
   } catch (error) {
     console.error('Failed to fetch transactions:', error);
     throw error;
@@ -21,7 +21,7 @@ export const getDagTransactionsApi = async (address: string) => {
 export const getDagBalanceApi = async (address: string) => {
   try {
     const response = await fetch(
-      `https://be-testnet.constellationnetwork.io/addresses/${address}/balance`,
+      `http://localhost:9090/api/dag?address=${address}`,
       { method: 'GET' },
     );
 
@@ -31,7 +31,7 @@ export const getDagBalanceApi = async (address: string) => {
 
     const data = await response.json();
     console.log(data, 'rpc');
-    return data?.data?.balance;
+    return data?.balance;
   } catch (error) {
     console.error('Failed to fetch balance:', error);
     throw error;

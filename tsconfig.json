@@ -29,7 +29,8 @@
     "**/*.ts",
     "**/*.tsx",
     "src/snap/src/index.ts",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "backend/server.js"
   ],
   "exclude": ["node_modules"],
   "files": ["./node_modules/@metamask/snap-types/global.d.ts", "./src/components/Header.tsx"]
