@@ -1,5 +1,6 @@
-import { DAG_TEST_WALLET_ADDRESS } from '@/constants/wallet';
 import React from 'react';
+import logo from '@/images/dag.png';
+import Image from 'next/image';
 
 interface Transaction {
   hash: string;
@@ -17,6 +18,7 @@ interface TransactionsProps {
   isMenuOpen: boolean;
   toggleConnectModal: () => void;
   transactions: Transaction[];
+  userAddress: string;
 }
 
 const Transactions: React.FC<TransactionsProps> = ({
@@ -26,6 +28,7 @@ const Transactions: React.FC<TransactionsProps> = ({
   isMenuOpen,
   toggleConnectModal,
   transactions,
+  userAddress,
 }) => {
   console.log(transactions, 'transactions');
   const formatDate = (dateString: string) => {
@@ -43,11 +46,11 @@ const Transactions: React.FC<TransactionsProps> = ({
           <div className="relative">
             <button
               onClick={toggleDropdown}
-              className="bg-black text-white px-3 py-1 rounded-full text-sm flex items-center"
+              className="bg-gray-800 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center justify-between w-36 hover:bg-gray-700 transition-colors duration-200"
             >
-              DevNet 1.0
+              <span>TestNet 2.0</span>
               <svg
-                className={`w-4 h-8 ml-1 transform ${isDropdownOpen ? 'rotate-180' : ''} transition-transform`}
+                className={`w-4 h-4 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -57,24 +60,24 @@ const Transactions: React.FC<TransactionsProps> = ({
               </svg>
             </button>
             {isDropdownOpen && (
-              <div className="absolute mt-2 w-40 bg-white rounded-md shadow-lg z-10">
-                <a href="" className="px-4 py-3 text-sm text-gray-800 hover:bg-gray-100">
-                  DevNet 1.0
-                </a>
-                <a href="#" className="px-4 py-3 text-sm text-gray-400 hover:bg-gray-100">
-                  TestNet <span className="text-xs text-red-400 ml-1 italic">coming soon</span>
-                </a>
-                <a href="#" className="px-4 py-3 text-sm text-gray-400 hover:bg-gray-100">
-                  MainNet <span className="text-xs text-red-400 ml-1 italic">coming soon</span>
-                </a>
+              <div className="absolute mt-2 w-64 bg-white rounded-lg shadow-lg z-10 overflow-hidden border border-gray-100">
+                <div className="px-4 py-3 text-xs text-gray-500 flex items-center justify-between">
+                  <span>IntegrationNet 2.0</span>
+                  <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">Coming Soon</span>
+                </div>
+                <div className="px-4 py-3 text-xs text-gray-500 flex items-center justify-between">
+                  <span>MainNet 2.0</span>
+                  <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">Coming Soon</span>
+                </div>
               </div>
             )}
           </div>
           <button
-            onClick={() => window.open('https://mainnet.dagexplorer.io/', '_blank')}
-            className="text-blue bg-white px-3 py-1 rounded-full text-sm flex items-center ml-4 h-11"
+            onClick={() => window.open('https://testnet.dagexplorer.io/', '_blank')}
+            className="text-blue bg-white px-3 py-1 rounded-full text-sm flex items-center ml-4 h-11 space-x-2"
           >
-            DAG Explorer
+            <span>DAG Explorer</span>
+            <Image src={logo} alt="Company Logo" width={20} height={20} className="object-contain max-w-full" />
           </button>
           <div className="relative">
             <button
@@ -156,17 +159,13 @@ const Transactions: React.FC<TransactionsProps> = ({
                 <div className="flex items-center">
                   <div
                     className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
-                      transaction.source === DAG_TEST_WALLET_ADDRESS
-                        ? 'bg-red-100 text-red-600'
-                        : 'bg-green-100 text-green-600'
+                      transaction.source === userAddress ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'
                     }`}
                   >
-                    {transaction.source === DAG_TEST_WALLET_ADDRESS ? '↑' : '↓'}
+                    {transaction.source === userAddress ? '↑' : '↓'}
                   </div>
                   <div>
-                    <p className="font-medium">
-                      {transaction.source === DAG_TEST_WALLET_ADDRESS ? 'Sent DAG' : 'Received DAG'}
-                    </p>
+                    <p className="font-medium">{transaction.source === userAddress ? 'Sent DAG' : 'Received DAG'}</p>
                     <p className="text-sm text-gray-500">{formatDate(transaction.timestamp)}</p>
                   </div>
                 </div>

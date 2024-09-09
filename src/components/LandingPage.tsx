@@ -69,6 +69,7 @@ const LandingPage = () => {
           isMenuOpen={isMenuOpen}
           toggleConnectModal={toggleConnectModal}
           transactions={transactions}
+          userAddress={userAddress}
         />
       </div>
       <div className="text-center text-gray-400 text-sm mt-4">Powered by MetaMask Snaps</div>
