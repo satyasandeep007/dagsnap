@@ -2,9 +2,9 @@ import type { OnRpcRequestHandler } from '@metamask/snaps-sdk';
 import { Box, Text, Bold } from '@metamask/snaps-sdk/jsx';
 import {
   getAddress,
-  getBalance,
-  getTransactions,
-  makeTransaction,
+  // getBalance,
+  // getTransactions,
+  // makeTransaction,
 } from './rpc';
 
 /**
@@ -46,15 +46,15 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
     case 'dag_getAddress':
       return getAddress();
 
-    case 'dag_getTransactions':
-      return getTransactions();
+    // case 'dag_getTransactions':
+    //   return getTransactions();
 
-    case 'dag_getBalance':
-      return getBalance();
+    // case 'dag_getBalance':
+    //   return getBalance();
 
-    case 'dag_makeTransaction':
-      // Check if the params are valid
-      return makeTransaction(request.params);
+    // case 'dag_makeTransaction':
+    //   // Check if the params are valid
+    //   return makeTransaction(request.params);
     default:
       throw new Error('Method not found.');
   }

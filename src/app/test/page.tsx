@@ -43,19 +43,7 @@ const Index = () => {
   };
 
   async function getAccount() {
-    const accounts = await provider // Or window.ethereum if you don't support EIP-6963.
-      .request({ method: 'eth_requestAccounts' })
-      .catch((err: any) => {
-        if (err.code === 4001) {
-          // EIP-1193 userRejectedRequest error.
-          // If this happens, the user rejected the connection request.
-          console.log('Please connect to MetaMask.');
-        } else {
-          console.error(err);
-        }
-      });
-    const account = accounts[0];
-    console.log(account, 'account');
+    const account = await invokeSnap({ method: 'dag_getAddress' });
 
     setUserAddress(account);
     return account;

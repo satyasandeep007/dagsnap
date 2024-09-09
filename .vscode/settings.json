@@ -7,6 +7,6 @@
       "url": "https://raw.githubusercontent.com/MetaMask/SIPs/main/assets/sip-9/snap.manifest.schema.json"
     }
   ],
-  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true
 }
