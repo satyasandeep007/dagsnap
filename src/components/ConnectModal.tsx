@@ -1,8 +1,9 @@
 import { useRequestSnap } from '@/hooks/useRequestSnap';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { isLocalSnap, shouldDisplayReconnectButton } from '@/utils';
 import { defaultSnapOrigin } from '@/config';
 import { useMetaMask } from '@/hooks/useMetaMask';
+import { useInvokeSnap } from '@/hooks/useInvokeSnap';
 
 interface ConnectModalProps {
   isOpen: boolean;
@@ -12,25 +13,57 @@ interface ConnectModalProps {
 const ConnectModal: React.FC<ConnectModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
   const requestSnap = useRequestSnap();
+
   const { isFlask, snapsDetected, installedSnap } = useMetaMask();
+  const [currentStep, setCurrentStep] = useState(1);
+  const [userAddress, setUserAddress]: any = useState<string | null>(null);
+
+  const invokeSnap = useInvokeSnap(defaultSnapOrigin);
 
   const isMetaMaskReady = isLocalSnap(defaultSnapOrigin) ? true : snapsDetected;
 
-  const connectToMetaMask = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const connectToMetaMask = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     console.log('Connecting to MetaMask...');
-    requestSnap();
+    await requestSnap();
+    setCurrentStep(2);
+  };
+
+  useEffect(() => {
+    if (installedSnap) {
+      setCurrentStep(2);
+    }
+  }, [installedSnap]);
+
+  const getAccount = async () => {
+    const account = await invokeSnap({ method: 'dag_getAddress' });
+    setUserAddress(account);
+    return account;
   };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 w-96 shadow-xl">
-        <div className="flex justify-between items-center mb-4">
-          <div className="flex items-center space-x-2">
-            <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs font-bold">
-              1
-            </div>
-            <div className="w-6 h-6 bg-gray-200 rounded-full"></div>
+        <div className="flex justify-between items-center mb-6">
+          <div className="flex items-center space-x-4">
+            {[1, 2].map((step) => (
+              <div key={step} className="flex flex-col items-center">
+                <div
+                  className={`w-8 h-8 ${
+                    step < currentStep
+                      ? 'bg-green-500 text-white'
+                      : step === currentStep
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-gray-200 text-gray-500'
+                  } rounded-full flex items-center justify-center text-sm font-bold mb-1`}
+                >
+                  {step}
+                </div>
+                <div className={`text-xs ${step === currentStep ? 'text-blue-600 font-semibold' : 'text-gray-500'}`}>
+                  {step === 1 ? 'Connect' : 'Get Address'}
+                </div>
+              </div>
+            ))}
           </div>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
             <svg
@@ -44,51 +77,52 @@ const ConnectModal: React.FC<ConnectModalProps> = ({ isOpen, onClose }) => {
             </svg>
           </button>
         </div>
-        <div className="flex justify-center space-x-4 mb-6">
-          <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
-            <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0-18c4.411 0 8 3.589 8 8s-3.589 8-8 8-8-3.589-8-8 3.589-8 8-8zm-5 8l5-5 5 5-5 5-5-5z" />
-            </svg>
-          </div>
-          <div className="w-6 h-12 flex items-center">
-            <svg
-              className="w-6 h-6 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
+
+        {currentStep === 1 && (
+          <div className="bg-gray-50 p-4 rounded-lg mb-4">
+            <h2 className="text-xl font-bold mb-2 text-center">Connect to MetaMask</h2>
+            <p className="text-gray-600 mb-4 text-center text-sm">Connect your MetaMask wallet to continue.</p>
+            <button
+              className={`w-full py-3 rounded-lg flex items-center justify-center font-medium ${
+                isMetaMaskReady
+                  ? 'bg-blue-600 text-white hover:bg-blue-700'
+                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              }`}
+              onClick={connectToMetaMask}
+              disabled={!isMetaMaskReady}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-              />
-            </svg>
+              <svg className="w-5 h-5 mr-2 text-orange-500" viewBox="0 0 24 24" fill="currentColor"></svg>
+              {shouldDisplayReconnectButton(installedSnap) ? 'Reconnect to MetaMask' : 'Connect to MetaMask'}
+            </button>
           </div>
-          <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-            <svg className="w-8 h-8 text-orange-500" viewBox="0 0 24 24" fill="currentColor"></svg>
+        )}
+
+        {currentStep === 2 && (
+          <div className="bg-gray-50 p-4 rounded-lg mb-4">
+            <h2 className="text-xl font-bold mb-2 text-center">Get Address</h2>
+            <p className="text-gray-600 mb-4 text-center text-sm">Retrieve your DAG address from the DAGsnap.</p>
+            <button
+              className="w-full bg-blue-600 text-white py-3 rounded-lg flex items-center justify-center font-medium hover:bg-blue-700"
+              onClick={getAccount}
+            >
+              Get Address
+            </button>
+            {userAddress && (
+              <div className="mt-4 p-2 bg-white rounded border border-gray-200">
+                <p className="text-gray-700 text-sm break-all">{userAddress}</p>
+              </div>
+            )}
           </div>
-        </div>
-        <h2 className="text-xl font-bold mb-2 text-center">Connect to Dagsnap : MetaMask DAG snap</h2>
-        <p className="text-gray-600 mb-4 text-center text-sm">
-          If you do not have DAGsnap installed, you will be prompted to do so.
-        </p>
+        )}
+
         <a
           href="https://docs.metamask.io/snaps/#what-is-snaps"
-          target={'_blank'}
-          className="text-blue-500 hover:underline mb-6 text-sm block text-center"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-500 hover:underline mt-4 text-sm block text-center"
         >
-          What is Snaps &gt;
+          What are Snaps?
         </a>
-        <button
-          className="w-full bg-gray-800 text-white py-3 rounded-lg flex items-center justify-center font-medium"
-          onClick={connectToMetaMask}
-          disabled={!isMetaMaskReady}
-        >
-          <svg className="w-5 h-5 mr-2 text-orange-500" viewBox="0 0 24 24" fill="currentColor"></svg>
-          Connect to Metamask
-        </button>
       </div>
     </div>
   );
