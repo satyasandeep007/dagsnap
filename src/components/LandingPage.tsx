@@ -9,7 +9,6 @@ import ConnectModal from './ConnectModal';
 import SendModal from './SendModal';
 import ReceiveModal from './ReceiveModal';
 import Transactions from './Transactions';
-import { getDagTransactionsApi } from '../utils/dag/api';
 import { useMetaMaskContext } from '@/hooks/MetamaskContext';
 import { useMetaMask } from '@/hooks/useMetaMask';
 
@@ -19,9 +18,8 @@ const LandingPage = () => {
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
   const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
-  const [transactions, setTransactions] = useState([]);
-  const { userAddress, balance }: any = useMetaMaskContext();
-  const { getAccount } = useMetaMask();
+  const { userAddress, balance, transactions }: any = useMetaMaskContext();
+  const { getAccount, getBalance, getTransactions } = useMetaMask();
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -43,14 +41,8 @@ const LandingPage = () => {
     setIsReceiveModalOpen(!isReceiveModalOpen);
   };
 
-  const getTransactions = async () => {
-    if (!userAddress) return;
-    const transactions = await getDagTransactionsApi(userAddress);
-    console.log(userAddress, transactions);
-    setTransactions(transactions);
-  };
-
   useEffect(() => {
+    getBalance();
     getTransactions();
   }, [userAddress]);
 

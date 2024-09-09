@@ -5,13 +5,15 @@ import type { GetSnapsResponse } from '@/types';
 import { useMetaMaskContext } from './MetamaskContext';
 import { useRequest } from './useRequest';
 import { useInvokeSnap } from './useInvokeSnap';
+import { getDagBalanceApi, getDagTransactionsApi } from '@/utils/dag/api';
 
 /**
  * A Hook to retrieve useful data from MetaMask.
  * @returns The informations.
  */
 export const useMetaMask = () => {
-  const { provider, setInstalledSnap, installedSnap, setUserAddress } = useMetaMaskContext();
+  const { provider, setInstalledSnap, installedSnap, setUserAddress, setBalance, setTransactions, userAddress } =
+    useMetaMaskContext();
   const request = useRequest();
 
   const [isFlask, setIsFlask] = useState(false);
@@ -49,16 +51,33 @@ export const useMetaMask = () => {
     return account;
   };
 
+  // const getBalance = async () => {
+  //   const balance = await invokeSnap({ method: 'dag_getBalance' });
+  //   console.log(balance, 'balance ugadi');
+
+  //   setBalance(balance as string);
+  //   return balance;
+  // };
+
+  // const getTransactions = async () => {
+  //   const transactions: any = await invokeSnap({ method: 'dag_getTransactions' });
+  //   console.log(transactions, 'transactions ugadi');
+
+  //   setTransactions(transactions);
+  //   return transactions;
+  // };
+
   const getBalance = async () => {
-    const balance = await invokeSnap({ method: 'dag_getBalance' });
+    const balance: any = await getDagBalanceApi(userAddress);
+    setBalance(balance as string);
     return balance;
   };
 
   const getTransactions = async () => {
-    const transactions = await invokeSnap({ method: 'dag_getTransactions' });
+    const transactions: any = await getDagTransactionsApi(userAddress);
+    setTransactions(transactions);
     return transactions;
   };
-  console.log(provider, installedSnap);
 
   useEffect(() => {
     const detect = async () => {
@@ -74,14 +93,24 @@ export const useMetaMask = () => {
   useEffect(() => {
     const detect = async () => {
       if (installedSnap) {
+        console.log('detect installedSnap');
         await getAccount();
+      }
+    };
+
+    detect().catch(console.error);
+  }, [installedSnap]);
+
+  useEffect(() => {
+    const detect = async () => {
+      if (userAddress) {
         await getBalance();
         await getTransactions();
       }
     };
 
     detect().catch(console.error);
-  }, [installedSnap]);
+  }, [userAddress]);
 
   return { isFlask, snapsDetected, installedSnap, getSnap, getAccount, getBalance, getTransactions };
 };
