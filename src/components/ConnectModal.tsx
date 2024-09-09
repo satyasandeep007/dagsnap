@@ -1,4 +1,8 @@
+import { useRequestSnap } from '@/hooks/useRequestSnap';
 import React from 'react';
+import { isLocalSnap, shouldDisplayReconnectButton } from '@/utils';
+import { defaultSnapOrigin } from '@/config';
+import { useMetaMask } from '@/hooks/useMetaMask';
 
 interface ConnectModalProps {
   isOpen: boolean;
@@ -7,6 +11,16 @@ interface ConnectModalProps {
 
 const ConnectModal: React.FC<ConnectModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
+  const requestSnap = useRequestSnap();
+  const { isFlask, snapsDetected, installedSnap } = useMetaMask();
+
+  const isMetaMaskReady = isLocalSnap(defaultSnapOrigin) ? true : snapsDetected;
+
+  const connectToMetaMask = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    console.log('Connecting to MetaMask...');
+    requestSnap();
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -53,9 +67,7 @@ const ConnectModal: React.FC<ConnectModalProps> = ({ isOpen, onClose }) => {
             </svg>
           </div>
           <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-            <svg className="w-8 h-8 text-orange-500" viewBox="0 0 24 24" fill="currentColor">
-              {/* Add MetaMask fox icon SVG path here */}
-            </svg>
+            <svg className="w-8 h-8 text-orange-500" viewBox="0 0 24 24" fill="currentColor"></svg>
           </div>
         </div>
         <h2 className="text-xl font-bold mb-2 text-center">Connect to Dagsnap : MetaMask DAG snap</h2>
@@ -71,17 +83,10 @@ const ConnectModal: React.FC<ConnectModalProps> = ({ isOpen, onClose }) => {
         </a>
         <button
           className="w-full bg-gray-800 text-white py-3 rounded-lg flex items-center justify-center font-medium"
-          onClick={(e) => {
-            e.preventDefault(); // Prevent default link behavior
-            // Open the MetaMask Flask extension page in a new tab
-            window.open('#', '_blank');
-            // Add any additional MetaMask connection logic here
-            console.log('Connecting to MetaMask...');
-          }}
+          onClick={connectToMetaMask}
+          disabled={!isMetaMaskReady}
         >
-          <svg className="w-5 h-5 mr-2 text-orange-500" viewBox="0 0 24 24" fill="currentColor">
-            {/* Add MetaMask fox icon SVG path here */}
-          </svg>
+          <svg className="w-5 h-5 mr-2 text-orange-500" viewBox="0 0 24 24" fill="currentColor"></svg>
           Connect to Metamask
         </button>
       </div>
