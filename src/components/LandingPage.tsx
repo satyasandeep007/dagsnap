@@ -57,8 +57,10 @@ const LandingPage = () => {
         <div className="flex-grow p-6">
           <Header userAddress={userAddress} />
           <BalanceCard toggleSendModal={toggleSendModal} toggleReceiveModal={toggleReceiveModal} balance={balance} />
-          <Portfolio />
-          <MarketPrice />
+          <div className="flex justify-between flex-col gap-32">
+            <Portfolio />
+            <MarketPrice />
+          </div>
         </div>
 
         {/* RIGHT SIDE */}

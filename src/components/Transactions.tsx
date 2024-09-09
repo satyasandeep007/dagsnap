@@ -128,40 +128,48 @@ const Transactions: React.FC<TransactionsProps> = ({
           </div>
         </div>
         {/* Transactions */}
-        <div className="mb-6">
-          <h2 className="text-lg font-semibold mb-4">Recent Transactions</h2>
+        <div className="mb-6 h-full">
+          <h2 className="text-lg mx-auto  mb-4 ">Recent Transactions</h2>
 
-          {transactions && transactions.length === 0 && (
-            <div className="text-center text-gray-400">No transactions found</div>
-          )}
-
-          {transactions &&
-            transactions.length > 0 &&
-            transactions.map((transaction, index) => (
-              <div key={transaction.hash} className="flex justify-between items-center mb-3 p-2 rounded-lg shadow-sm">
-                <div className="flex items-center">
-                  <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
-                      transaction.source === userAddress ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'
-                    }`}
-                  >
-                    {transaction.source === userAddress ? '↑' : '↓'}
+          <div className="h-full">
+            {transactions && transactions.length > 0 ? (
+              transactions.map((transaction, index) => (
+                <div key={transaction.hash} className="flex justify-between items-center mb-3 p-2 rounded-lg shadow-sm">
+                  <div className="flex items-center">
+                    <div
+                      className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
+                        transaction.source === userAddress ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'
+                      }`}
+                    >
+                      {transaction.source === userAddress ? '↑' : '↓'}
+                    </div>
+                    <div>
+                      <p className="font-medium">{transaction.source === userAddress ? 'Sent DAG' : 'Received DAG'}</p>
+                      <p className="text-sm text-gray-500">{formatDate(transaction.timestamp)}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-medium">{transaction.source === userAddress ? 'Sent DAG' : 'Received DAG'}</p>
-                    <p className="text-sm text-gray-500">{formatDate(transaction.timestamp)}</p>
+                  <div className="text-right">
+                    <p className="font-medium">{formatAmount(transaction.amount)}</p>
+                    <p className="text-sm text-gray-500">Fee: {transaction.fee} DAG</p>
                   </div>
                 </div>
-                <div className="text-right">
-                  <p className="font-medium">{formatAmount(transaction.amount)}</p>
-                  <p className="text-sm text-gray-500">Fee: {transaction.fee} DAG</p>
-                </div>
+              ))
+            ) : (
+              <div className="flex justify-center items-center h-full py-52">
+                <div className="text-center text-gray-400 h-full font-mono">No transactions found</div>
               </div>
-            ))}
+            )}
+          </div>
         </div>
       </div>
-      <div className="flex justify-between items-center text-sm text-gray-600">
-        <span>View all transactions</span>
+      <div>
+        <a
+          href="https://testnet.dagexplorer.io/"
+          className="flex justify-left gap-2 items-center text-sm text-gray-600"
+        >
+          <span>View all transactions</span>
+          <span className="text-indigo-300">→</span>
+        </a>
       </div>
     </div>
   );
