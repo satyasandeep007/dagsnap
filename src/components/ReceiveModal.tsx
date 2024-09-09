@@ -26,42 +26,53 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ isOpen, onClose, userAddres
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-96 shadow-xl">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">RECEIVE</h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
+      <div className="bg-white rounded-2xl w-[360px] overflow-hidden shadow-xl">
+        <div className="bg-gray-50 p-4">
+          <div className="flex justify-between items-center mb-6">
+            <div className="flex items-center space-x-2">
+              <svg width="19" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M2.12646 5.23584V15.68H12.7856"
+                  stroke="#5785EF"
+                  strokeWidth="2.31"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M17.1135 1.22709L3.40994 14.7403"
+                  stroke="#5785EF"
+                  strokeWidth="2.31"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <h2 className="text-lg font-semibold text-gray-800">RECEIVE</h2>
+            </div>
+            <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M1 1L13 13M1 13L13 1"
+                  stroke="#6B7280"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+          <div className="flex justify-center mb-4">
+            <QRCodeSVG value={userAddress} size={200} />
+          </div>
+        </div>
+        <div className="p-4">
+          <div className="bg-gray-100 px-3 py-2 rounded-lg mb-4 text-center text-xs break-all">{userAddress}</div>
+          <button
+            onClick={handleCopyAddress}
+            className="w-full py-3 rounded-lg bg-gray-700 text-white text-sm font-medium hover:bg-gray-600 transition-colors duration-200"
+          >
+            Copy Address
           </button>
         </div>
-        <div className="flex justify-center mb-4">
-          <QRCodeSVG value={userAddress} size={192} />
-        </div>
-        <div className="bg-gray-100 p-2 rounded-lg mb-4 text-center text-sm break-all">{userAddress}</div>
-        <button
-          onClick={handleCopyAddress}
-          className={`w-full py-3 rounded-lg flex items-center justify-center font-medium transition-colors duration-200 ${
-            copied ? 'bg-green-500 text-white' : 'bg-gray-800 text-white'
-          }`}
-        >
-          <span className="mr-2">{copied ? 'Copied!' : 'Copy Address'}</span>
-          {copied && (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path
-                fillRule="evenodd"
-                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
-          )}
-        </button>
       </div>
     </div>
   );
