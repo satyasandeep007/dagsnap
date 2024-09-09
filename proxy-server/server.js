@@ -34,12 +34,7 @@ const sendDagTransaction = async (toAddress, amount, account) => {
     networkVersion: '2.0',
     testnet: true,
   });
-  const newAccount = "bf2f3288a3342119ce125752f1d7fde3dee665f47066ce3c8c1e32d16854e94f"
-  console.log(newAccount, 'newAccount');
-  dag4.account.loginPrivateKey(newAccount);
-  amount = 10
-  toAddress = "DAG5jVXiSjiFqbVkbfTmMsHLUM3pWULxk6CmUtz5"
-
+  dag4.account.loginPrivateKey(account.replace('0x', ''));
   const tx = await dag4.account.transferDag(toAddress, amount, 0);
   return tx;
 };
