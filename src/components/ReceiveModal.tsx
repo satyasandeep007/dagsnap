@@ -26,8 +26,8 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ isOpen, onClose, userAddres
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-2xl w-[360px] overflow-hidden shadow-xl">
-        <div className="bg-gray-50 p-4">
+      <div className="bg-white rounded-2xl w-[360px] overflow-hidden shadow-xl h-[52vh] flex flex-col">
+        <div className="bg-gray-50 p-4 flex-grow">
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center space-x-2">
               <svg width="19" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -60,17 +60,37 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ isOpen, onClose, userAddres
               </svg>
             </button>
           </div>
-          <div className="flex justify-center mb-4">
+          <div className="flex justify-center mb-6">
             <QRCodeSVG value={userAddress} size={200} />
           </div>
+          <div className="bg-gray-100 px-3 py-2 rounded-lg text-center text-xs break-all">{userAddress}</div>
         </div>
         <div className="p-4">
-          <div className="bg-gray-100 px-3 py-2 rounded-lg mb-4 text-center text-xs break-all">{userAddress}</div>
           <button
             onClick={handleCopyAddress}
-            className="w-full py-3 rounded-lg bg-gray-700 text-white text-sm font-medium hover:bg-gray-600 transition-colors duration-200"
+            className={`w-full py-3 rounded-lg text-white text-sm font-medium transition-colors duration-200 flex items-center justify-center ${
+              copied ? 'bg-green-500 hover:bg-green-600' : 'bg-gray-600 hover:bg-gray-700'
+            }`}
           >
-            Copy Address
+            {copied ? (
+              <>
+                <svg
+                  className="w-5 h-5 mr-2"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                Copied!
+              </>
+            ) : (
+              'Copy Address'
+            )}
           </button>
         </div>
       </div>
