@@ -21,8 +21,7 @@ export const getTransactions = async (): Promise<any[]> => {
 
 export const getBalance = async (): Promise<number> => {
   const myAddress = await getAddress();
-  dag4.account.loginPublicKey(myAddress);
-  return dag4.account.getBalance();
+  return dag4.account.getBalanceFor(myAddress);
 };
 
 /**
@@ -46,87 +45,36 @@ export const getBalance = async (): Promise<number> => {
  * @param transactionParams.toAddress - The destination address.
  * @param transactionParams.amountInSatoshi - The amount to send, in "satoshis" i.e. DOGE * 100_000_000.
  */
-// export const makeTransaction = async ({
-//   toAddress,
-//   amountInSatoshi,
-// }: MakeTransactionParams): Promise<BroadcastTransactionResponse> => {
-//   const amountInDoge = amountInSatoshi / SATOSHI_TO_DOGE;
-//   const confirmationResponse = await snap.request({
-//     method: 'snap_dialog',
-//     params: {
-//       type: 'confirmation',
-//       content: panel([
-//         heading('Confirm transaction'),
-//         divider(),
-//         text('Send the following amount in DOGE:'),
-//         copyable(amountInDoge.toString()),
-//         text('To the following address:'),
-//         copyable(toAddress),
-//       ]),
-//     },
-//   });
+export const makeTransaction = async ({
+  toAddress,
+  amount,
+}: any): Promise<any> => {
+  const confirmationResponse = await snap.request({
+    method: 'snap_dialog',
+    params: {
+      type: 'confirmation',
+      content: panel([
+        heading('Confirm transaction'),
+        divider(),
+        text('Send the following amount in DOGE:'),
+        copyable(amount.toString()),
+        text('To the following address:'),
+        copyable(toAddress),
+      ]),
+    },
+  });
 
-//   if (confirmationResponse !== true) {
-//     throw new Error('Transaction must be approved by user');
-//   }
+  if (confirmationResponse !== true) {
+    throw new Error('Transaction must be approved by user');
+  }
 
-//   const psbt = new Psbt({
-//     network: dogecoinNetwork,
-//   });
+  const account = await getAccount();
 
-//   const account = await getAccount();
+  if (!account.privateKeyBytes) {
+    throw new Error('Private key is required');
+  }
 
-//   if (!account.privateKeyBytes) {
-//     throw new Error('Private key is required');
-//   }
+  const myAddress = await getAddress();
 
-//   const myAddress = await getAddress();
-//   const utxos = await getUtxosForValue(myAddress, amountInSatoshi);
-//   const fees = await getFees();
-//   const feePerByte = fees.medium;
-
-//   await Promise.all(
-//     utxos.map(async (utxo) => {
-//       const txHex = await getTransactionHex(utxo.txHash);
-//       psbt.addInput({
-//         hash: utxo.txHash,
-//         index: utxo.index,
-//         nonWitnessUtxo: Buffer.from(txHex, 'hex'),
-//       });
-//     }),
-//   );
-
-//   const estimatedTxSize = utxos.length * 180 + 2 * 34 + 10;
-//   const fee = Math.floor(estimatedTxSize * feePerByte);
-
-//   const totalUtxoValue = utxos.reduce(
-//     (total, curr) => total + curr.value * 100_000_000,
-//     0,
-//   );
-//   const changeValue = Math.floor(totalUtxoValue - amountInSatoshi - fee);
-//   if (changeValue < 0) {
-//     throw new Error('Must have enough funds for transaction + fees');
-//   }
-
-//   psbt.addOutput({
-//     address: toAddress,
-//     value: amountInSatoshi,
-//   });
-
-//   try {
-//     psbt.addOutput({
-//       address: myAddress,
-//       value: changeValue,
-//     });
-//   } catch (err) {
-//     console.error('error while adding output', err);
-//   }
-
-//   psbt.signAllInputs(
-//     ECPair.fromPrivateKey(Buffer.from(account.privateKeyBytes)),
-//   );
-
-//   const txHex = psbt.finalizeAllInputs().extractTransaction(true).toHex();
-//   const txResponse = await broadcastSignedTransaction(txHex);
-//   return txResponse;
-// };
+  return myAddress;
+};

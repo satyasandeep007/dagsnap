@@ -4,7 +4,7 @@ import {
   getAddress,
   getBalance,
   getTransactions,
-  // makeTransaction,
+  makeTransaction,
 } from './rpc';
 
 /**
@@ -52,9 +52,9 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
     case 'dag_getBalance':
       return getBalance();
 
-    // case 'dag_makeTransaction':
-    //   // Check if the params are valid
-    //   return makeTransaction(request.params);
+    case 'dag_makeTransaction':
+      // Check if the params are valid
+      return makeTransaction(request.params);
     default:
       throw new Error('Method not found.');
   }
