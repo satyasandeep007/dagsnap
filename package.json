@@ -10,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@metamask/providers": "^17.2.0",
     "@metamask/snaps-types": "^0.29.0",
     "@metamask/snaps-ui": "^0.29.0",
     "@next/font": "13.1.6",
