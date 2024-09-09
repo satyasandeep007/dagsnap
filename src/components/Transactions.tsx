@@ -1,12 +1,42 @@
 import React from 'react';
 
 const transactions = [
-  { type: 'Received BTC', date: 'Jun 28, 2021', amount: 'US$694.69', btc: '0.021BTC' },
-  { type: 'Sent BTC', date: 'Jun 24, 2021', amount: 'US$679.98', btc: '0.021BTC' },
-  { type: 'Received BTC', date: 'Jun 28, 2021', amount: 'US$694.69', btc: '0.021BTC' },
-  { type: 'Sent BTC', date: 'Jun 24, 2021', amount: 'US$679.98', btc: '0.021BTC' },
-  { type: 'Received BTC', date: 'Jun 28, 2021', amount: 'US$694.69', btc: '0.021BTC' },
-  { type: 'Sent BTC', date: 'Jun 24, 2021', amount: 'US$679.98', btc: '0.021BTC' },
+  {
+    type: 'Received BTC',
+    date: 'Jun 28, 2021',
+    amount: 'US$694.69',
+    btc: '0.021BTC',
+  },
+  {
+    type: 'Sent BTC',
+    date: 'Jun 24, 2021',
+    amount: 'US$679.98',
+    btc: '0.021BTC',
+  },
+  {
+    type: 'Received BTC',
+    date: 'Jun 28, 2021',
+    amount: 'US$694.69',
+    btc: '0.021BTC',
+  },
+  {
+    type: 'Sent BTC',
+    date: 'Jun 24, 2021',
+    amount: 'US$679.98',
+    btc: '0.021BTC',
+  },
+  {
+    type: 'Received BTC',
+    date: 'Jun 28, 2021',
+    amount: 'US$694.69',
+    btc: '0.021BTC',
+  },
+  {
+    type: 'Sent BTC',
+    date: 'Jun 24, 2021',
+    amount: 'US$679.98',
+    btc: '0.021BTC',
+  },
 ];
 
 export default function Transactions({
@@ -14,7 +44,7 @@ export default function Transactions({
   toggleDropdown,
   toggleMenu,
   isMenuOpen,
-  toggleConnectModal
+  toggleConnectModal,
 }) {
   return (
     <div className="w-500 bg-slate-50		 p-6 flex flex-col justify-between">
@@ -55,19 +85,27 @@ export default function Transactions({
                   href="#"
                   className="block px-4 py-3 text-sm text-gray-400 hover:bg-gray-100"
                 >
-                 TestNet <span className="text-xs text-red-400 ml-1 italic">coming soon</span>
+                  TestNet{' '}
+                  <span className="text-xs text-red-400 ml-1 italic">
+                    coming soon
+                  </span>
                 </a>
                 <a
                   href="#"
                   className="block px-4 py-3 text-sm text-gray-400 hover:bg-gray-100"
                 >
-                  MainNet <span className="text-xs text-red-400 ml-1 italic">coming soon</span>
+                  MainNet{' '}
+                  <span className="text-xs text-red-400 ml-1 italic">
+                    coming soon
+                  </span>
                 </a>
               </div>
             )}
           </div>
           <button
-            onClick={() => window.open('https://mainnet.dagexplorer.io/', '_blank')}
+            onClick={() =>
+              window.open('https://mainnet.dagexplorer.io/', '_blank')
+            }
             className="text-blue bg-white px-3 py-1 rounded-full text-sm flex items-center ml-4 h-11"
           >
             DAG Explorer
@@ -179,9 +217,18 @@ export default function Transactions({
         <div className="mb-6">
           {/* <h1 className="text-lg font-semibold mb-4">Recent Transactions</h1> */}
           {transactions.map((transaction, index) => (
-            <div key={index} className="flex justify-between items-center mb-3 p-2 rounded-lg shadow-sm">
+            <div
+              key={index}
+              className="flex justify-between items-center mb-3 p-2 rounded-lg shadow-sm"
+            >
               <div className="flex items-center">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${transaction.type === 'Received BTC' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
+                <div
+                  className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
+                    transaction.type === 'Received BTC'
+                      ? 'bg-green-100 text-green-600'
+                      : 'bg-red-100 text-red-600'
+                  }`}
+                >
                   {transaction.type === 'Received BTC' ? '↓' : '↑'}
                 </div>
                 <div>
@@ -199,7 +246,6 @@ export default function Transactions({
       </div>
       <div className="flex justify-between items-center text-sm text-gray-600">
         <span>View all transactions</span>
-       
       </div>
     </div>
   );
