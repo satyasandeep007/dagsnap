@@ -28,7 +28,7 @@
     },
     "snap_getBip44Entropy": [
       {
-        "coinType": 3
+        "coinType": 1
       }
     ]
   },

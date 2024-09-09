@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@metamask/snaps-sdk": "^6.1.1",
+    "@stardust-collective/dag4": "^2.2.2",
     "buffer": "^6.0.3"
   },
   "devDependencies": {
