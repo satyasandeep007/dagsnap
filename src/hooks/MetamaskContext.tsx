@@ -11,12 +11,18 @@ type MetaMaskContextType = {
   error: Error | null;
   setInstalledSnap: (snap: Snap | null) => void;
   setError: (error: Error) => void;
+  userAddress: string | null;
+  setUserAddress: (address: string | null) => void;
 };
 
 export const MetaMaskContext = createContext<MetaMaskContextType>({
   provider: null,
   installedSnap: null,
   error: null,
+  userAddress: null,
+  setUserAddress: () => {
+    /* no-op */
+  },
   setInstalledSnap: () => {
     /* no-op */
   },
@@ -36,6 +42,7 @@ export const MetaMaskProvider = ({ children }: { children: ReactNode }) => {
   const [provider, setProvider] = useState<MetaMaskInpageProvider | null>(null);
   const [installedSnap, setInstalledSnap] = useState<Snap | null>(null);
   const [error, setError] = useState<Error | null>(null);
+  const [userAddress, setUserAddress] = useState<string | null>(null);
 
   useEffect(() => {
     getSnapsProvider().then(setProvider).catch(console.error);
@@ -57,7 +64,7 @@ export const MetaMaskProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <MetaMaskContext.Provider
-      value={{ provider, error, setError, installedSnap, setInstalledSnap }}
+      value={{ provider, installedSnap, setInstalledSnap, userAddress, setUserAddress, error, setError }}
     >
       {children}
     </MetaMaskContext.Provider>

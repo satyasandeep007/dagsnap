@@ -11,6 +11,7 @@ import ReceiveModal from './ReceiveModal';
 import Transactions from './Transactions';
 import { getDagTransactionsApi } from '../utils/dag/api';
 import { DAG_TEST_WALLET_ADDRESS } from '../constants/wallet';
+import { useMetaMaskContext } from '@/hooks/MetamaskContext';
 
 const LandingPage = () => {
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
@@ -20,6 +21,7 @@ const LandingPage = () => {
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
   const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
   const [transactions, setTransactions] = useState([]);
+  const { userAddress } = useMetaMaskContext();
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -46,21 +48,22 @@ const LandingPage = () => {
   };
 
   const getTransactions = async () => {
-    const transactions = await getDagTransactionsApi(DAG_TEST_WALLET_ADDRESS);
-    console.log(transactions);
+    if (!userAddress) return;
+    const transactions = await getDagTransactionsApi(userAddress);
+    console.log(userAddress, transactions);
     setTransactions(transactions);
   };
 
   useEffect(() => {
     getTransactions();
-  }, []);
+  }, [userAddress]);
 
   return (
     <div className="bg-indigo-50 p-6 h-screen flex justify-center items-center flex-col">
       <div className="max-w-6xl m-auto bg-white w-4/6 rounded-2xl shadow-lg overflow-hidden flex relative  ">
         {/* LEFT SIDE */}
         <div className="flex-grow p-6">
-          <Header />
+          <Header userAddress={userAddress} />
           <BalanceCard toggleSendModal={toggleSendModal} toggleReceiveModal={toggleReceiveModal} />
           <Portfolio />
           <MarketPrice />

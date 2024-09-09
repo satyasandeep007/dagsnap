@@ -4,16 +4,18 @@ import { defaultSnapOrigin } from '@/config';
 import type { GetSnapsResponse } from '@/types';
 import { useMetaMaskContext } from './MetamaskContext';
 import { useRequest } from './useRequest';
+import { useInvokeSnap } from './useInvokeSnap';
 
 /**
  * A Hook to retrieve useful data from MetaMask.
  * @returns The informations.
  */
 export const useMetaMask = () => {
-  const { provider, setInstalledSnap, installedSnap } = useMetaMaskContext();
+  const { provider, setInstalledSnap, installedSnap, setUserAddress } = useMetaMaskContext();
   const request = useRequest();
 
   const [isFlask, setIsFlask] = useState(false);
+  const invokeSnap = useInvokeSnap(defaultSnapOrigin);
 
   const snapsDetected = provider !== null;
 
@@ -41,16 +43,23 @@ export const useMetaMask = () => {
     setInstalledSnap(snaps[defaultSnapOrigin] ?? null);
   };
 
+  const getAccount = async () => {
+    const account = await invokeSnap({ method: 'dag_getAddress' });
+    setUserAddress(account as string);
+    return account;
+  };
+
   useEffect(() => {
     const detect = async () => {
       if (provider) {
         await detectFlask();
         await getSnap();
+        await getAccount();
       }
     };
 
     detect().catch(console.error);
   }, [provider]);
 
-  return { isFlask, snapsDetected, installedSnap, getSnap };
+  return { isFlask, snapsDetected, installedSnap, getSnap, getAccount };
 };

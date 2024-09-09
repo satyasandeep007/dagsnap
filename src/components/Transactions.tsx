@@ -149,31 +149,33 @@ const Transactions: React.FC<TransactionsProps> = ({
             <div className="text-center text-gray-400">No transactions found</div>
           )}
 
-          {transactions.map((transaction, index) => (
-            <div key={transaction.hash} className="flex justify-between items-center mb-3 p-2 rounded-lg shadow-sm">
-              <div className="flex items-center">
-                <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
-                    transaction.source === DAG_TEST_WALLET_ADDRESS
-                      ? 'bg-red-100 text-red-600'
-                      : 'bg-green-100 text-green-600'
-                  }`}
-                >
-                  {transaction.source === DAG_TEST_WALLET_ADDRESS ? '↑' : '↓'}
+          {transactions &&
+            transactions.length > 0 &&
+            transactions.map((transaction, index) => (
+              <div key={transaction.hash} className="flex justify-between items-center mb-3 p-2 rounded-lg shadow-sm">
+                <div className="flex items-center">
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
+                      transaction.source === DAG_TEST_WALLET_ADDRESS
+                        ? 'bg-red-100 text-red-600'
+                        : 'bg-green-100 text-green-600'
+                    }`}
+                  >
+                    {transaction.source === DAG_TEST_WALLET_ADDRESS ? '↑' : '↓'}
+                  </div>
+                  <div>
+                    <p className="font-medium">
+                      {transaction.source === DAG_TEST_WALLET_ADDRESS ? 'Sent DAG' : 'Received DAG'}
+                    </p>
+                    <p className="text-sm text-gray-500">{formatDate(transaction.timestamp)}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-medium">
-                    {transaction.source === DAG_TEST_WALLET_ADDRESS ? 'Sent DAG' : 'Received DAG'}
-                  </p>
-                  <p className="text-sm text-gray-500">{formatDate(transaction.timestamp)}</p>
+                <div className="text-right">
+                  <p className="font-medium">{formatAmount(transaction.amount)}</p>
+                  <p className="text-sm text-gray-500">Fee: {transaction.fee} DAG</p>
                 </div>
               </div>
-              <div className="text-right">
-                <p className="font-medium">{formatAmount(transaction.amount)}</p>
-                <p className="text-sm text-gray-500">Fee: {transaction.fee} DAG</p>
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
       <div className="flex justify-between items-center text-sm text-gray-600">
