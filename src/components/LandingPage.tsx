@@ -15,7 +15,6 @@ import { useMetaMask } from '@/hooks/useMetaMask';
 
 const LandingPage = () => {
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
-  const [isSliderOpen, setIsSliderOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
@@ -26,10 +25,6 @@ const LandingPage = () => {
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
-  };
-
-  const toggleSlider = () => {
-    setIsSliderOpen(!isSliderOpen);
   };
 
   const toggleMenu = () => {
@@ -65,7 +60,7 @@ const LandingPage = () => {
 
   return (
     <div className="bg-indigo-50 p-6 h-screen flex justify-center items-center flex-col">
-      <div className="max-w-6xl m-auto bg-white w-4/6 rounded-2xl shadow-lg overflow-hidden flex relative  ">
+      <div className="max-w-6xl m-auto bg-white w-4/6 rounded-2xl shadow-sm overflow-hidden flex relative h-4/5  ">
         {/* LEFT SIDE */}
         <div className="flex-grow p-6">
           <Header userAddress={userAddress} />
@@ -78,7 +73,6 @@ const LandingPage = () => {
         <Transactions
           isDropdownOpen={isDropdownOpen}
           toggleDropdown={toggleDropdown}
-          // toggleSlider={toggleSlider}
           toggleMenu={toggleMenu}
           isMenuOpen={isMenuOpen}
           toggleConnectModal={toggleConnectModal}
