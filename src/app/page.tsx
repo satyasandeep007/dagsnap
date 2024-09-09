@@ -1,6 +1,4 @@
-'use client';
-
-import Header from '@/layout/Header';
+import React from 'react';
 import LandingPage from '@/components/LandingPage';
 
 export default function Home() {
