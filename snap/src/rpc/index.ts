@@ -2,10 +2,8 @@ import { dag4 } from '@stardust-collective/dag4';
 import { add0x, remove0x } from '@metamask/utils';
 import { copyable, divider, heading, panel, text } from '@metamask/snaps-ui';
 import { getAccount } from './private-key';
+import { getDagTransactionsApi, getDagBalanceApi } from './util';
 
-/**
- * This demo wallet uses a single account/address.
- */
 export const getAddress = async (): Promise<string> => {
   const account = await getAccount();
   dag4.account.loginPrivateKey(remove0x(account));
@@ -14,19 +12,31 @@ export const getAddress = async (): Promise<string> => {
 };
 
 export const getTransactions = async (): Promise<any[]> => {
+  await dag4.account.connect({
+    networkVersion: '2.0',
+    testnet: true,
+    beUrl: 'https://be-testnet.constellationnetwork.io/',
+    l0Url: 'https://l0-lb-testnet.constellationnetwork.io/',
+    l1Url: 'https://l1-lb-testnet.constellationnetwork.io/',
+  });
   const myAddress = await getAddress();
   dag4.account.loginPublicKey(myAddress);
-  return dag4.account.getTransactions(10);
+  // return dag4.account.getTransactions(100);
+  return getDagTransactionsApi(myAddress);
 };
 
 export const getBalance = async (): Promise<number> => {
+  await dag4.account.connect({
+    networkVersion: '2.0',
+    testnet: true,
+    beUrl: 'https://be-testnet.constellationnetwork.io/',
+    l0Url: 'https://l0-lb-testnet.constellationnetwork.io/',
+    l1Url: 'https://l1-lb-testnet.constellationnetwork.io/',
+  });
   const myAddress = await getAddress();
-  console.log(
-    dag4.account.getBalanceFor(myAddress),
-    'dag4.account.getBalanceFor(myAddress);',
-  );
-
-  return dag4.account.getBalanceFor(myAddress);
+  dag4.account.loginPublicKey(myAddress);
+  // return dag4.account.getBalance();
+  return getDagBalanceApi(myAddress);
 };
 
 export const makeTransaction = async ({

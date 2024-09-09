@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { dag4 } from '@stardust-collective/dag4';
 
 interface BalanceCardProps {
   toggleSendModal: () => void;
@@ -7,6 +8,33 @@ interface BalanceCardProps {
 }
 
 const BalanceCard: React.FC<BalanceCardProps> = ({ toggleSendModal, toggleReceiveModal, balance }) => {
+  const getTransactions = async (): Promise<any[]> => {
+    dag4.account.connect({
+      networkVersion: '2.0',
+      testnet: true,
+    });
+    dag4.account.loginPublicKey('DAG0hHS1f5ATEUtKbK5GAkzLgEcPbgc7obXvCSdb');
+    return dag4.account.getTransactions(100);
+  };
+
+  const getBalance = async (): Promise<number> => {
+    dag4.account.connect({
+      networkVersion: '2.0',
+      testnet: true,
+    });
+
+    return dag4.account.getBalanceFor('DAG0hHS1f5ATEUtKbK5GAkzLgEcPbgc7obXvCSdb');
+  };
+
+  useEffect(() => {
+    async function fetchData() {
+      const balance = await getBalance();
+      const transactions = await getTransactions();
+      console.log(balance, transactions, 'onam');
+    }
+    fetchData();
+  }, []);
+
   return (
     <div className="grid grid-cols-5 gap-6 mb-6">
       <div className="col-span-3 bg-gray-900 text-white p-6 rounded-xl relative overflow-hidden">
