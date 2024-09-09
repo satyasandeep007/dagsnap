@@ -1,22 +1,21 @@
 // import { payments, Psbt, ECPair } from 'bitcoinjs-lib';
 import { dag4 } from '@stardust-collective/dag4';
-// @ts-expect-error No types exist
-import coininfo from 'coininfo';
+// import coininfo from 'coininfo';
 import { copyable, divider, heading, panel, text } from '@metamask/snaps-ui';
 import { getAccount } from './private-key';
 
-const dogecoinFormat = coininfo.dogecoin.test.toBitcoinJS();
-const dogecoinNetwork = {
-  messagePrefix: `\x19${dogecoinFormat.name} Signed Message:\n`,
-  bech32: '',
-  bip32: {
-    public: dogecoinFormat.bip32.public,
-    private: dogecoinFormat.bip32.private,
-  },
-  pubKeyHash: dogecoinFormat.pubKeyHash,
-  scriptHash: dogecoinFormat.scriptHash,
-  wif: dogecoinFormat.wif,
-};
+// const dogecoinFormat = coininfo.dogecoin.test.toBitcoinJS();
+// const dogecoinNetwork = {
+//   messagePrefix: `\x19${dogecoinFormat.name} Signed Message:\n`,
+//   bech32: '',
+//   bip32: {
+//     public: dogecoinFormat.bip32.public,
+//     private: dogecoinFormat.bip32.private,
+//   },
+//   pubKeyHash: dogecoinFormat.pubKeyHash,
+//   scriptHash: dogecoinFormat.scriptHash,
+//   wif: dogecoinFormat.wif,
+// };
 
 /**
  * This demo wallet uses a single account/address.
@@ -24,18 +23,20 @@ const dogecoinNetwork = {
 export const getAddress = async (): Promise<string> => {
   const account = await getAccount();
   console.log('account: ', account);
-  // const pk = dag4.keyStore.generatePrivateKey();
+  const pk = dag4.keyStore.generatePrivateKey();
+  console.log('pk: ', pk);
   // const address = dag4.keyStore.getDagAddressFromPublicKey(account.compressedPublicKeyBytes);
   // const { address } = payments.p2pkh({
   //   pubkey: Buffer.from(account.compressedPublicKeyBytes),
   //   network: dogecoinNetwork,
   // });
+  const address = 'dd';
 
-  // if (!address) {
-  //   throw new Error('Address not found');
-  // }
+  if (!address) {
+    throw new Error('Address not found');
+  }
 
-  // return address;
+  return address;
 };
 
 // export const getTransactions = async (): Promise<any[]> => {
