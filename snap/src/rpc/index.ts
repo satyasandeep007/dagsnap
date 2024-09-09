@@ -2,7 +2,11 @@ import { dag4 } from '@stardust-collective/dag4';
 import { add0x, remove0x } from '@metamask/utils';
 import { copyable, divider, heading, panel, text } from '@metamask/snaps-ui';
 import { getAccount } from './private-key';
-import { getDagTransactionsApi, getDagBalanceApi } from './util';
+import {
+  getDagTransactionsApi,
+  getDagBalanceApi,
+  sendDagTransaction,
+} from './util';
 
 export const getAddress = async (): Promise<string> => {
   const account = await getAccount();
@@ -73,7 +77,6 @@ export const makeTransaction = async ({
     testnet: true,
   });
   dag4.account.loginPrivateKey(remove0x(account));
-  const tx = await dag4.account.transferDag(toAddress, amount, 0);
 
-  return tx;
+  return sendDagTransaction(toAddress, amount, account);
 };

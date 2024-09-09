@@ -37,3 +37,30 @@ export const getDagBalanceApi = async (address: string) => {
     throw error;
   }
 };
+
+export const sendDagTransaction = async (
+  toAddress: string,
+  amount: number,
+  account: any,
+) => {
+  try {
+    const response = await fetch(`http://localhost:9090/api/dag/send`, {
+      method: 'POST',
+      body: JSON.stringify({ toAddress, amount, account }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log(data, 'rpc');
+    return data?.tx;
+  } catch (error) {
+    console.error('Failed to send DAG transaction:', error);
+    throw error;
+  }
+};

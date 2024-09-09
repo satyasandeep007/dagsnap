@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@stardust-collective/dag4": "^2.2.2",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "node-fetch": "^2.7.0"
