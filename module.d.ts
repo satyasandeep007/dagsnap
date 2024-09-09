@@ -3,3 +3,4 @@ declare module '@metamask/providers' {
     request: (request: { method: string; params?: any[] }) => Promise<any>;
   }
 }
+declare module 'qrcode.react';

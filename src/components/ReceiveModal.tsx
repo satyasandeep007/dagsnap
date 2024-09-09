@@ -1,12 +1,28 @@
-import React from 'react';
+'use client';
+
+import React, { useCallback, useState } from 'react';
+import { QRCodeSVG } from 'qrcode.react';
 
 interface ReceiveModalProps {
   isOpen: boolean;
   onClose: () => void;
+  userAddress: string;
 }
 
-const ReceiveModal: React.FC<ReceiveModalProps> = ({ isOpen, onClose }) => {
+const ReceiveModal: React.FC<ReceiveModalProps> = ({ isOpen, onClose, userAddress }) => {
   if (!isOpen) return null;
+
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyAddress = useCallback(() => {
+    navigator.clipboard
+      .writeText(userAddress)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      })
+      .catch((err) => console.error('Failed to copy address: ', err));
+  }, [userAddress]);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -26,13 +42,25 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ isOpen, onClose }) => {
           </button>
         </div>
         <div className="flex justify-center mb-4">
-          <img src="images/qrcode1.png" alt="QR Code" className="w-48 h-48" />
+          <QRCodeSVG value={userAddress} size={192} />
         </div>
-        <div className="bg-gray-100 p-2 rounded-lg mb-4 text-center text-sm break-all">
-          bc1quqymjx86lw528m8kteu2erw3mvcyj9
-        </div>
-        <button className="w-full bg-gray-800 text-white py-3 rounded-lg flex items-center justify-center font-medium">
-          Copy Address
+        <div className="bg-gray-100 p-2 rounded-lg mb-4 text-center text-sm break-all">{userAddress}</div>
+        <button
+          onClick={handleCopyAddress}
+          className={`w-full py-3 rounded-lg flex items-center justify-center font-medium transition-colors duration-200 ${
+            copied ? 'bg-green-500 text-white' : 'bg-gray-800 text-white'
+          }`}
+        >
+          <span className="mr-2">{copied ? 'Copied!' : 'Copy Address'}</span>
+          {copied && (
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path
+                fillRule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clipRule="evenodd"
+              />
+            </svg>
+          )}
         </button>
       </div>
     </div>

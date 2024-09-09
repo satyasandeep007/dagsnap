@@ -21,7 +21,7 @@ const LandingPage = () => {
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
   const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
   const [transactions, setTransactions] = useState([]);
-  const { userAddress } = useMetaMaskContext();
+  const { userAddress }: any = useMetaMaskContext();
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -86,7 +86,7 @@ const LandingPage = () => {
 
       <SendModal isOpen={isSendModalOpen} onClose={toggleSendModal} />
 
-      <ReceiveModal isOpen={isReceiveModalOpen} onClose={toggleReceiveModal} />
+      <ReceiveModal isOpen={isReceiveModalOpen} onClose={toggleReceiveModal} userAddress={userAddress} />
     </div>
   );
 };
