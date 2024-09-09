@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
 
-const CryptoItem = ({ icon, name, symbol, price, change, chart }) => (
+const CryptoItem = ({
+  icon,
+  name,
+  symbol,
+  price,
+  change,
+  chart,
+}: {
+  icon: string;
+  name: string;
+  symbol: string;
+  price: string;
+  change: string;
+  chart: string;
+}) => (
   <div className="flex items-center justify-between py-4 border-b border-gray-200">
     <div className="flex items-center">
-      <span className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xl">
-        {icon}
-      </span>
+      <span className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xl">{icon}</span>
       <div className="ml-3">
         <div className="font-semibold">{name}</div>
         <div className="text-sm text-gray-500">{symbol}</div>
@@ -23,7 +35,17 @@ const CryptoItem = ({ icon, name, symbol, price, change, chart }) => (
   </div>
 );
 
-const NFTItem = ({ name, collection, price, image }) => (
+const NFTItem = ({
+  name,
+  collection,
+  price,
+  image,
+}: {
+  name: string;
+  collection: string;
+  price: string;
+  image: string;
+}) => (
   <div className="flex items-center justify-between py-4 border-b border-gray-200">
     <div className="flex items-center">
       <img src={image} alt={name} className="w-12 h-12 rounded-md object-cover" />
@@ -38,7 +60,17 @@ const NFTItem = ({ name, collection, price, image }) => (
   </div>
 );
 
-const PortfolioItem = ({ asset, amount, value, change }) => (
+const PortfolioItem = ({
+  asset,
+  amount,
+  value,
+  change,
+}: {
+  asset: string;
+  amount: string;
+  value: string;
+  change: string;
+}) => (
   <div className="flex items-center justify-between py-4 border-b border-gray-200">
     <div>
       <div className="font-semibold">{asset}</div>

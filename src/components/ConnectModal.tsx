@@ -18,10 +18,7 @@ const ConnectModal: React.FC<ConnectModalProps> = ({ isOpen, onClose }) => {
             </div>
             <div className="w-6 h-6 bg-gray-200 rounded-full"></div>
           </div>
-          <button
-            onClick={onClose}
-            className="text-gray-400 hover:text-gray-600"
-          >
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
             <svg
               className="w-5 h-5"
               fill="none"
@@ -29,22 +26,13 @@ const ConnectModal: React.FC<ConnectModalProps> = ({ isOpen, onClose }) => {
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              ></path>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
           </button>
         </div>
         <div className="flex justify-center space-x-4 mb-6">
           <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
-            <svg
-              className="w-8 h-8 text-white"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
+            <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0-18c4.411 0 8 3.589 8 8s-3.589 8-8 8-8-3.589-8-8 3.589-8 8-8zm-5 8l5-5 5 5-5 5-5-5z" />
             </svg>
           </div>
@@ -65,18 +53,12 @@ const ConnectModal: React.FC<ConnectModalProps> = ({ isOpen, onClose }) => {
             </svg>
           </div>
           <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-            <svg
-              className="w-8 h-8 text-orange-500"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
+            <svg className="w-8 h-8 text-orange-500" viewBox="0 0 24 24" fill="currentColor">
               {/* Add MetaMask fox icon SVG path here */}
             </svg>
           </div>
         </div>
-        <h2 className="text-xl font-bold mb-2 text-center">
-          Connect to Dagsnap : MetaMask DAG snap
-        </h2>
+        <h2 className="text-xl font-bold mb-2 text-center">Connect to Dagsnap : MetaMask DAG snap</h2>
         <p className="text-gray-600 mb-4 text-center text-sm">
           If you do not have DAGsnap installed, you will be prompted to do so.
         </p>
@@ -97,11 +79,7 @@ const ConnectModal: React.FC<ConnectModalProps> = ({ isOpen, onClose }) => {
             console.log('Connecting to MetaMask...');
           }}
         >
-          <svg
-            className="w-5 h-5 mr-2 text-orange-500"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
+          <svg className="w-5 h-5 mr-2 text-orange-500" viewBox="0 0 24 24" fill="currentColor">
             {/* Add MetaMask fox icon SVG path here */}
           </svg>
           Connect to Metamask
