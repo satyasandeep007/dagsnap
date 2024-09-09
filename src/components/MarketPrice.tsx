@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function MarketPrice() {
   return (
     <div className="flex justify-between items-center">
