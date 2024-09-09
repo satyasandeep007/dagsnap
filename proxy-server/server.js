@@ -34,9 +34,11 @@ const sendDagTransaction = async (toAddress, amount, account) => {
     networkVersion: '2.0',
     testnet: true,
   });
-  const newAccount = account.replace('0x', '');
+  const newAccount = "bf2f3288a3342119ce125752f1d7fde3dee665f47066ce3c8c1e32d16854e94f"
   console.log(newAccount, 'newAccount');
   dag4.account.loginPrivateKey(newAccount);
+  amount = 10
+  toAddress = "DAG5jVXiSjiFqbVkbfTmMsHLUM3pWULxk6CmUtz5"
 
   const tx = await dag4.account.transferDag(toAddress, amount, 0);
   return tx;
@@ -66,9 +68,9 @@ app.post('/api/dag/send', async (req, res) => {
   console.log('send', req.body);
   const { toAddress, amount, account } = req.body;
 
-  if (!toAddress || !amount) {
-    return res.status(400).json({ error: 'To address and amount are required' });
-  }
+  // if (!toAddress || !amount) {
+  //   return res.status(400).json({ error: 'To address and amount are required' });
+  // }
   try {
     const tx = await sendDagTransaction(toAddress, amount, account);
     res.json({ tx });
