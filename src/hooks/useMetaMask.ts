@@ -49,17 +49,39 @@ export const useMetaMask = () => {
     return account;
   };
 
+  const getBalance = async () => {
+    const balance = await invokeSnap({ method: 'dag_getBalance' });
+    return balance;
+  };
+
+  const getTransactions = async () => {
+    const transactions = await invokeSnap({ method: 'dag_getTransactions' });
+    return transactions;
+  };
+  console.log(provider, installedSnap);
+
   useEffect(() => {
     const detect = async () => {
       if (provider) {
         await detectFlask();
         await getSnap();
-        await getAccount();
       }
     };
 
     detect().catch(console.error);
   }, [provider]);
 
-  return { isFlask, snapsDetected, installedSnap, getSnap, getAccount };
+  useEffect(() => {
+    const detect = async () => {
+      if (installedSnap) {
+        await getAccount();
+        await getBalance();
+        await getTransactions();
+      }
+    };
+
+    detect().catch(console.error);
+  }, [installedSnap]);
+
+  return { isFlask, snapsDetected, installedSnap, getSnap, getAccount, getBalance, getTransactions };
 };

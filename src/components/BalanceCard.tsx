@@ -3,9 +3,10 @@ import React from 'react';
 interface BalanceCardProps {
   toggleSendModal: () => void;
   toggleReceiveModal: () => void;
+  balance: string | null;
 }
 
-const BalanceCard: React.FC<BalanceCardProps> = ({ toggleSendModal, toggleReceiveModal }) => {
+const BalanceCard: React.FC<BalanceCardProps> = ({ toggleSendModal, toggleReceiveModal, balance }) => {
   return (
     <div className="grid grid-cols-5 gap-6 mb-6">
       <div className="col-span-3 bg-gray-900 text-white p-6 rounded-xl relative overflow-hidden">
@@ -13,7 +14,7 @@ const BalanceCard: React.FC<BalanceCardProps> = ({ toggleSendModal, toggleReceiv
           <img src="images/logo1.png" alt="Logo" className="w-8 h-8" />
         </div>
         <h2 className="text-sm uppercase mb-2">CURRENT BALANCE</h2>
-        <div className="text-4xl font-bold mb-1">24.00 DAG</div>
+        <div className="text-4xl font-bold mb-1">{balance} DAG</div>
         <div className="text-sm text-gray-400">/ Sats</div>
         <div className="mt-4 text-sm">-- USD</div>
       </div>
