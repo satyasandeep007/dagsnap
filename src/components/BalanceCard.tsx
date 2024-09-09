@@ -1,17 +1,16 @@
 import React from 'react';
 
-export default function BalanceCard({
-  toggleSendModal,
-  toggleReceiveModal,
-}: any) {
+interface BalanceCardProps {
+  toggleSendModal: () => void;
+  toggleReceiveModal: () => void;
+}
+
+const BalanceCard: React.FC<BalanceCardProps> = ({ toggleSendModal, toggleReceiveModal }) => {
   return (
     <div className="grid grid-cols-5 gap-6 mb-6">
       <div className="col-span-3 bg-gray-900 text-white p-6 rounded-xl relative overflow-hidden">
         <div className="absolute right-4 top-4 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
-          <img
-            src="images/logo1.png"
-            className="w-8 h-8"
-          />
+          <img src="images/logo1.png" alt="Logo" className="w-8 h-8" />
         </div>
         <h2 className="text-sm uppercase mb-2">CURRENT BALANCE</h2>
         <div className="text-4xl font-bold mb-1">24.00 DAG</div>
@@ -84,4 +83,6 @@ export default function BalanceCard({
       </div>
     </div>
   );
-}
+};
+
+export default BalanceCard;

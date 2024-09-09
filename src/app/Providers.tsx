@@ -7,10 +7,7 @@ import { mainnet, polygon, polygonMumbai, sepolia } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import { MetaMaskProvider } from '@/hooks';
 
-const { chains, provider } = configureChains(
-  [mainnet, polygon, sepolia, polygonMumbai],
-  [publicProvider()],
-);
+const { chains, provider } = configureChains([mainnet, polygon, sepolia, polygonMumbai], [publicProvider()]);
 
 const { connectors } = getDefaultWallets({
   appName: 'NextJS Snap',

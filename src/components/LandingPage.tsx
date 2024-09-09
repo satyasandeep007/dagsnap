@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Portfolio from './Portfolio';
-import { Header } from './Header';
+import Header from './Header';
 import BalanceCard from './BalanceCard';
 import MarketPrice from './MarketPrice';
 import ConnectModal from './ConnectModal';
