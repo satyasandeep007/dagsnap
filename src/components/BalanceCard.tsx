@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import logo from '@/images/dag.png';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getCoinData } from './MarketPrice';
 
 interface BalanceCardProps {
   toggleSendModal: () => void;
@@ -9,6 +10,14 @@ interface BalanceCardProps {
 }
 
 const BalanceCard: React.FC<BalanceCardProps> = ({ toggleSendModal, toggleReceiveModal, balance }) => {
+  const [marketPrice, setMarketPrice] = useState(0);
+  useEffect(() => {
+    getCoinData('constellation-labs')
+      .then((response) => response.json())
+      .then((data) => {
+        setMarketPrice(data.market_data.current_price.usd);
+      });
+  }, []);
   return (
     <div className="grid grid-cols-5 gap-6 mb-6">
       <div className="col-span-3 bg-gray-900 text-white p-6 rounded-xl relative overflow-hidden h-full">
@@ -18,7 +27,7 @@ const BalanceCard: React.FC<BalanceCardProps> = ({ toggleSendModal, toggleReceiv
         <h2 className="text-sm uppercase mb-2 text-gray-400">CURRENT BALANCE</h2>
         <div className="text-4xl font-bold mb-1">{balance ? balance : '--'} DAG</div>
         {/* <div className="text-sm text-gray-400">/ Sats</div> */}
-        <div className="mt-4 text-sm text-gray-400">-- USD</div>
+        <div className="mt-4 text-sm text-gray-400">{balance ? balance * marketPrice : '--'} USD</div>
       </div>
 
       <div className="col-span-2 flex flex-col w-full justify-between gap-5">

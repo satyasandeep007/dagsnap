@@ -103,7 +103,12 @@ const Transactions: React.FC<TransactionsProps> = ({
                       fill="#656D85"
                     ></path>
                   </svg>
-                  <span className="ml-2">Github</span>
+                  <span
+                    onClick={() => window.open('https://github.com/satyasandeep007/DAGSnap', '_blank')}
+                    className="ml-2"
+                  >
+                    Github
+                  </span>
                 </a>
 
                 <div className="border-t border-gray-100 my-1"></div>
@@ -129,8 +134,6 @@ const Transactions: React.FC<TransactionsProps> = ({
         </div>
         {/* Transactions */}
         <div className="mb-6 h-full">
-          <h2 className="text-lg mx-auto  mb-4 ">Recent Transactions</h2>
-
           <div className="h-full">
             {transactions && transactions.length > 0 ? (
               transactions.map((transaction, index) => (
@@ -155,7 +158,7 @@ const Transactions: React.FC<TransactionsProps> = ({
                 </div>
               ))
             ) : (
-              <div className="flex justify-center items-center h-full py-52">
+              <div className="flex justify-center items-center h-full py-60">
                 <div className="text-center text-gray-400 h-full font-mono">No transactions found</div>
               </div>
             )}
