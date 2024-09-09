@@ -1,10 +1,13 @@
+import { DAG_TEST_WALLET_ADDRESS } from '@/constants/wallet';
 import React from 'react';
 
 interface Transaction {
-  type: string;
-  date: string;
-  amount: string;
-  btc: string;
+  hash: string;
+  amount: number;
+  source: string;
+  destination: string;
+  fee: number;
+  timestamp: string;
 }
 
 interface TransactionsProps {
@@ -13,46 +16,8 @@ interface TransactionsProps {
   toggleMenu: () => void;
   isMenuOpen: boolean;
   toggleConnectModal: () => void;
+  transactions: Transaction[];
 }
-
-const transactions: Transaction[] = [
-  {
-    type: 'Received BTC',
-    date: 'Jun 28, 2021',
-    amount: 'US$694.69',
-    btc: '0.021BTC',
-  },
-  {
-    type: 'Sent BTC',
-    date: 'Jun 24, 2021',
-    amount: 'US$679.98',
-    btc: '0.021BTC',
-  },
-  {
-    type: 'Received BTC',
-    date: 'Jun 28, 2021',
-    amount: 'US$694.69',
-    btc: '0.021BTC',
-  },
-  {
-    type: 'Sent BTC',
-    date: 'Jun 24, 2021',
-    amount: 'US$679.98',
-    btc: '0.021BTC',
-  },
-  {
-    type: 'Received BTC',
-    date: 'Jun 28, 2021',
-    amount: 'US$694.69',
-    btc: '0.021BTC',
-  },
-  {
-    type: 'Sent BTC',
-    date: 'Jun 24, 2021',
-    amount: 'US$679.98',
-    btc: '0.021BTC',
-  },
-];
 
 const Transactions: React.FC<TransactionsProps> = ({
   isDropdownOpen,
@@ -60,7 +25,17 @@ const Transactions: React.FC<TransactionsProps> = ({
   toggleMenu,
   isMenuOpen,
   toggleConnectModal,
+  transactions,
 }) => {
+  console.log(transactions, 'transactions');
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  };
+
+  const formatAmount = (amount: number) => {
+    return (amount / 100000000).toFixed(2) + ' DAG';
+  };
   return (
     <div className="w-500 bg-slate-50		 p-6 flex flex-col justify-between">
       <div>
@@ -168,25 +143,34 @@ const Transactions: React.FC<TransactionsProps> = ({
         </div>
         {/* Transactions */}
         <div className="mb-6">
-          {/* <h1 className="text-lg font-semibold mb-4">Recent Transactions</h1> */}
+          <h2 className="text-lg font-semibold mb-4">Recent Transactions</h2>
+
+          {transactions && transactions.length === 0 && (
+            <div className="text-center text-gray-400">No transactions found</div>
+          )}
+
           {transactions.map((transaction, index) => (
-            <div key={index} className="flex justify-between items-center mb-3 p-2 rounded-lg shadow-sm">
+            <div key={transaction.hash} className="flex justify-between items-center mb-3 p-2 rounded-lg shadow-sm">
               <div className="flex items-center">
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
-                    transaction.type === 'Received BTC' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'
+                    transaction.source === DAG_TEST_WALLET_ADDRESS
+                      ? 'bg-red-100 text-red-600'
+                      : 'bg-green-100 text-green-600'
                   }`}
                 >
-                  {transaction.type === 'Received BTC' ? '↓' : '↑'}
+                  {transaction.source === DAG_TEST_WALLET_ADDRESS ? '↑' : '↓'}
                 </div>
                 <div>
-                  <p className="font-medium">{transaction.type}</p>
-                  <p className="text-sm text-gray-500">{transaction.date}</p>
+                  <p className="font-medium">
+                    {transaction.source === DAG_TEST_WALLET_ADDRESS ? 'Sent DAG' : 'Received DAG'}
+                  </p>
+                  <p className="text-sm text-gray-500">{formatDate(transaction.timestamp)}</p>
                 </div>
               </div>
               <div className="text-right">
-                <p className="font-medium">{transaction.amount}</p>
-                <p className="text-sm text-gray-500">{transaction.btc}</p>
+                <p className="font-medium">{formatAmount(transaction.amount)}</p>
+                <p className="text-sm text-gray-500">Fee: {transaction.fee} DAG</p>
               </div>
             </div>
           ))}

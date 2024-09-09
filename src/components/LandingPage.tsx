@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import Portfolio from './Portfolio';
 import Header from './Header';
 import BalanceCard from './BalanceCard';
@@ -7,6 +9,8 @@ import ConnectModal from './ConnectModal';
 import SendModal from './SendModal';
 import ReceiveModal from './ReceiveModal';
 import Transactions from './Transactions';
+import { getDagTransactionsApi } from '../utils/dag/api';
+import { DAG_TEST_WALLET_ADDRESS } from '../constants/wallet';
 
 const LandingPage = () => {
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
@@ -15,6 +19,7 @@ const LandingPage = () => {
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
   const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
+  const [transactions, setTransactions] = useState([]);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -40,6 +45,16 @@ const LandingPage = () => {
     setIsReceiveModalOpen(!isReceiveModalOpen);
   };
 
+  const getTransactions = async () => {
+    const transactions = await getDagTransactionsApi(DAG_TEST_WALLET_ADDRESS);
+    console.log(transactions);
+    setTransactions(transactions);
+  };
+
+  useEffect(() => {
+    getTransactions();
+  }, []);
+
   return (
     <div className="bg-indigo-50 p-6 h-screen flex justify-center items-center flex-col">
       <div className="max-w-6xl m-auto bg-white w-4/6 rounded-2xl shadow-lg overflow-hidden flex relative  ">
@@ -59,6 +74,7 @@ const LandingPage = () => {
           toggleMenu={toggleMenu}
           isMenuOpen={isMenuOpen}
           toggleConnectModal={toggleConnectModal}
+          transactions={transactions}
         />
       </div>
       <div className="text-center text-gray-400 text-sm mt-4">Powered by MetaMask Snaps</div>
