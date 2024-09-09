@@ -1,3 +1,4 @@
+import { getDagPublicKey } from './../../../src/utils/dag/walletUtil';
 // import { payments, Psbt, ECPair } from 'bitcoinjs-lib';
 import { dag4 } from '@stardust-collective/dag4';
 // import coininfo from 'coininfo';
@@ -30,7 +31,9 @@ export const getAddress = async (): Promise<string> => {
   //   pubkey: Buffer.from(account.compressedPublicKeyBytes),
   //   network: dogecoinNetwork,
   // });
-  const address = 'dd';
+  // getPublicKeyFromPrivate(privateKey: string, compact?: boolean): string;
+  // getDagAddressFromPrivateKey(privateKeyHex: string): string;
+  const address = dag4.keyStore.getPublicKeyFromPrivate(account.privateKey);
 
   if (!address) {
     throw new Error('Address not found');
