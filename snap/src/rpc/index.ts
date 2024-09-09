@@ -21,6 +21,11 @@ export const getTransactions = async (): Promise<any[]> => {
 
 export const getBalance = async (): Promise<number> => {
   const myAddress = await getAddress();
+  console.log(
+    dag4.account.getBalanceFor(myAddress),
+    'dag4.account.getBalanceFor(myAddress);',
+  );
+
   return dag4.account.getBalanceFor(myAddress);
 };
 

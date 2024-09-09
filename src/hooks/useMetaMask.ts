@@ -11,7 +11,8 @@ import { useInvokeSnap } from './useInvokeSnap';
  * @returns The informations.
  */
 export const useMetaMask = () => {
-  const { provider, setInstalledSnap, installedSnap, setUserAddress } = useMetaMaskContext();
+  const { provider, setInstalledSnap, installedSnap, setUserAddress, setBalance, setTransactions } =
+    useMetaMaskContext();
   const request = useRequest();
 
   const [isFlask, setIsFlask] = useState(false);
@@ -51,11 +52,17 @@ export const useMetaMask = () => {
 
   const getBalance = async () => {
     const balance = await invokeSnap({ method: 'dag_getBalance' });
+    console.log(balance, 'balance Satya');
+
+    setBalance(balance as string);
     return balance;
   };
 
   const getTransactions = async () => {
-    const transactions = await invokeSnap({ method: 'dag_getTransactions' });
+    const transactions: any = await invokeSnap({ method: 'dag_getTransactions' });
+    console.log(transactions, 'transactions Satya');
+
+    setTransactions(transactions);
     return transactions;
   };
   console.log(provider, installedSnap);
@@ -74,6 +81,8 @@ export const useMetaMask = () => {
   useEffect(() => {
     const detect = async () => {
       if (installedSnap) {
+        console.log('detect installedSnap');
+
         await getAccount();
         await getBalance();
         await getTransactions();
