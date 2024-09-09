@@ -7,7 +7,7 @@
     "url": "https://github.com/satyasandeep007/dagsnap"
   },
   "source": {
-    "shasum": "6wh1hRJcEox5F5n0yoFj7J3Tnq8YV/wwhL1S6tXfCXQ=",
+    "shasum": "fcmU9WukyUBdlIq9cVC45MsPdTn9p49ql9dHR1k+XmY=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
@@ -19,12 +19,18 @@
   },
   "initialPermissions": {
     "snap_dialog": {},
+    "snap_notify": {},
     "endowment:transaction-insight": {},
     "endowment:network-access": {},
     "endowment:rpc": {
       "dapps": true,
       "snaps": false
-    }
+    },
+    "snap_getBip44Entropy": [
+      {
+        "coinType": 3
+      }
+    ]
   },
   "manifestVersion": "0.1"
 }
