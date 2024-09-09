@@ -4,6 +4,7 @@ import { isLocalSnap, shouldDisplayReconnectButton } from '@/utils';
 import { defaultSnapOrigin } from '@/config';
 import { useMetaMask } from '@/hooks/useMetaMask';
 import { useInvokeSnap } from '@/hooks/useInvokeSnap';
+import { useMetaMaskContext } from '@/hooks/MetamaskContext';
 
 interface ConnectModalProps {
   isOpen: boolean;
@@ -14,9 +15,9 @@ const ConnectModal: React.FC<ConnectModalProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
   const requestSnap = useRequestSnap();
 
-  const { isFlask, snapsDetected, installedSnap } = useMetaMask();
+  const { isFlask, snapsDetected, installedSnap, getAccount } = useMetaMask();
   const [currentStep, setCurrentStep] = useState(1);
-  const [userAddress, setUserAddress]: any = useState<string | null>(null);
+  const { userAddress, setUserAddress } = useMetaMaskContext();
 
   const invokeSnap = useInvokeSnap(defaultSnapOrigin);
 
@@ -35,10 +36,8 @@ const ConnectModal: React.FC<ConnectModalProps> = ({ isOpen, onClose }) => {
     }
   }, [installedSnap]);
 
-  const getAccount = async () => {
-    const account = await invokeSnap({ method: 'dag_getAddress' });
-    setUserAddress(account);
-    return account;
+  const handleGetAccount = async () => {
+    await getAccount();
   };
 
   return (
@@ -103,7 +102,7 @@ const ConnectModal: React.FC<ConnectModalProps> = ({ isOpen, onClose }) => {
             <p className="text-gray-600 mb-4 text-center text-sm">Retrieve your DAG address from the DAGsnap.</p>
             <button
               className="w-full bg-blue-600 text-white py-3 rounded-lg flex items-center justify-center font-medium hover:bg-blue-700"
-              onClick={getAccount}
+              onClick={handleGetAccount}
             >
               Get Address
             </button>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Header = () => {
+const Header = ({ userAddress }: { userAddress: any }) => {
   return (
     <header className="flex justify-between items-center mb-6">
       <div className="flex items-center space-x-2">
@@ -12,6 +12,9 @@ const Header = () => {
             height={40}
             className="object-contain max-w-full"
           />
+        </div>
+        <div className="flex items-center space-x-2">
+          Address: <p>{userAddress}</p>
         </div>
       </div>
     </header>
