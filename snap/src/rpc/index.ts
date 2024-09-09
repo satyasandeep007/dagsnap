@@ -1,44 +1,15 @@
-import { getDagPublicKey } from './../../../src/utils/dag/walletUtil';
-// import { payments, Psbt, ECPair } from 'bitcoinjs-lib';
 import { dag4 } from '@stardust-collective/dag4';
-// import coininfo from 'coininfo';
+import { add0x, remove0x } from '@metamask/utils';
 import { copyable, divider, heading, panel, text } from '@metamask/snaps-ui';
 import { getAccount } from './private-key';
-
-// const dogecoinFormat = coininfo.dogecoin.test.toBitcoinJS();
-// const dogecoinNetwork = {
-//   messagePrefix: `\x19${dogecoinFormat.name} Signed Message:\n`,
-//   bech32: '',
-//   bip32: {
-//     public: dogecoinFormat.bip32.public,
-//     private: dogecoinFormat.bip32.private,
-//   },
-//   pubKeyHash: dogecoinFormat.pubKeyHash,
-//   scriptHash: dogecoinFormat.scriptHash,
-//   wif: dogecoinFormat.wif,
-// };
 
 /**
  * This demo wallet uses a single account/address.
  */
 export const getAddress = async (): Promise<string> => {
   const account = await getAccount();
-  console.log('account: ', account);
-  const pk = dag4.keyStore.generatePrivateKey();
-  console.log('pk: ', pk);
-  // const address = dag4.keyStore.getDagAddressFromPublicKey(account.compressedPublicKeyBytes);
-  // const { address } = payments.p2pkh({
-  //   pubkey: Buffer.from(account.compressedPublicKeyBytes),
-  //   network: dogecoinNetwork,
-  // });
-  // getPublicKeyFromPrivate(privateKey: string, compact?: boolean): string;
-  // getDagAddressFromPrivateKey(privateKeyHex: string): string;
-  const privateKey = Buffer.from(account.privateKey, 'hex').toString('hex');
-  // const dagAccount = dag4.createAccount(privateKey);
-
-  dag4.account.loginPrivateKey(pk);
+  dag4.account.loginPrivateKey(remove0x(account));
   const address = dag4.account.address;
-
   return address;
 };
 // {"depth":5,"parentFingerprint":2124694065,"index":0,"privateKey":"0x46e4ba9341ff0a8803880cb76247cdc227c7859819c9d4aaac8c68756686c469","publicKey":"0x041a8094939a27f7bb4c629a43220a2597b7727533e3fbcd0eb75ba35419503d32cedd6fdd856ac24590231822a204f326484dffa15974890d3abc4f5cc32ac8c1","chainCode":"0xa4b0c618c5acd22171b2fcda5a7dd8e89d7fec558f5ffce6c2c57c3558b6c224"}
