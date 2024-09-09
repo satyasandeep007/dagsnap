@@ -1,5 +1,11 @@
 import type { OnRpcRequestHandler } from '@metamask/snaps-sdk';
 import { Box, Text, Bold } from '@metamask/snaps-sdk/jsx';
+import {
+  getAddress,
+  getBalance,
+  getTransactions,
+  makeTransaction,
+} from './rpc';
 
 /**
  * Handle incoming JSON-RPC requests, sent through `wallet_invokeSnap`.
@@ -37,27 +43,18 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
           ),
         },
       });
-    case 'hello':
-      return snap.request({
-        method: 'snap_dialog',
-        params: {
-          type: 'confirmation',
-          content: (
-            <Box>
-              <Text>
-                Hello, <Bold>{origin}</Bold>!
-              </Text>
-              <Text>
-                This custom confirmation is just for display purposes.
-              </Text>
-              <Text>
-                But you can edit the snap source code to make it do something,
-                if you want to!
-              </Text>
-            </Box>
-          ),
-        },
-      });
+    case 'dag_getAddress':
+      return getAddress();
+
+    case 'dag_getTransactions':
+      return getTransactions();
+
+    case 'dag_getBalance':
+      return getBalance();
+
+    case 'dag_makeTransaction':
+      // Check if the params are valid
+      return makeTransaction(request.params);
     default:
       throw new Error('Method not found.');
   }
