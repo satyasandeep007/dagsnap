@@ -12,20 +12,18 @@ export const getAddress = async (): Promise<string> => {
   const address = dag4.account.address;
   return address;
 };
-// {"depth":5,"parentFingerprint":2124694065,"index":0,"privateKey":"0x46e4ba9341ff0a8803880cb76247cdc227c7859819c9d4aaac8c68756686c469","publicKey":"0x041a8094939a27f7bb4c629a43220a2597b7727533e3fbcd0eb75ba35419503d32cedd6fdd856ac24590231822a204f326484dffa15974890d3abc4f5cc32ac8c1","chainCode":"0xa4b0c618c5acd22171b2fcda5a7dd8e89d7fec558f5ffce6c2c57c3558b6c224"}
 
-// export const getTransactions = async (): Promise<any[]> => {
-//   const myAddress = await getAddress();
-//   return getAllTxnsForAddress(myAddress);
-// };
+export const getTransactions = async (): Promise<any[]> => {
+  const myAddress = await getAddress();
+  dag4.account.loginPublicKey(myAddress);
+  return dag4.account.getTransactions(10);
+};
 
-// export const getBalance = async (): Promise<number> => {
-//   const myAddress = await getAddress();
-//   const balanceResponse = await getBalanceForAddress(myAddress);
-//   return (
-//     parseFloat(balanceResponse.incoming) - parseFloat(balanceResponse.outgoing)
-//   );
-// };
+export const getBalance = async (): Promise<number> => {
+  const myAddress = await getAddress();
+  dag4.account.loginPublicKey(myAddress);
+  return dag4.account.getBalance();
+};
 
 /**
  * Create a Dogecoin P2PKH transaction and broadcast it over the network. The current
