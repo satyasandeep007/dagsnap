@@ -1,27 +1,13 @@
 'use client';
 
-import {
-  ConnectButton,
-  InstallFlaskButton,
-  ReconnectButton,
-  SendHelloButton,
-} from '@/utils/ui/Buttons';
+import { ConnectButton, InstallFlaskButton, ReconnectButton, SendHelloButton } from '@/utils/ui/Buttons';
 import { defaultSnapOrigin } from '@/config';
-import {
-  useMetaMask,
-  useInvokeSnap,
-  useMetaMaskContext,
-  useRequestSnap,
-} from '@/hooks';
+import { useMetaMask, useInvokeSnap, useMetaMaskContext, useRequestSnap } from '@/hooks';
 import { isLocalSnap, shouldDisplayReconnectButton } from '@/utils';
 import { useState } from 'react';
 
 const Card = ({ content, disabled, fullWidth }: any) => (
-  <div
-    className={`bg-white shadow-md rounded-lg p-6 ${
-      fullWidth ? 'w-full' : 'w-64'
-    } ${disabled ? 'opacity-50' : ''}`}
-  >
+  <div className={`bg-white shadow-md rounded-lg p-6 ${fullWidth ? 'w-full' : 'w-64'} ${disabled ? 'opacity-50' : ''}`}>
     <h2 className="text-xl font-bold mb-4">{content.title}</h2>
     <p className="mb-4">{content.description}</p>
     {content.button}
@@ -39,7 +25,10 @@ const Index = () => {
   const isMetaMaskReady = isLocalSnap(defaultSnapOrigin) ? true : snapsDetected;
 
   const handleSendHelloClick = async () => {
-    await invokeSnap({ method: 'hello' });
+    await invokeSnap({
+      method: 'dag_makeTransaction',
+      params: { toAddress: '0x5B4d77e199FE8e5090009C72d2a5581C74FEbE89', amount: 1 },
+    });
   };
 
   async function getAccount() {
@@ -51,9 +40,7 @@ const Index = () => {
 
   const sendCrypto = async (recipientAddress: string, amountInWei: string) => {
     if (!userAddress) {
-      console.error(
-        'User address not available. Please connect your wallet first.',
-      );
+      console.error('User address not available. Please connect your wallet first.');
       return;
     }
 
@@ -149,14 +136,8 @@ const Index = () => {
           <Card
             content={{
               title: 'Connect',
-              description:
-                'Get started by connecting to and installing the example snap.',
-              button: (
-                <ConnectButton
-                  onClick={requestSnap}
-                  disabled={!isMetaMaskReady}
-                />
-              ),
+              description: 'Get started by connecting to and installing the example snap.',
+              button: <ConnectButton onClick={requestSnap} disabled={!isMetaMaskReady} />,
             }}
             disabled={!isMetaMaskReady}
           />
@@ -167,12 +148,7 @@ const Index = () => {
               title: 'Reconnect',
               description:
                 'While connected to a local running snap this button will always be displayed in order to update the snap if a change is made.',
-              button: (
-                <ReconnectButton
-                  onClick={requestSnap}
-                  disabled={!installedSnap}
-                />
-              ),
+              button: <ReconnectButton onClick={requestSnap} disabled={!installedSnap} />,
             }}
             disabled={!installedSnap}
           />
@@ -180,21 +156,11 @@ const Index = () => {
         <Card
           content={{
             title: 'Send Hello message',
-            description:
-              'Display a custom message within a confirmation screen in MetaMask.',
-            button: (
-              <SendHelloButton
-                onClick={handleSendHelloClick}
-                disabled={!installedSnap}
-              />
-            ),
+            description: 'Display a custom message within a confirmation screen in MetaMask.',
+            button: <SendHelloButton onClick={handleSendHelloClick} disabled={!installedSnap} />,
           }}
           disabled={!installedSnap}
-          fullWidth={
-            isMetaMaskReady &&
-            Boolean(installedSnap) &&
-            !shouldDisplayReconnectButton(installedSnap)
-          }
+          fullWidth={isMetaMaskReady && Boolean(installedSnap) && !shouldDisplayReconnectButton(installedSnap)}
         />
         <Card
           content={{
@@ -214,10 +180,7 @@ const Index = () => {
             title: 'Send Crypto',
             description: 'Send crypto to a recipient address using Snaps.',
             button: (
-              <SendHelloButton
-                onClick={handleSendCryptoClick}
-                disabled={!installedSnap}
-              >
+              <SendHelloButton onClick={handleSendCryptoClick} disabled={!installedSnap}>
                 Send Crypto
               </SendHelloButton>
             ),
@@ -229,10 +192,7 @@ const Index = () => {
             title: 'Show Snap Dialog',
             description: 'Display a dialog using the snap_dialog method.',
             button: (
-              <SendHelloButton
-                onClick={handleHelloClick}
-                disabled={!installedSnap}
-              >
+              <SendHelloButton onClick={handleHelloClick} disabled={!installedSnap}>
                 Show Dialog
               </SendHelloButton>
             ),
@@ -241,10 +201,8 @@ const Index = () => {
         />
         <div className="bg-background-alternative border border-border text-text-alternative rounded p-6 mt-6 max-w-[60rem] w-full sm:mt-3 sm:p-4">
           <p className="m-0">
-            Please note that the <b>snap.manifest.json</b> and{' '}
-            <b>package.json</b> must be located in the server root directory and
-            the bundle must be hosted at the location specified by the location
-            field.
+            Please note that the <b>snap.manifest.json</b> and <b>package.json</b> must be located in the server root
+            directory and the bundle must be hosted at the location specified by the location field.
           </p>
         </div>
       </div>
