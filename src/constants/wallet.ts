@@ -1,0 +1,1 @@
+export const DAG_TEST_WALLET_ADDRESS = 'DAG0Vw4w8yuPbM9vFSsFxW1FpPBYX6yjqY6dmeh2';
