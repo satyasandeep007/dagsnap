@@ -53,7 +53,10 @@ export const makeTransaction = async ({
     throw new Error('Private key is required');
   }
 
-  const myAddress = await getAddress();
+  dag4.account.connect({
+    networkVersion: '2.0',
+    testnet: true,
+  });
   dag4.account.loginPrivateKey(remove0x(account));
   const tx = await dag4.account.transferDag(toAddress, amount, 0);
 
