@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+export const getCoinData = async (coinid: any) => {
+  const url = `https://api.coingecko.com/api/v3/coins/${coinid}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=true&sparkline=false`;
+
+  return await fetch(url);
+};
 
 const MarketPrice: React.FC = () => {
+  const [marketPrice, setMarketPrice] = useState(0);
+  useEffect(() => {
+    getCoinData('constellation-labs')
+      .then((response) => response.json())
+      .then((data) => {
+        setMarketPrice(data.market_data.current_price.usd);
+      });
+  }, []);
   return (
     <div className="flex justify-between items-center">
       <div className="text-gray-500">
-        Market Price: <span className="text-blue-500 font-medium">0 USD</span>
+        Market Price: <span className="text-blue-500 font-medium"> {marketPrice || 0} USD</span>
       </div>
       <button
         className="bg-white text-gray-700 px-4 py-2 rounded-full flex items-center border border-gray-300 shadow-sm hover:bg-gray-50 transition-colors duration-200"
