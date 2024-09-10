@@ -5,7 +5,7 @@ const NFTItem = ({
   collection,
   price,
   image,
-  lastItem
+  lastItem,
 }: {
   name: string;
   collection: string;
@@ -31,13 +31,13 @@ const nftData = [
   {
     name: 'El Paca',
     collection: 'El Paca is a meme-utility token',
-    price: '100',
+    price: '0',
     image: 'https://icons-metagraph.s3.amazonaws.com/PACA/ElPaca_token2x.png',
   },
   {
     name: 'DOR',
     collection: 'Dor Traffic Miner',
-    price: '80',
+    price: '0',
     image: 'https://icons-metagraph.s3.amazonaws.com/DOR/dortoken_red.svg',
   },
 ];

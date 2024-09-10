@@ -32,7 +32,7 @@ const LandingPage = () => {
     setTimeout(() => {
       setIsRefreshing(false);
     }, 1000);
-    toggleConnectModal();
+    // toggleConnectModal();
   };
 
   const toggleDropdown = () => {
@@ -106,7 +106,7 @@ const LandingPage = () => {
             toggleMenu={toggleMenu}
             isMenuOpen={isMenuOpen}
             toggleConnectModal={toggleConnectModal}
-            transactions={[]}
+            transactions={transactions}
             userAddress={userAddress}
             installedSnap={installedSnap}
             handleDisconnectSnap={handleDisconnectSnap}

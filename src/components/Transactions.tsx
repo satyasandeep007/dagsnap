@@ -64,7 +64,7 @@ const Transactions: React.FC<TransactionsProps> = ({
         <div className="relative">
           <button
             onClick={toggleDropdown}
-            className="bg-gray-800 text-white px-4 py-2 rounded-2xl text-sm font-medium flex items-center justify-between w-36 hover:bg-gray-700 transition-colors duration-200"
+            className="bg-gray-800 text-white px-4 py-4 rounded-2xl text-sm font-medium flex items-center justify-between w-36 hover:bg-gray-700 transition-colors duration-200"
           >
             <span>TestNet 2.0</span>
             <svg
@@ -92,7 +92,7 @@ const Transactions: React.FC<TransactionsProps> = ({
         </div>
         <button
           onClick={() => window.open(`https://testnet.dagexplorer.io/address/${userAddress}`, '_blank')}
-          className="text-blue bg-white px-4 py-2 text-sm rounded-2xl flex items-center border border-gray-200"
+          className="text-blue bg-white px-4 py-4 text-sm rounded-2xl flex items-center border border-gray-200"
         >
           <span className="text-md font-semibold mr-2">DAG Explorer</span> {/* Add margin to the right */}
           <Image src={logo} alt="Company Logo" width={20} height={20} className="object-contain" />
@@ -100,7 +100,7 @@ const Transactions: React.FC<TransactionsProps> = ({
         <div className="relative">
           <button
             onClick={toggleMenu}
-            className="text-gray-600 bg-white px-2 py-2 rounded-2xl text-sm flex items-center border border-gray-200"
+            className="text-gray-600 bg-white px-4 py-4 rounded-2xl text-sm flex items-center border border-gray-200"
           >
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M14 13V15H4V13H14ZM16 8V10H2V8H16ZM14 3V5H4V3H14Z" fill="#111214" />
