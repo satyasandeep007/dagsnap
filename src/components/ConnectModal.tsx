@@ -42,9 +42,23 @@ const ConnectModal: React.FC<ConnectModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-96 shadow-xl">
-        <div className="flex justify-between items-center mb-6">
-          <div className="flex items-center space-x-4">
+      <div className="bg-white rounded-lg p-6 w-72 h-96 shadow-xl">
+        <div className="flex justify-end">
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div className="flex justify-center items-center mb-6">
+          <div className="flex items-center">
             {[1, 2].map((step) => (
               <div key={step} className="flex flex-col items-center">
                 <div
@@ -64,17 +78,6 @@ const ConnectModal: React.FC<ConnectModalProps> = ({ isOpen, onClose }) => {
               </div>
             ))}
           </div>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-          </button>
         </div>
 
         {currentStep === 1 && (
