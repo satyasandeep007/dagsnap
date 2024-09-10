@@ -4,14 +4,11 @@ import React, { useCallback, useState } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
 
 interface ReceiveModalProps {
-  isOpen: boolean;
   onClose: () => void;
   userAddress: string;
 }
 
-const ReceiveModal: React.FC<ReceiveModalProps> = ({ isOpen, onClose, userAddress }) => {
-  if (!isOpen) return null;
-
+const ReceiveModal: React.FC<ReceiveModalProps> = ({ onClose, userAddress }) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopyAddress = useCallback(() => {
