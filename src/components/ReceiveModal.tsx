@@ -23,11 +23,14 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ onClose, userAddress }) => 
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-2xl w-[360px] overflow-hidden shadow-xl h-[52vh] flex flex-col">
-        <div className="bg-gray-50 p-4 flex-grow">
+
+
+
+      <div className="bg-gradient-to-tr from-white to-blue-100 rounded-2xl w-[22rem] h-[30rem] p-2 overflow-hidden shadow-xl flex flex-col">
+        <div className="p-4 flex-grow">
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center space-x-2">
-              <svg width="19" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M2.12646 5.23584V15.68H12.7856"
                   stroke="#5785EF"
@@ -43,7 +46,7 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ onClose, userAddress }) => 
                   strokeLinejoin="round"
                 />
               </svg>
-              <h2 className="text-lg font-semibold text-gray-800">RECEIVE</h2>
+              <h2 className="text-normal font-normal text-gray-800">RECEIVE</h2>
             </div>
             <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -57,16 +60,18 @@ const ReceiveModal: React.FC<ReceiveModalProps> = ({ onClose, userAddress }) => 
               </svg>
             </button>
           </div>
-          <div className="flex justify-center mb-6">
-            <QRCodeSVG value={userAddress} size={200} />
+          <div className="flex justify-center mb-6 ">
+            <div className="bg-white p-2">
+              <QRCodeSVG value={userAddress} size={180} />
+            </div>
           </div>
-          <div className="bg-gray-100 px-3 py-2 rounded-lg text-center text-xs break-all">{userAddress}</div>
+          <div className="bg-white border border-gray-200 px-3 py-2 rounded-lg text-center text-xs break-all font-mono">{userAddress}</div>
         </div>
         <div className="p-4">
           <button
             onClick={handleCopyAddress}
             className={`w-full py-3 rounded-lg text-white text-sm font-medium transition-colors duration-200 flex items-center justify-center ${
-              copied ? 'bg-green-500 hover:bg-green-600' : 'bg-gray-600 hover:bg-gray-700'
+              copied ? 'bg-green-500 hover:bg-green-600' : 'bg-gray-800 hover:bg-gray-700'
             }`}
           >
             {copied ? (

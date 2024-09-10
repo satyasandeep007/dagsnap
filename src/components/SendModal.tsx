@@ -29,22 +29,48 @@ const SendModal: React.FC<SendModalProps> = ({ onClose, balance, marketPrice }) 
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-96 shadow-xl">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">SEND</h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+      <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-lg p-6 w-[24rem] h-[34rem] shadow-xl">
+        <div className="flex justify-between items-center mb-6">
+          <div className="flex items-center space-x-2">
             <svg
-              className="w-5 h-5"
+              transform="rotate(180)"
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
               fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+              <path
+                d="M2.12646 5.23584V15.68H12.7856"
+                stroke="#5785EF"
+                strokeWidth="2.31"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M17.1135 1.22709L3.40994 14.7403"
+                stroke="#5785EF"
+                strokeWidth="2.31"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <h2 className="text-normal font-normal text-gray-800">SEND</h2>
+          </div>
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M1 1L13 13M1 13L13 1"
+                stroke="#6B7280"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </button>
         </div>
-        <div className="mb-4">
+
+        <div className="py-4">
           <label className="block text-sm font-medium text-gray-700 mb-1">Amount</label>
           <div className="flex items-center">
             <input
@@ -62,7 +88,8 @@ const SendModal: React.FC<SendModalProps> = ({ onClose, balance, marketPrice }) 
             <span>Fee: 0 DAG</span>
           </div>
         </div>
-        <div className="mb-4">
+
+        <div className="py-4">
           <div className="flex justify-between text-sm text-gray-500">
             <span>Balance</span>
             <span>
