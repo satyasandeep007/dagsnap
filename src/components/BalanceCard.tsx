@@ -24,10 +24,11 @@ const BalanceCard: React.FC<BalanceCardProps> = ({ toggleSendModal, toggleReceiv
         <div className="absolute right-4 top-4 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
           <Image src={logo} alt="Logo" />
         </div>
-        <h2 className="text-sm uppercase mb-2 text-gray-400">CURRENT BALANCE</h2>
-        <div className="text-4xl font-bold mb-1">{balance ? balance : '--'} DAG</div>
-        {/* <div className="text-sm text-gray-400">/ Sats</div> */}
-        <div className="mt-4 text-sm text-gray-400">{balance ? balance * marketPrice : '--'} USD</div>
+        <h2 className="text-sm uppercase mb-2 text-gray-400 font-thin">CURRENT BALANCE</h2>
+        <div className="text-4xl font-bold mb-1">{balance ?? '- -'} DAG</div>
+        <div className="mt-4 text-sm text-gray-400 font-thin">
+          {balance ? (parseFloat(balance) * marketPrice).toFixed(2) : '- -'} USD
+        </div>
       </div>
 
       <div className="col-span-2 flex flex-col w-full justify-between gap-5">
