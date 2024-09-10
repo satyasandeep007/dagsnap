@@ -160,12 +160,34 @@ const Transactions: React.FC<TransactionsProps> = ({
                       }`}
                     >
                       {transaction.source === userAddress ? (
-                        <svg width="12" height="12" fill="currentColor" className="text-red-600">
-                          <path d="M6 12L0 6H3V0H9V6H12L6 12Z" />
+                        <svg width="34" height="33" viewBox="0 0 34 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <ellipse cx="16.8183" cy="16.9702" rx="16.6996" ry="16" fill="#FFEDEC" />
+                          <g clip-path="url(#clip0_0_1)">
+                            <path
+                              d="M13.6869 9.97095V11.9709L20.565 11.9709L8.46826 23.5609L9.93991 24.9709L22.0367 13.3809V19.9709H24.1241V9.97095L13.6869 9.97095Z"
+                              fill="#E1473D"
+                            />
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_0_1">
+                              <rect width="25.0494" height="24" fill="white" transform="translate(4.29346 4.97095)" />
+                            </clipPath>
+                          </defs>
                         </svg>
                       ) : (
-                        <svg width="12" height="12" fill="currentColor" className="text-green-600">
-                          <path d="M6 0L12 6H9V12H3V6H0L6 0Z" />
+                        <svg width="34" height="33" viewBox="0 0 34 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <ellipse cx="16.9886" cy="16.9702" rx="16.8601" ry="16" fill="#E2FEE8" />
+                          <g clip-path="url(#clip0_0_1)">
+                            <path
+                              d="M25.4182 10.3805L23.9324 8.97046L11.7193 20.5605V13.9705H9.61182V23.9705H20.1494V21.9705H13.2051L25.4182 10.3805Z"
+                              fill="#4AD768"
+                            />
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_0_1">
+                              <rect width="25.2902" height="24" fill="white" transform="translate(4.34326 4.97046)" />
+                            </clipPath>
+                          </defs>
                         </svg>
                       )}
                     </div>
