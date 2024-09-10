@@ -11,6 +11,7 @@ import ReceiveModal from './ReceiveModal';
 import Transactions from './Transactions';
 import { useMetaMaskContext } from '@/hooks/MetamaskContext';
 import { useMetaMask } from '@/hooks/useMetaMask';
+import { getCoinData } from '@/utils/dag/api';
 
 const LandingPage = () => {
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
@@ -20,6 +21,7 @@ const LandingPage = () => {
   const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
   const { userAddress, balance, transactions }: any = useMetaMaskContext();
   const { getAccount, getBalance, getTransactions } = useMetaMask();
+  const [marketPrice, setMarketPrice] = useState(0);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -50,6 +52,14 @@ const LandingPage = () => {
     getAccount();
   }, []);
 
+  useEffect(() => {
+    getCoinData('constellation-labs')
+      .then((response) => response.json())
+      .then((data) => {
+        setMarketPrice(data.market_data.current_price.usd);
+      });
+  }, []);
+
   return (
     <div className="bg-indigo-50 p-6 h-screen flex justify-center items-center flex-col">
       <div className="max-w-6xl m-auto bg-white w-4/6 rounded-2xl shadow-sm flex  h-4/5  ">
@@ -78,9 +88,9 @@ const LandingPage = () => {
 
       {isConnectModalOpen && <ConnectModal isOpen={isConnectModalOpen} onClose={toggleConnectModal} />}
 
-      <SendModal isOpen={isSendModalOpen} onClose={toggleSendModal} />
+      {isSendModalOpen && <SendModal onClose={toggleSendModal} balance={balance} marketPrice={marketPrice} />}
 
-      <ReceiveModal isOpen={isReceiveModalOpen} onClose={toggleReceiveModal} userAddress={userAddress} />
+      {isReceiveModalOpen && <ReceiveModal onClose={toggleReceiveModal} userAddress={userAddress} />}
     </div>
   );
 };

@@ -11,6 +11,7 @@ interface BalanceCardProps {
 
 const BalanceCard: React.FC<BalanceCardProps> = ({ toggleSendModal, toggleReceiveModal, balance }) => {
   const [marketPrice, setMarketPrice] = useState(0);
+
   useEffect(() => {
     getCoinData('constellation-labs')
       .then((response) => response.json())
@@ -18,6 +19,7 @@ const BalanceCard: React.FC<BalanceCardProps> = ({ toggleSendModal, toggleReceiv
         setMarketPrice(data.market_data.current_price.usd);
       });
   }, []);
+
   return (
     <div className="grid grid-cols-5 gap-6 mb-6">
       <div className="col-span-3 bg-gray-900 text-white p-6 rounded-xl relative overflow-hidden h-full">
