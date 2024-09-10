@@ -148,26 +148,40 @@ const Transactions: React.FC<TransactionsProps> = ({
         <div className="h-full">
           {transactions && transactions.length > 0 ? (
             transactions.map((transaction, index) => (
-              <div key={transaction.hash} className="flex justify-between items-center mb-3 p-2 rounded-lg shadow-sm">
-                <div className="flex items-center">
-                  <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
-                      transaction.source === userAddress ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'
-                    }`}
-                  >
-                    {transaction.source === userAddress ? '↑' : '↓'}
+              <div
+                key={transaction.hash}
+                className={`flex flex-col mb-4 p-4 rounded-lg shadow-sm transition-transform transform hover:scale-105  `}
+              >
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center">
+                    <div
+                      className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
+                        transaction.source === userAddress ? 'bg-red-200' : 'bg-green-200'
+                      }`}
+                    >
+                      {transaction.source === userAddress ? (
+                        <svg width="12" height="12" fill="currentColor" className="text-red-600">
+                          <path d="M6 12L0 6H3V0H9V6H12L6 12Z" />
+                        </svg>
+                      ) : (
+                        <svg width="12" height="12" fill="currentColor" className="text-green-600">
+                          <path d="M6 0L12 6H9V12H3V6H0L6 0Z" />
+                        </svg>
+                      )}
+                    </div>
+                    <div>
+                      <p className="font-medium  ">
+                        {transaction.source === userAddress ? 'Recieved DAG' : 'Sent DAG'}
+                      </p>
+                      <p className="text-sm text-gray-400">{formatDate(transaction.timestamp)}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-medium">{transaction.source === userAddress ? 'OUT' : 'IN'}</p>
-                    <p className="text-sm text-gray-500">{formatDate(transaction.timestamp)}</p>
+                  <div className="text-right">
+                    <p className="font-medium ">
+                      US${(parseFloat(formatAmount(transaction.amount)) * marketPrice).toFixed(3)}
+                    </p>
+                    <p className="text-sm text-gray-400">{formatAmount(transaction.amount)} DAG</p>
                   </div>
-                </div>
-                <div className="text-right">
-                  <p className="font-medium">{formatAmount(transaction.amount)} DAG</p>
-                  <p className="text-sm text-gray-500">
-                    {' '}
-                    (${parseFloat((parseFloat(formatAmount(transaction.amount)) * marketPrice).toFixed(4))} USD)
-                  </p>
                 </div>
               </div>
             ))
