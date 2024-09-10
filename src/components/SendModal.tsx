@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useMetaMask } from '@/hooks/useMetaMask';
 import { useInvokeSnap } from '@/hooks/useInvokeSnap';
 import { defaultSnapOrigin } from '@/config';
+import { toast } from 'react-toastify';
 
 interface SendModalProps {
   onClose: () => void;
@@ -13,6 +13,13 @@ const SendModal: React.FC<SendModalProps> = ({ onClose, balance, marketPrice }) 
   const invokeSnap = useInvokeSnap(defaultSnapOrigin);
   const [amount, setAmount] = useState('');
   const [toAddress, setToAddress] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleMax = () => {
+    if (balance) {
+      setAmount(balance); // Set amount to the user's balance
+    }
+  };
 
   const handleSend = async () => {
     if (!amount || !toAddress) {
@@ -20,11 +27,22 @@ const SendModal: React.FC<SendModalProps> = ({ onClose, balance, marketPrice }) 
       return;
     }
 
-    await invokeSnap({
-      method: 'dag_makeTransaction',
-      params: { toAddress, amount: Number(amount) },
-    });
-    onClose();
+    setLoading(true); // Set loading to true
+    try {
+      await invokeSnap({
+        method: 'dag_makeTransaction',
+        params: { toAddress, amount: Number(amount) },
+      });
+
+      // Show success alert at the top right
+      toast.success('Transaction Successful!');
+    } catch (error) {
+      // Handle error case
+      toast.error('Transaction Failed!');
+    } finally {
+      setLoading(false); // Reset loading state
+      onClose();
+    }
   };
 
   return (
@@ -81,7 +99,9 @@ const SendModal: React.FC<SendModalProps> = ({ onClose, balance, marketPrice }) 
               onChange={(e) => setAmount(e.target.value)}
             />
             <div className="bg-blue-100 text-blue-800 p-2 rounded-r-lg">DAG</div>
-            <button className="ml-2 bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">MAX</button>
+            <button onClick={handleMax} className="ml-2 bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">
+              MAX
+            </button>
           </div>
           <div className="flex justify-between text-sm text-gray-500 mt-1">
             <span>{amount ? (parseFloat(amount) * marketPrice).toFixed(2) : '- -'} USD</span>
@@ -108,11 +128,17 @@ const SendModal: React.FC<SendModalProps> = ({ onClose, balance, marketPrice }) 
           />
         </div>
         <div className="flex space-x-4">
-          <button onClick={onClose} className="flex-1 bg-gray-200 text-gray-800 py-2 rounded-lg">
+          <button onClick={onClose} className="flex-1 bg-gray-200 text-gray-800 py-2 rounded-lg" disabled={loading}>
             Cancel
           </button>
-          <button onClick={handleSend} className="flex-1 bg-gray-800 text-white py-2 rounded-lg">
-            Send
+          <button
+            onClick={handleSend}
+            className={`flex-1 bg-gray-800 text-white py-2 rounded-lg disabled:cursor-not-allowed ${
+              loading ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+            disabled={loading || !amount || !toAddress}
+          >
+            {loading ? 'Sending...' : 'Send'}
           </button>
         </div>
       </div>
