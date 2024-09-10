@@ -26,8 +26,8 @@ const MarketPrice: React.FC = () => {
       >
         <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M15.2969 3.25H12.2969V0.25H0.296875V13.75H8.54688V9.625H11.1719L7.79688 6.25L4.42188 9.625H7.04688V12.25H1.79688V4.75H13.7969V12.25H10.0469V13.75H15.2969V3.25ZM1.79688 3.25V1.75H10.7969V3.25H1.79688Z"
             fill="#5785EF"
           />

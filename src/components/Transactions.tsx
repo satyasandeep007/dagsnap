@@ -157,8 +157,8 @@ const Transactions: React.FC<TransactionsProps> = ({
             <div className="flex flex-col justify-center gap-4 items-center h-full py-6">
               <svg width="36" height="48" viewBox="0 0 36 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
+                  fillRule="evenodd"
+                  clipRule="evenodd"
                   d="M6.032 0H1.7894L4.7894 3L12.728 10.9386L0 23.6666L2.1214 25.7879L14.8494 13.0599L22.7894 21L25.7894 24V19.7574V3V0H22.7894H6.032ZM9.032 3L22.7894 16.7574V3H9.032ZM29.5465 48H33.7891L30.7891 45L22.8506 37.0615L35.5785 24.3335L33.4572 22.2122L20.7293 34.9401L12.7891 27L9.7891 24V28.2426V45V48H12.7891H29.5465ZM18.608 37.0615L20.7293 39.1828L26.5465 45H12.7891V31.2426L18.608 37.0615Z"
                   fill="url(#paint0_linear_21_628)"
                 />
@@ -181,8 +181,8 @@ const Transactions: React.FC<TransactionsProps> = ({
                 <div className="text-center text-gray-400 h-full font-thin">no transactions</div>
                 <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
+                    fillRule="evenodd"
+                    clipRule="evenodd"
                     d="M15.6562 10C15.6562 13.3137 12.9699 16 9.65625 16C6.34254 16 3.65625 13.3137 3.65625 10C3.65625 6.68629 6.34254 4 9.65625 4C12.9699 4 15.6562 6.68629 15.6562 10ZM16.6562 10C16.6562 13.866 13.5223 17 9.65625 17C5.79026 17 2.65625 13.866 2.65625 10C2.65625 6.13401 5.79026 3 9.65625 3C13.5223 3 16.6562 6.13401 16.6562 10ZM8.90625 7.75V6.25H10.4062V7.75H8.90625ZM8.90625 13.75V9.25H10.4062V13.75H8.90625Z"
                     fill="#9095A3"
                   />
