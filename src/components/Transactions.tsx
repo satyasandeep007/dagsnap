@@ -30,7 +30,6 @@ const Transactions: React.FC<TransactionsProps> = ({
   transactions,
   userAddress,
 }) => {
-  console.log(transactions, 'transactions');
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
@@ -39,6 +38,7 @@ const Transactions: React.FC<TransactionsProps> = ({
   const formatAmount = (amount: number) => {
     return (amount / 100000000).toFixed(2) + ' DAG';
   };
+
   return (
     <div className="w-500 bg-slate-50		 p-6 flex flex-col justify-between">
       <div>
@@ -73,7 +73,7 @@ const Transactions: React.FC<TransactionsProps> = ({
             )}
           </div>
           <button
-            onClick={() => window.open('https://testnet.dagexplorer.io/', '_blank')}
+            onClick={() => window.open(`https://testnet.dagexplorer.io/address/${userAddress}`, '_blank')}
             className="text-blue bg-white px-3 py-1 rounded-full text-sm flex items-center ml-4 h-11 space-x-2"
           >
             <span>DAG Explorer</span>
