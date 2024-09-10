@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "dev-snap": "concurrently \"next dev\" \"cd snap && yarn start\"",
+    "install-all": "./scripts/install-dependencies.sh",
+    "watch": "concurrently \"yarn --cwd snap start\" \"yarn --cwd proxy-server dev\" \"next dev\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

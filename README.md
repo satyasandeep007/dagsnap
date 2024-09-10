@@ -24,31 +24,25 @@
    cd DAGSnap
    ```
 
-2. **Frontend**
+2. **Install All Dependencies**
+
+   Run the following command to install dependencies for the frontend, proxy server, and Snap:
 
    ```bash
-   yarn install
-   yarn dev
+   yarn run install-all
    ```
 
-3. **Proxy Server**
+3. **Run the Application**
+
+   You can start all services (Frontend, Proxy Server, and Snap) with the following command:
 
    ```bash
-   cd backend
-   yarn install
-   node server.js
-   ```
-
-4. **Snap**
-   ```bash
-   cd snap
-   yarn install
-   yarn start
+   yarn watch
    ```
 
 ## 🚀 Running the App
 
-After following the setup steps, your app should be running on:
+This will run:
 
 - Frontend: http://localhost:3000
 - Snap: http://localhost:8080
