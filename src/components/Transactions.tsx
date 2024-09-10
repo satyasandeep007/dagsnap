@@ -180,8 +180,8 @@ const Transactions: React.FC<TransactionsProps> = ({
                     y2="48"
                     gradientUnits="userSpaceOnUse"
                   >
-                    <stop stop-color="#E1E6F0" />
-                    <stop offset="1" stop-color="#CED3E0" />
+                    <stop stopColor="#E1E6F0" />
+                    <stop offset="1" stopColor="#CED3E0" />
                   </linearGradient>
                 </defs>
               </svg>

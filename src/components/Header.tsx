@@ -2,7 +2,7 @@ import React from 'react';
 import logo from '@/images/dag.png';
 import Image from 'next/image';
 
-const Header = ({ userAddress }: { userAddress: any }) => {
+const Header = () => {
   return (
     <header className="flex justify-between items-center mb-6  border-indigo-200/50 border-b pb-4">
       <div className="flex items-center space-x-2 ">

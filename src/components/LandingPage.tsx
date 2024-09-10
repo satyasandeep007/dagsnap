@@ -20,8 +20,7 @@ const LandingPage = () => {
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
   const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
-  const { userAddress, balance, transactions, setInstalledSnap, setUserAddress, setBalance, setTransactions }: any =
-    useMetaMaskContext();
+  const { userAddress, balance, transactions }: any = useMetaMaskContext();
   const { getAccount, installedSnap, getBalance, getTransactions } = useMetaMask();
   const [marketPrice, setMarketPrice] = useState(0);
   const { disconnectSnap } = useRequestSnap();
@@ -46,8 +45,6 @@ const LandingPage = () => {
     setIsReceiveModalOpen(!isReceiveModalOpen);
   };
 
-  console.log(userAddress, 'userAddress');
-
   useEffect(() => {
     if (userAddress) {
       getBalance();
@@ -60,15 +57,19 @@ const LandingPage = () => {
   }, []);
 
   useEffect(() => {
-    getCoinData('constellation-labs')
-      .then((response) => response.json())
-      .then((data) => {
-        setMarketPrice(data.market_data.current_price.usd);
-      });
-  }, []);
+    const fetchMarketPrice = async () => {
+      if (userAddress) {
+        const price: any = await getCoinData('constellation-labs');
+        setMarketPrice(price);
+      }
+    };
+
+    fetchMarketPrice();
+  }, [userAddress]);
 
   const handleDisconnectSnap = () => {
     disconnectSnap();
+    localStorage.clear();
   };
 
   return (
@@ -76,10 +77,15 @@ const LandingPage = () => {
       <div className="max-w-6xl m-auto bg-white w-4/6 rounded-2xl shadow-sm flex  h-4/5  ">
         {/* LEFT SIDE */}
         <div className="h-full w-3/5 p-6 flex flex-col justify-between">
-          <Header userAddress={userAddress} />
-          <BalanceCard toggleSendModal={toggleSendModal} toggleReceiveModal={toggleReceiveModal} balance={balance} />
+          <Header />
+          <BalanceCard
+            toggleSendModal={toggleSendModal}
+            toggleReceiveModal={toggleReceiveModal}
+            balance={balance}
+            marketPrice={marketPrice}
+          />
           <Portfolio />
-          <MarketPrice />
+          <MarketPrice marketPrice={marketPrice} />
         </div>
 
         {/* RIGHT SIDE */}

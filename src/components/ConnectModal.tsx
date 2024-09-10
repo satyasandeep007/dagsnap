@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { isLocalSnap, shouldDisplayReconnectButton } from '@/utils';
 import { defaultSnapOrigin } from '@/config';
 import { useMetaMask } from '@/hooks/useMetaMask';
-import { useInvokeSnap } from '@/hooks/useInvokeSnap';
 import { useMetaMaskContext } from '@/hooks/MetamaskContext';
 
 interface ConnectModalProps {
@@ -12,13 +11,11 @@ interface ConnectModalProps {
 }
 
 const ConnectModal: React.FC<ConnectModalProps> = ({ onClose }) => {
-  const { requestSnap, disconnectSnap } = useRequestSnap();
+  const { requestSnap } = useRequestSnap();
 
-  const { isFlask, snapsDetected, installedSnap, getAccount } = useMetaMask();
+  const { snapsDetected, installedSnap, getAccount } = useMetaMask();
   const [currentStep, setCurrentStep] = useState(1);
-  const { userAddress, setUserAddress } = useMetaMaskContext();
-
-  const invokeSnap = useInvokeSnap(defaultSnapOrigin);
+  const { userAddress } = useMetaMaskContext();
 
   const isMetaMaskReady = isLocalSnap(defaultSnapOrigin) ? true : snapsDetected;
 

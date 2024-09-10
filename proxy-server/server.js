@@ -75,6 +75,20 @@ app.post('/api/dag/send', async (req, res) => {
   }
 });
 
+app.get('/api/coin/:coinid', async (req, res) => {
+  console.log('getCoinData', req.params.coinid);
+  const coinid = req.params.coinid;
+  const coinData = await getCoinData(coinid);
+  res.json(coinData);
+});
+
+const getCoinData = async (coinid) => {
+  const url = `https://api.coingecko.com/api/v3/coins/${coinid}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=true&sparkline=false`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+};
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

@@ -1,5 +1,7 @@
 export const getCoinData = async (coinid: any) => {
-  const url = `https://api.coingecko.com/api/v3/coins/${coinid}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=true&sparkline=false`;
-
-  return await fetch(url);
+  const url = `http://localhost:9090/api/coin/${coinid}`;
+  const response = await fetch(url);
+  console.log(response, 'response');
+  const data = await response.json();
+  return data.market_data.current_price.usd;
 };
