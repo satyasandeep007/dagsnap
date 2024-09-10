@@ -19,6 +19,8 @@ interface TransactionsProps {
   toggleConnectModal: () => void;
   transactions: Transaction[];
   userAddress: string;
+  installedSnap: any;
+  handleDisconnectSnap: any;
 }
 
 const Transactions: React.FC<TransactionsProps> = ({
@@ -29,6 +31,8 @@ const Transactions: React.FC<TransactionsProps> = ({
   toggleConnectModal,
   transactions,
   userAddress,
+  installedSnap,
+  handleDisconnectSnap,
 }) => {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -37,6 +41,15 @@ const Transactions: React.FC<TransactionsProps> = ({
 
   const formatAmount = (amount: number) => {
     return (amount / 100000000).toFixed(2) + ' DAG';
+  };
+
+  const handleConnectSnap = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (installedSnap) {
+      handleDisconnectSnap();
+    } else {
+      toggleConnectModal();
+    }
   };
 
   return (
@@ -107,12 +120,8 @@ const Transactions: React.FC<TransactionsProps> = ({
               </a>
 
               <div className="border-t border-gray-100 my-1"></div>
-              <a
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  toggleConnectModal();
-                }}
+              <button
+                onClick={handleConnectSnap}
                 className="px-4 py-3 text-sm text-green-600 hover:bg-gray-100 flex items-center"
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -121,8 +130,8 @@ const Transactions: React.FC<TransactionsProps> = ({
                     fill="#21A35D"
                   ></path>
                 </svg>
-                <span className="ml-2">Connect</span>
-              </a>
+                <span className="ml-2"> {installedSnap ? 'Disconnect' : 'Connect'}</span>
+              </button>
             </div>
           )}
         </div>

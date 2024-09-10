@@ -11,12 +11,9 @@ import { useRequest } from './useRequest';
  * @param version - The requested version.
  * @returns The `wallet_requestSnaps` wrapper.
  */
-export const useRequestSnap = (
-  snapId = defaultSnapOrigin,
-  version?: string,
-) => {
+export const useRequestSnap = (snapId = defaultSnapOrigin, version?: string) => {
   const request = useRequest();
-  const { setInstalledSnap } = useMetaMaskContext();
+  const { setInstalledSnap, setUserAddress, setBalance, setTransactions } = useMetaMaskContext();
 
   /**
    * Request the Snap.
@@ -33,5 +30,20 @@ export const useRequestSnap = (
     setInstalledSnap(snaps?.[snapId] ?? null);
   };
 
-  return requestSnap;
+  const disconnectSnap = async () => {
+    // await request({
+    //   method: 'wallet_revokePermissions',
+    //   params: {
+    //     [snapId]: {}, // You may need to adjust this based on your Snap's requirements
+    //   },
+    // });
+
+    // Optionally clear the installedSnap context variable
+    setInstalledSnap(null);
+    setUserAddress(null);
+    setBalance(null);
+    setTransactions([]);
+  };
+
+  return { requestSnap, disconnectSnap };
 };

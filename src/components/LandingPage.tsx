@@ -12,6 +12,7 @@ import Transactions from './Transactions';
 import { useMetaMaskContext } from '@/hooks/MetamaskContext';
 import { useMetaMask } from '@/hooks/useMetaMask';
 import { getCoinData } from '@/utils/api';
+import { useRequestSnap } from '@/hooks/useRequestSnap';
 
 const LandingPage = () => {
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
@@ -19,9 +20,11 @@ const LandingPage = () => {
   const [isConnectModalOpen, setIsConnectModalOpen] = useState(false);
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
   const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
-  const { userAddress, balance, transactions }: any = useMetaMaskContext();
-  const { getAccount, getBalance, getTransactions } = useMetaMask();
+  const { userAddress, balance, transactions, setInstalledSnap, setUserAddress, setBalance, setTransactions }: any =
+    useMetaMaskContext();
+  const { getAccount, installedSnap, getBalance, getTransactions } = useMetaMask();
   const [marketPrice, setMarketPrice] = useState(0);
+  const { disconnectSnap } = useRequestSnap();
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -43,9 +46,13 @@ const LandingPage = () => {
     setIsReceiveModalOpen(!isReceiveModalOpen);
   };
 
+  console.log(userAddress, 'userAddress');
+
   useEffect(() => {
-    getBalance();
-    getTransactions();
+    if (userAddress) {
+      getBalance();
+      getTransactions();
+    }
   }, [userAddress]);
 
   useEffect(() => {
@@ -59,6 +66,10 @@ const LandingPage = () => {
         setMarketPrice(data.market_data.current_price.usd);
       });
   }, []);
+
+  const handleDisconnectSnap = () => {
+    disconnectSnap();
+  };
 
   return (
     <div className="bg-indigo-50 p-6 h-screen flex justify-center items-center flex-col">
@@ -81,6 +92,8 @@ const LandingPage = () => {
             toggleConnectModal={toggleConnectModal}
             transactions={transactions}
             userAddress={userAddress}
+            installedSnap={installedSnap}
+            handleDisconnectSnap={handleDisconnectSnap}
           />
         </div>
       </div>

@@ -12,7 +12,7 @@ interface ConnectModalProps {
 }
 
 const ConnectModal: React.FC<ConnectModalProps> = ({ onClose }) => {
-  const requestSnap = useRequestSnap();
+  const { requestSnap, disconnectSnap } = useRequestSnap();
 
   const { isFlask, snapsDetected, installedSnap, getAccount } = useMetaMask();
   const [currentStep, setCurrentStep] = useState(1);
