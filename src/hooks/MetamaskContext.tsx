@@ -17,6 +17,8 @@ type MetaMaskContextType = {
   setBalance: (balance: string | null) => void;
   transactions: any[];
   setTransactions: (transactions: any[]) => void;
+  metagraphBalance: string | null;
+  setMetagraphBalance: (balance: string | null) => void;
 };
 
 export const MetaMaskContext = createContext<MetaMaskContextType>({
@@ -26,6 +28,7 @@ export const MetaMaskContext = createContext<MetaMaskContextType>({
   userAddress: null,
   balance: null,
   transactions: [],
+  metagraphBalance: null,
   setUserAddress: () => {
     /* no-op */
   },
@@ -39,6 +42,9 @@ export const MetaMaskContext = createContext<MetaMaskContextType>({
     /* no-op */
   },
   setTransactions: () => {
+    /* no-op */
+  },
+  setMetagraphBalance: () => {
     /* no-op */
   },
 });
@@ -57,6 +63,7 @@ export const MetaMaskProvider = ({ children }: { children: ReactNode }) => {
   const [userAddress, setUserAddress] = useState<string | null>(null);
   const [balance, setBalance] = useState<string | null>(null);
   const [transactions, setTransactions] = useState<any[]>([]);
+  const [metagraphBalance, setMetagraphBalance] = useState<string | null>(null);
 
   useEffect(() => {
     getSnapsProvider().then(setProvider).catch(console.error);
@@ -90,6 +97,8 @@ export const MetaMaskProvider = ({ children }: { children: ReactNode }) => {
         setBalance,
         transactions,
         setTransactions,
+        metagraphBalance,
+        setMetagraphBalance,
       }}
     >
       {children}

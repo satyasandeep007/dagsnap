@@ -39,6 +39,29 @@ const sendDagTransaction = async (toAddress, amount, account) => {
   return tx;
 };
 
+const getMetagraphBalanceViaAccount = async (account) => {
+  dag4.account.connect({
+    networkVersion: '2.0',
+    testnet: true,
+  });
+  dag4.account.loginPrivateKey(account.replace('0x', ''));
+  console.log(account, 'account');
+  const metagraphClient = dag4.account.createMetagraphTokenClient({
+    l0Url: 'https://l0-lb-testnet.constellationnetwork.io/',
+    l1Url: 'https://l1-lb-testnet.constellationnetwork.io/',
+  });
+  const balance = await metagraphClient.getBalance();
+  console.log(balance, 'balance');
+  return balance;
+};
+
+const getMetagraphBalance = async (address) => {
+  const response = await fetch(`https://dyzt5u1o3ld0z.cloudfront.net/testnet/addresses/${address}/metagraphs`);
+  const data = await response.json();
+  console.log(data, 'data');
+  return data.data;
+};
+
 app.get('/api/dag', async (req, res) => {
   const address = req.query.address;
 
@@ -55,6 +78,23 @@ app.get('/api/dag', async (req, res) => {
     });
   } catch (error) {
     console.error('Error fetching DAG data:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.post('/api/metagraph/balance', async (req, res) => {
+  const { address } = req.body;
+  console.log(address, 'address');
+  if (!address) {
+    return res.status(400).json({ error: 'address is required' });
+  }
+
+  try {
+    const balance = await getMetagraphBalance(address);
+    console.log(balance, 'balance');
+    res.json({ balance });
+  } catch (error) {
+    console.error('Error fetching Metagraph data:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });

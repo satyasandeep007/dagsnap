@@ -3,6 +3,7 @@ import { Box, Text, Bold } from '@metamask/snaps-sdk/jsx';
 import {
   getAddress,
   getBalance,
+  getMetagraphBalance,
   getTransactions,
   makeTransaction,
 } from './rpc';
@@ -55,6 +56,10 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
     case 'dag_makeTransaction':
       // Check if the params are valid
       return makeTransaction(request.params);
+
+    case 'dag_getMetagraphBalance':
+      return getMetagraphBalance();
+
     default:
       throw new Error('Method not found.');
   }

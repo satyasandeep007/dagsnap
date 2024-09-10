@@ -6,6 +6,7 @@ import {
   getDagTransactionsApi,
   getDagBalanceApi,
   sendDagTransaction,
+  getMetagraphBalanceApi,
 } from './util';
 
 export const getAddress = async (): Promise<string> => {
@@ -41,6 +42,16 @@ export const getBalance = async (): Promise<number> => {
   dag4.account.loginPublicKey(myAddress);
   // return dag4.account.getBalance();
   return getDagBalanceApi(myAddress);
+};
+
+export const getMetagraphBalance = async (): Promise<any> => {
+  await dag4.account.connect({
+    networkVersion: '2.0',
+    testnet: true,
+  });
+  const myAddress = await getAddress();
+  dag4.account.loginPublicKey(myAddress);
+  return getMetagraphBalanceApi(myAddress);
 };
 
 export const makeTransaction = async ({

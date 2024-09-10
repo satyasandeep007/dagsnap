@@ -43,9 +43,9 @@ const nftData = [
 ];
 
 export default function Portfolio() {
-  const [activeTab, setActiveTab] = useState('Tokens');
+  const [activeTab, setActiveTab] = useState('Metagraphs');
 
-  const tabs = ['Tokens'];
+  const tabs = ['Metagraphs'];
 
   return (
     <div className="w-full  mx-auto py-4  flex-grow flex flex-col overflow-hidden">
@@ -66,7 +66,7 @@ export default function Portfolio() {
       </div>
 
       <div className="pt-4 flex-grow overflow-y-auto">
-        {activeTab === 'Tokens' && (
+        {activeTab === 'Metagraphs' && (
           <div className="h-full overflow-y-auto px-2">
             {nftData.map((item, index) => (
               <NFTItem key={index} {...item} lastItem={index === nftData.length - 1} />
