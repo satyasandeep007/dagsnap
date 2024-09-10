@@ -112,6 +112,7 @@ const LandingPage = () => {
             handleDisconnectSnap={handleDisconnectSnap}
             handleRefresh={handleRefresh}
             isRefreshing={isRefreshing}
+            marketPrice={marketPrice}
           />
         </div>
       </div>

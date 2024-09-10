@@ -23,6 +23,7 @@ interface TransactionsProps {
   handleDisconnectSnap: any;
   handleRefresh: () => void;
   isRefreshing: boolean;
+  marketPrice: number;
 }
 
 const Transactions: React.FC<TransactionsProps> = ({
@@ -37,6 +38,7 @@ const Transactions: React.FC<TransactionsProps> = ({
   handleDisconnectSnap,
   handleRefresh,
   isRefreshing,
+  marketPrice,
 }) => {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -44,7 +46,7 @@ const Transactions: React.FC<TransactionsProps> = ({
   };
 
   const formatAmount = (amount: number) => {
-    return (amount / 100000000).toFixed(2) + ' DAG';
+    return (amount / 100000000).toFixed(0);
   };
 
   const handleConnectSnap = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -156,13 +158,16 @@ const Transactions: React.FC<TransactionsProps> = ({
                     {transaction.source === userAddress ? '↑' : '↓'}
                   </div>
                   <div>
-                    <p className="font-medium">{transaction.source === userAddress ? 'Sent DAG' : 'Received DAG'}</p>
+                    <p className="font-medium">{transaction.source === userAddress ? 'OUT' : 'IN'}</p>
                     <p className="text-sm text-gray-500">{formatDate(transaction.timestamp)}</p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="font-medium">{formatAmount(transaction.amount)}</p>
-                  <p className="text-sm text-gray-500">Fee: {transaction.fee} DAG</p>
+                  <p className="font-medium">{formatAmount(transaction.amount)} DAG</p>
+                  <p className="text-sm text-gray-500">
+                    {' '}
+                    (${parseFloat((parseFloat(formatAmount(transaction.amount)) * marketPrice).toFixed(4))} USD)
+                  </p>
                 </div>
               </div>
             ))
