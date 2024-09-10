@@ -114,7 +114,7 @@ const ConnectModal: React.FC<ConnectModalProps> = ({ onClose }) => {
           <div>
             <h2 className="text-xl font-bold text-center">Connect to Dagsnap : MetaMask</h2>
 
-            <p className="text-xl font-bold mb-6 text-center">DAG Snap</p>
+            <p className="text-xl font-bold mb-6 text-center">Dagsnap</p>
             <p className="text-gray-400 mt-6 mb-6 text-center text-sm font-medium mx-auto max-w-[75%]">
               If you do not have DAGsnap installed, you will be prompted to do so.
             </p>
@@ -123,9 +123,16 @@ const ConnectModal: React.FC<ConnectModalProps> = ({ onClose }) => {
               href="https://docs.metamask.io/snaps/#what-is-snaps"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-500 hover:underline mt-6 mb-24 text-sm block text-center"
+              className="text-[#5785EF] hover:underline mt-6 mb-24 text-sm flex items-center justify-center text-center font-medium space-x-2"
             >
-              What is Snaps &gt;
+              <span> What is Snaps</span>
+              <svg width="5" height="9" viewBox="0 0 5 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M0.535645 1L3.36407 3.82843C3.7546 4.21895 3.7546 4.85212 3.36407 5.24264L0.535646 8.07107"
+                  stroke="#5785EF"
+                  stroke-linecap="round"
+                />
+              </svg>
             </a>
 
             <button
