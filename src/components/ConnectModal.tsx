@@ -115,7 +115,7 @@ const ConnectModal: React.FC<ConnectModalProps> = ({ onClose }) => {
             <h2 className="text-xl font-bold text-center">Connect to Dagsnap : MetaMask</h2>
 
             <p className="text-xl font-bold mb-6 text-center">DAG Snap</p>
-            <p className="text-gray-400 mt-6 mb-24 text-center text-sm font-medium mx-auto max-w-[75%]">
+            <p className="text-gray-400 mt-6 mb-6 text-center text-sm font-medium mx-auto max-w-[75%]">
               If you do not have DAGsnap installed, you will be prompted to do so.
             </p>
 
