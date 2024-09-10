@@ -1,9 +1,11 @@
-# DAG Snap
+# DAGSNAP
 
 ## 🚀 Quick Start
 
-**GitHub Repo**: [DAGSnap](https://github.com/satyasandeep007/DAGSnap)  
+**GitHub Repo**: [dagsnap](https://github.com/satyasandeep007/dagsnap)  
 **Demo Video**: [Watch on YouTube](https://www.youtube.com)
+
+![DAG Snap Demo](./demo/app.png)
 
 ## 🛠️ Tech Stack
 
@@ -20,8 +22,8 @@
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/satyasandeep007/DAGSnap
-   cd DAGSnap
+   git clone https://github.com/satyasandeep007/dagsnap
+   cd dagsnap
    ```
 
 2. **Install All Dependencies**
