@@ -13,7 +13,6 @@
     "@metamask/providers": "^17.2.0",
     "@metamask/snaps-types": "^0.29.0",
     "@metamask/snaps-ui": "^0.29.0",
-    "@next/font": "13.1.6",
     "@stardust-collective/dag4": "^2.2.2",
     "@types/node": "18.13.0",
     "@types/react": "18.0.27",
