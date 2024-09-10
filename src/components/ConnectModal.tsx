@@ -11,8 +11,7 @@ interface ConnectModalProps {
   onClose: () => void;
 }
 
-const ConnectModal: React.FC<ConnectModalProps> = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
+const ConnectModal: React.FC<ConnectModalProps> = ({ onClose }) => {
   const requestSnap = useRequestSnap();
 
   const { isFlask, snapsDetected, installedSnap, getAccount } = useMetaMask();

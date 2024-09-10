@@ -76,7 +76,7 @@ const LandingPage = () => {
       </div>
       <div className="text-center text-gray-400 text-sm mt-4">Powered by MetaMask Snaps</div>
 
-      <ConnectModal isOpen={isConnectModalOpen} onClose={toggleConnectModal} />
+      {isConnectModalOpen && <ConnectModal isOpen={isConnectModalOpen} onClose={toggleConnectModal} />}
 
       <SendModal isOpen={isSendModalOpen} onClose={toggleSendModal} />
 
