@@ -25,6 +25,16 @@ const LandingPage = () => {
   const [marketPrice, setMarketPrice] = useState(0);
   const { disconnectSnap } = useRequestSnap();
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const handleRefresh = () => {
+    setIsRefreshing(true);
+    setTimeout(() => {
+      setIsRefreshing(false);
+    }, 1000);
+    toggleConnectModal();
+  };
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -96,10 +106,12 @@ const LandingPage = () => {
             toggleMenu={toggleMenu}
             isMenuOpen={isMenuOpen}
             toggleConnectModal={toggleConnectModal}
-            transactions={transactions}
+            transactions={[]}
             userAddress={userAddress}
             installedSnap={installedSnap}
             handleDisconnectSnap={handleDisconnectSnap}
+            handleRefresh={handleRefresh}
+            isRefreshing={isRefreshing}
           />
         </div>
       </div>
