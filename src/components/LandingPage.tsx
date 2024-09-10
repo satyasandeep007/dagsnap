@@ -11,7 +11,7 @@ import ReceiveModal from './ReceiveModal';
 import Transactions from './Transactions';
 import { useMetaMaskContext } from '@/hooks/MetamaskContext';
 import { useMetaMask } from '@/hooks/useMetaMask';
-import { getCoinData } from '@/utils/dag/api';
+import { getCoinData } from '@/utils/api';
 
 const LandingPage = () => {
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
