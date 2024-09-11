@@ -19,6 +19,11 @@ interface TransactionsProps {
   toggleConnectModal: () => void;
   transactions: Transaction[];
   userAddress: string;
+  installedSnap: any;
+  handleDisconnectSnap: any;
+  handleRefresh: () => void;
+  isRefreshing: boolean;
+  marketPrice: number;
 }
 
 const Transactions: React.FC<TransactionsProps> = ({
@@ -29,6 +34,11 @@ const Transactions: React.FC<TransactionsProps> = ({
   toggleConnectModal,
   transactions,
   userAddress,
+  installedSnap,
+  handleDisconnectSnap,
+  handleRefresh,
+  isRefreshing,
+  marketPrice,
 }) => {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -36,12 +46,23 @@ const Transactions: React.FC<TransactionsProps> = ({
   };
 
   const formatAmount = (amount: number) => {
-    return (amount / 100000000).toFixed(2) + ' DAG';
+    return (amount / 100000000).toFixed(0);
+  };
+
+  const handleConnectSnap = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (installedSnap) {
+      handleDisconnectSnap();
+    } else {
+      toggleConnectModal();
+    }
   };
 
   return (
     <div className="w-full h-full bg-slate-50	p-3 flex flex-col justify-between rounded-r-2xl ">
-      <div className="flex justify-between items-center py-3">
+      <div className="flex justify-end items-center py-3 space-x-2">
+        {' '}
+        {/* Use space-x-2 for spacing */}
         <div className="relative">
           <button
             onClick={toggleDropdown}
@@ -71,19 +92,17 @@ const Transactions: React.FC<TransactionsProps> = ({
             </div>
           )}
         </div>
-
         <button
           onClick={() => window.open(`https://testnet.dagexplorer.io/address/${userAddress}`, '_blank')}
-          className="text-blue bg-white px-4 py-4 text-sm gap-2 rounded-2xl flex items-center border border-gray-200"
+          className="text-blue bg-white px-4 py-4 text-sm rounded-2xl flex items-center border border-gray-200"
         >
-          <span>DAGExplorer</span>
-          <Image src={logo} alt="Company Logo" width={20} height={20} className="object-contain max-w-full" />
+          <span className="text-md font-semibold mr-2">DAG Explorer</span> {/* Add margin to the right */}
+          <Image src={logo} alt="Company Logo" width={20} height={20} className="object-contain" />
         </button>
-
         <div className="relative">
           <button
             onClick={toggleMenu}
-            className="text-gray-600 bg-white px-4 py-4 rounded-2xl text-sm flex items-center ml-4 border border-gray-200"
+            className="text-gray-600 bg-white px-4 py-4 rounded-2xl text-sm flex items-center border border-gray-200"
           >
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M14 13V15H4V13H14ZM16 8V10H2V8H16ZM14 3V5H4V3H14Z" fill="#111214" />
@@ -107,12 +126,8 @@ const Transactions: React.FC<TransactionsProps> = ({
               </a>
 
               <div className="border-t border-gray-100 my-1"></div>
-              <a
-                href="#"
-                onClick={(e) => {
-                  e.preventDefault();
-                  toggleConnectModal();
-                }}
+              <button
+                onClick={handleConnectSnap}
                 className="px-4 py-3 text-sm text-green-600 hover:bg-gray-100 flex items-center"
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -121,8 +136,8 @@ const Transactions: React.FC<TransactionsProps> = ({
                     fill="#21A35D"
                   ></path>
                 </svg>
-                <span className="ml-2">Connect</span>
-              </a>
+                <span className="ml-2"> {installedSnap ? 'Disconnect' : 'Connect'}</span>
+              </button>
             </div>
           )}
         </div>
@@ -133,23 +148,62 @@ const Transactions: React.FC<TransactionsProps> = ({
         <div className="h-full">
           {transactions && transactions.length > 0 ? (
             transactions.map((transaction, index) => (
-              <div key={transaction.hash} className="flex justify-between items-center mb-3 p-2 rounded-lg shadow-sm">
-                <div className="flex items-center">
-                  <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
-                      transaction.source === userAddress ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'
-                    }`}
-                  >
-                    {transaction.source === userAddress ? '↑' : '↓'}
+              <div
+                key={transaction.hash}
+                className={`flex flex-col mb-4 p-4 rounded-lg shadow-sm transition-transform transform hover:scale-105  `}
+              >
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center">
+                    <div
+                      className={`w-8 h-8 rounded-full flex items-center justify-center mr-3 ${
+                        transaction.source === userAddress ? 'bg-red-200' : 'bg-green-200'
+                      }`}
+                    >
+                      {transaction.source === userAddress ? (
+                        <svg width="34" height="33" viewBox="0 0 34 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <ellipse cx="16.8183" cy="16.9702" rx="16.6996" ry="16" fill="#FFEDEC" />
+                          <g clip-path="url(#clip0_0_1)">
+                            <path
+                              d="M13.6869 9.97095V11.9709L20.565 11.9709L8.46826 23.5609L9.93991 24.9709L22.0367 13.3809V19.9709H24.1241V9.97095L13.6869 9.97095Z"
+                              fill="#E1473D"
+                            />
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_0_1">
+                              <rect width="25.0494" height="24" fill="white" transform="translate(4.29346 4.97095)" />
+                            </clipPath>
+                          </defs>
+                        </svg>
+                      ) : (
+                        <svg width="34" height="33" viewBox="0 0 34 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <ellipse cx="16.9886" cy="16.9702" rx="16.8601" ry="16" fill="#E2FEE8" />
+                          <g clip-path="url(#clip0_0_1)">
+                            <path
+                              d="M25.4182 10.3805L23.9324 8.97046L11.7193 20.5605V13.9705H9.61182V23.9705H20.1494V21.9705H13.2051L25.4182 10.3805Z"
+                              fill="#4AD768"
+                            />
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_0_1">
+                              <rect width="25.2902" height="24" fill="white" transform="translate(4.34326 4.97046)" />
+                            </clipPath>
+                          </defs>
+                        </svg>
+                      )}
+                    </div>
+                    <div>
+                      <p className="font-medium  ">
+                        {transaction.source === userAddress ? 'Recieved DAG' : 'Sent DAG'}
+                      </p>
+                      <p className="text-sm text-gray-400">{formatDate(transaction.timestamp)}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-medium">{transaction.source === userAddress ? 'Sent DAG' : 'Received DAG'}</p>
-                    <p className="text-sm text-gray-500">{formatDate(transaction.timestamp)}</p>
+                  <div className="text-right">
+                    <p className="font-medium ">
+                      US${(parseFloat(formatAmount(transaction.amount)) * marketPrice).toFixed(3)}
+                    </p>
+                    <p className="text-sm text-gray-400">{formatAmount(transaction.amount)} DAG</p>
                   </div>
-                </div>
-                <div className="text-right">
-                  <p className="font-medium">{formatAmount(transaction.amount)}</p>
-                  <p className="text-sm text-gray-500">Fee: {transaction.fee} DAG</p>
                 </div>
               </div>
             ))
@@ -171,14 +225,14 @@ const Transactions: React.FC<TransactionsProps> = ({
                     y2="48"
                     gradientUnits="userSpaceOnUse"
                   >
-                    <stop stop-color="#E1E6F0" />
-                    <stop offset="1" stop-color="#CED3E0" />
+                    <stop stopColor="#E1E6F0" />
+                    <stop offset="1" stopColor="#CED3E0" />
                   </linearGradient>
                 </defs>
               </svg>
 
               <div className="flex justify-center gap-2 items-center">
-                <div className="text-center text-gray-400 h-full font-thin">no transactions</div>
+                <div className="text-center text-gray-400 h-full font-thin">No transactions</div>
                 <svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     fillRule="evenodd"
@@ -193,14 +247,35 @@ const Transactions: React.FC<TransactionsProps> = ({
         </div>
       </div>
 
-      <div className="py-2">
+      <div className="py-2 flex justify-between items-center">
         <a
-          href="https://testnet.dagexplorer.io/"
+          href={`https://testnet.dagexplorer.io/address/${userAddress}`}
+          target="_blank" // Open in a new tab
+          rel="noopener noreferrer" // Security best practice
           className="flex justify-right gap-2 items-center text-sm text-gray-600 font-normal"
         >
           <span>View all transactions</span>
           <span className="text-blue-500">→</span>
         </a>
+        <button onClick={handleRefresh} className="flex items-center">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style={{
+              transition: 'transform 0.3s',
+              transform: isRefreshing ? 'rotate(360deg)' : 'rotate(0deg)',
+              animation: isRefreshing ? 'spin 1s linear infinite' : 'none', // Spin animation
+            }}
+          >
+            <path
+              d="M4.00812 3.27063C5.14222 2.28791 6.59312 1.74791 8.09375 1.75001C11.5457 1.75001 14.3438 4.54813 14.3438 8.00001C14.3438 9.335 13.925 10.5725 13.2125 11.5875L11.2188 8.00001H13.0938C13.0938 7.01977 12.8057 6.06113 12.2654 5.24329C11.7251 4.42545 10.9562 3.78448 10.0545 3.40008C9.15275 3.01568 8.15795 2.90481 7.19373 3.08126C6.2295 3.25771 5.33841 3.71369 4.63125 4.39251L4.00812 3.27063ZM12.1794 12.7294C11.0452 13.7121 9.59442 14.2521 8.09375 14.25C4.64187 14.25 1.84375 11.4519 1.84375 8.00001C1.84375 6.66501 2.2625 5.42751 2.975 4.41251L4.96875 8.00001H3.09375C3.09367 8.98025 3.38172 9.93891 3.92208 10.7567C4.46245 11.5746 5.23129 12.2155 6.13302 12.5999C7.03473 12.9843 8.02955 13.0952 8.99375 12.9187C9.958 12.7423 10.8491 12.2863 11.5562 11.6075L12.1794 12.7294Z"
+              fill="#656D85"
+            />
+          </svg>
+        </button>
       </div>
     </div>
   );

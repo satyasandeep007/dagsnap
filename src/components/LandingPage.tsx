@@ -12,6 +12,7 @@ import Transactions from './Transactions';
 import { useMetaMaskContext } from '@/hooks/MetamaskContext';
 import { useMetaMask } from '@/hooks/useMetaMask';
 import { getCoinData } from '@/utils/api';
+import { useRequestSnap } from '@/hooks/useRequestSnap';
 
 const LandingPage = () => {
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
@@ -20,8 +21,19 @@ const LandingPage = () => {
   const [isSendModalOpen, setIsSendModalOpen] = useState(false);
   const [isReceiveModalOpen, setIsReceiveModalOpen] = useState(false);
   const { userAddress, balance, transactions }: any = useMetaMaskContext();
-  const { getAccount, getBalance, getTransactions } = useMetaMask();
+  const { getAccount, installedSnap, getBalance, getTransactions } = useMetaMask();
   const [marketPrice, setMarketPrice] = useState(0);
+  const { disconnectSnap } = useRequestSnap();
+
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const handleRefresh = () => {
+    setIsRefreshing(true);
+    setTimeout(() => {
+      setIsRefreshing(false);
+    }, 1000);
+    // toggleConnectModal();
+  };
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -44,8 +56,10 @@ const LandingPage = () => {
   };
 
   useEffect(() => {
-    getBalance();
-    getTransactions();
+    if (userAddress) {
+      getBalance();
+      getTransactions();
+    }
   }, [userAddress]);
 
   useEffect(() => {
@@ -53,22 +67,35 @@ const LandingPage = () => {
   }, []);
 
   useEffect(() => {
-    getCoinData('constellation-labs')
-      .then((response) => response.json())
-      .then((data) => {
-        setMarketPrice(data.market_data.current_price.usd);
-      });
-  }, []);
+    const fetchMarketPrice = async () => {
+      if (userAddress) {
+        const price: any = await getCoinData('constellation-labs');
+        setMarketPrice(price);
+      }
+    };
+
+    fetchMarketPrice();
+  }, [userAddress]);
+
+  const handleDisconnectSnap = () => {
+    disconnectSnap();
+    localStorage.clear();
+  };
 
   return (
     <div className="bg-indigo-50 p-6 h-screen flex justify-center items-center flex-col">
       <div className="max-w-6xl m-auto bg-white w-4/6 rounded-2xl shadow-sm flex  h-4/5  ">
         {/* LEFT SIDE */}
         <div className="h-full w-3/5 p-6 flex flex-col justify-between">
-          <Header userAddress={userAddress} />
-          <BalanceCard toggleSendModal={toggleSendModal} toggleReceiveModal={toggleReceiveModal} balance={balance} />
+          <Header />
+          <BalanceCard
+            toggleSendModal={toggleSendModal}
+            toggleReceiveModal={toggleReceiveModal}
+            balance={balance}
+            marketPrice={marketPrice}
+          />
           <Portfolio />
-          <MarketPrice />
+          <MarketPrice marketPrice={marketPrice} />
         </div>
 
         {/* RIGHT SIDE */}
@@ -81,6 +108,11 @@ const LandingPage = () => {
             toggleConnectModal={toggleConnectModal}
             transactions={transactions}
             userAddress={userAddress}
+            installedSnap={installedSnap}
+            handleDisconnectSnap={handleDisconnectSnap}
+            handleRefresh={handleRefresh}
+            isRefreshing={isRefreshing}
+            marketPrice={marketPrice}
           />
         </div>
       </div>

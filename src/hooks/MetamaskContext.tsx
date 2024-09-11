@@ -1,4 +1,3 @@
-import type { MetaMaskInpageProvider } from '@metamask/providers';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useState } from 'react';
 
@@ -6,7 +5,7 @@ import type { Snap } from '../types';
 import { getSnapsProvider } from '@/utils';
 
 type MetaMaskContextType = {
-  provider: MetaMaskInpageProvider | null;
+  provider: any | null;
   installedSnap: Snap | null;
   error: Error | null;
   setInstalledSnap: (snap: Snap | null) => void;
@@ -17,6 +16,8 @@ type MetaMaskContextType = {
   setBalance: (balance: string | null) => void;
   transactions: any[];
   setTransactions: (transactions: any[]) => void;
+  metagraphBalance: string | null;
+  setMetagraphBalance: (balance: string | null) => void;
 };
 
 export const MetaMaskContext = createContext<MetaMaskContextType>({
@@ -26,6 +27,7 @@ export const MetaMaskContext = createContext<MetaMaskContextType>({
   userAddress: null,
   balance: null,
   transactions: [],
+  metagraphBalance: null,
   setUserAddress: () => {
     /* no-op */
   },
@@ -41,6 +43,9 @@ export const MetaMaskContext = createContext<MetaMaskContextType>({
   setTransactions: () => {
     /* no-op */
   },
+  setMetagraphBalance: () => {
+    /* no-op */
+  },
 });
 
 /**
@@ -51,12 +56,13 @@ export const MetaMaskContext = createContext<MetaMaskContextType>({
  * @returns JSX.
  */
 export const MetaMaskProvider = ({ children }: { children: ReactNode }) => {
-  const [provider, setProvider] = useState<MetaMaskInpageProvider | null>(null);
+  const [provider, setProvider] = useState<any | null>(null);
   const [installedSnap, setInstalledSnap] = useState<Snap | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [userAddress, setUserAddress] = useState<string | null>(null);
   const [balance, setBalance] = useState<string | null>(null);
   const [transactions, setTransactions] = useState<any[]>([]);
+  const [metagraphBalance, setMetagraphBalance] = useState<string | null>(null);
 
   useEffect(() => {
     getSnapsProvider().then(setProvider).catch(console.error);
@@ -90,6 +96,8 @@ export const MetaMaskProvider = ({ children }: { children: ReactNode }) => {
         setBalance,
         transactions,
         setTransactions,
+        metagraphBalance,
+        setMetagraphBalance,
       }}
     >
       {children}

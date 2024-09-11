@@ -1,25 +1,15 @@
 import Image from 'next/image';
 import logo from '@/images/dag.png';
-import React, { useEffect, useState } from 'react';
-import { getCoinData } from './MarketPrice';
+import React from 'react';
 
 interface BalanceCardProps {
   toggleSendModal: () => void;
   toggleReceiveModal: () => void;
   balance: string | null;
+  marketPrice: number;
 }
 
-const BalanceCard: React.FC<BalanceCardProps> = ({ toggleSendModal, toggleReceiveModal, balance }) => {
-  const [marketPrice, setMarketPrice] = useState(0);
-
-  useEffect(() => {
-    getCoinData('constellation-labs')
-      .then((response) => response.json())
-      .then((data) => {
-        setMarketPrice(data.market_data.current_price.usd);
-      });
-  }, []);
-
+const BalanceCard: React.FC<BalanceCardProps> = ({ toggleSendModal, toggleReceiveModal, balance, marketPrice }) => {
   return (
     <div className="grid grid-cols-5 gap-6 mb-6">
       <div className="col-span-3 bg-gray-900 text-white p-6 rounded-xl relative overflow-hidden h-full">

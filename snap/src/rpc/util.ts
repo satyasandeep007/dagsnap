@@ -64,3 +64,29 @@ export const sendDagTransaction = async (
     throw error;
   }
 };
+
+export const getMetagraphBalanceApi = async (address: string) => {
+  try {
+    const response = await fetch(
+      `http://localhost:9090/api/metagraph/balance`,
+      {
+        method: 'POST',
+        body: JSON.stringify({ address }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log(data, 'rpc');
+    return data?.balance;
+  } catch (error) {
+    console.error('Failed to fetch Metagraph balance:', error);
+    throw error;
+  }
+};

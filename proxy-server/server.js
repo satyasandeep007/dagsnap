@@ -34,9 +34,34 @@ const sendDagTransaction = async (toAddress, amount, account) => {
     networkVersion: '2.0',
     testnet: true,
   });
+  //todo: pass signature instead of private key
   dag4.account.loginPrivateKey(account.replace('0x', ''));
   const tx = await dag4.account.transferDag(toAddress, amount, 0);
   return tx;
+};
+
+const getMetagraphBalanceViaAccount = async (account) => {
+  dag4.account.connect({
+    networkVersion: '2.0',
+    testnet: true,
+  });
+  //todo: pass signature instead of private key
+  dag4.account.loginPrivateKey(account.replace('0x', ''));
+  console.log(account, 'account');
+  const metagraphClient = dag4.account.createMetagraphTokenClient({
+    l0Url: 'https://l0-lb-testnet.constellationnetwork.io/',
+    l1Url: 'https://l1-lb-testnet.constellationnetwork.io/',
+  });
+  const balance = await metagraphClient.getBalance();
+  console.log(balance, 'balance');
+  return balance;
+};
+
+const getMetagraphBalance = async (address) => {
+  const response = await fetch(`https://dyzt5u1o3ld0z.cloudfront.net/testnet/addresses/${address}/metagraphs`);
+  const data = await response.json();
+  console.log(data, 'data');
+  return data.data;
 };
 
 app.get('/api/dag', async (req, res) => {
@@ -59,6 +84,23 @@ app.get('/api/dag', async (req, res) => {
   }
 });
 
+app.post('/api/metagraph/balance', async (req, res) => {
+  const { address } = req.body;
+  console.log(address, 'address');
+  if (!address) {
+    return res.status(400).json({ error: 'address is required' });
+  }
+
+  try {
+    const balance = await getMetagraphBalance(address);
+    console.log(balance, 'balance');
+    res.json({ balance });
+  } catch (error) {
+    console.error('Error fetching Metagraph data:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 app.post('/api/dag/send', async (req, res) => {
   console.log('send', req.body);
   const { toAddress, amount, account } = req.body;
@@ -74,6 +116,20 @@ app.post('/api/dag/send', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+app.get('/api/coin/:coinid', async (req, res) => {
+  console.log('getCoinData', req.params.coinid);
+  const coinid = req.params.coinid;
+  const coinData = await getCoinData(coinid);
+  res.json(coinData);
+});
+
+const getCoinData = async (coinid) => {
+  const url = `https://api.coingecko.com/api/v3/coins/${coinid}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=true&sparkline=false`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+};
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

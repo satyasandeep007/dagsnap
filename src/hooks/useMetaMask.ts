@@ -11,8 +11,16 @@ import { useInvokeSnap } from './useInvokeSnap';
  * @returns The informations.
  */
 export const useMetaMask = () => {
-  const { provider, setInstalledSnap, installedSnap, setUserAddress, setBalance, setTransactions, userAddress } =
-    useMetaMaskContext();
+  const {
+    provider,
+    setInstalledSnap,
+    installedSnap,
+    setUserAddress,
+    setBalance,
+    setTransactions,
+    userAddress,
+    setMetagraphBalance,
+  } = useMetaMaskContext();
   const request = useRequest();
 
   const [isFlask, setIsFlask] = useState(false);
@@ -64,6 +72,15 @@ export const useMetaMask = () => {
     return transactions;
   };
 
+  const getMetagraphBalance = async () => {
+    const metagraphBalance = await invokeSnap({
+      method: 'dag_getMetagraphBalance',
+    });
+    console.log(metagraphBalance, 'metagraphBalance');
+    setMetagraphBalance(metagraphBalance as string);
+    return metagraphBalance;
+  };
+
   useEffect(() => {
     const detect = async () => {
       if (provider) {
@@ -90,11 +107,21 @@ export const useMetaMask = () => {
       if (userAddress) {
         await getBalance();
         await getTransactions();
+        await getMetagraphBalance();
       }
     };
 
     detect().catch(console.error);
   }, [userAddress]);
 
-  return { isFlask, snapsDetected, installedSnap, getSnap, getAccount, getBalance, getTransactions };
+  return {
+    isFlask,
+    snapsDetected,
+    installedSnap,
+    getSnap,
+    getAccount,
+    getBalance,
+    getTransactions,
+    getMetagraphBalance,
+  };
 };

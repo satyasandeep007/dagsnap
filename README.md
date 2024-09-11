@@ -1,9 +1,11 @@
-# DAG Snap
+# DAGSNAP
 
 ## 🚀 Quick Start
 
-**GitHub Repo**: [DAGSnap](https://github.com/satyasandeep007/DAGSnap)  
+**GitHub Repo**: [dagsnap](https://github.com/satyasandeep007/dagsnap)  
 **Demo Video**: [Watch on YouTube](https://www.youtube.com)
+
+![DAG Snap Demo](./demo/app.png)
 
 ## 🛠️ Tech Stack
 
@@ -20,35 +22,29 @@
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/satyasandeep007/DAGSnap
-   cd DAGSnap
+   git clone https://github.com/satyasandeep007/dagsnap
+   cd dagsnap
    ```
 
-2. **Frontend**
+2. **Install All Dependencies**
+
+   Run the following command to install dependencies for the frontend, proxy server, and Snap:
 
    ```bash
-   yarn install
-   yarn dev
+   yarn run install-all
    ```
 
-3. **Proxy Server**
+3. **Run the Application**
+
+   You can start all services (Frontend, Proxy Server, and Snap) with the following command:
 
    ```bash
-   cd backend
-   yarn install
-   node server.js
-   ```
-
-4. **Snap**
-   ```bash
-   cd snap
-   yarn install
-   yarn start
+   yarn watch
    ```
 
 ## 🚀 Running the App
 
-After following the setup steps, your app should be running on:
+This will run:
 
 - Frontend: http://localhost:3000
 - Snap: http://localhost:8080
