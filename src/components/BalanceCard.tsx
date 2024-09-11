@@ -25,7 +25,7 @@ const BalanceCard: React.FC<BalanceCardProps> = ({ toggleSendModal, toggleReceiv
 
       <div className="col-span-2 flex flex-col w-full justify-between gap-5">
         <button
-          className="w-full h-full bg-white border border-gray-200 p-4 rounded-xl flex items-center justify-between"
+          className="w-full h-full bg-white border border-gray-200 p-4 rounded-xl flex items-center justify-between transition-all duration-300 ease-in-out hover:border-blue-500"
           onClick={toggleSendModal}
         >
           <div className="flex items-center text-gray-700">
@@ -56,7 +56,7 @@ const BalanceCard: React.FC<BalanceCardProps> = ({ toggleSendModal, toggleReceiv
           </svg>
         </button>
         <button
-          className="w-full h-full bg-white border border-gray-200 p-4 rounded-xl flex items-center justify-between"
+          className="w-full h-full bg-white border border-gray-200 p-4 rounded-xl flex items-center justify-between transition-all duration-300 ease-in-out hover:border-blue-500"
           onClick={toggleReceiveModal}
         >
           <div className="flex items-center text-gray-700">
