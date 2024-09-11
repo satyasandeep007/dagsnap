@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "allow-scripts": "yarn workspace root allow-scripts",
-    "build": "mm-snap build",
+    "build": "mm-snap build --no-lint",
     "build:clean": "yarn clean && yarn build",
     "clean": "rimraf dist",
     "lint": "yarn lint:eslint && yarn lint:misc --check",
@@ -28,7 +28,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@metamask/snaps-sdk": "^6.1.1",
+    "@metamask/snaps-sdk": "^6.3.0",
     "@stardust-collective/dag4": "^2.2.2",
     "buffer": "^6.0.3",
     "qrcode.react": "^4.0.1"

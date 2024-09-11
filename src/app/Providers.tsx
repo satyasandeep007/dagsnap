@@ -1,7 +1,12 @@
 'use client';
 
-import { MetaMaskProvider } from '@/hooks';
+import React, { ReactNode } from 'react';
+import { MetaMaskProvider } from '@/hooks/MetamaskContext';
 
-export function Providers({ children }: { children: React.ReactNode }) {
+interface ProvidersProps {
+  children: ReactNode;
+}
+
+export default function Providers({ children }: any): any {
   return <MetaMaskProvider>{children}</MetaMaskProvider>;
 }

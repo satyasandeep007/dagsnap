@@ -6,5 +6,5 @@
     "jsxImportSource": "@metamask/snaps-sdk",
     "types": ["@metamask/snaps-sdk"]
   },
-  "include": ["**/*.ts", "**/*.tsx", "../global.d.ts"]
+  "include": ["**/*.ts", "**/*.tsx"]
 }

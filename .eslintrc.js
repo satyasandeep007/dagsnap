@@ -16,15 +16,25 @@ module.exports = {
     {
       files: ['*.ts', '*.tsx'],
       extends: ['@metamask/eslint-config-typescript'],
+      rules: {
+        '@typescript-eslint/no-shadow': [
+          'error',
+          {
+            allow: ['Text', 'Box', 'Bold'],
+          },
+        ],
+      },
     },
 
     {
-      files: ['*.test.ts', '*.test.js'],
+      files: ['*.test.ts', '*.test.js', '*.test.tsx'],
       extends: ['@metamask/eslint-config-jest'],
       rules: {
         '@typescript-eslint/no-shadow': [
           'error',
-          { allow: ['describe', 'expect', 'it'] },
+          {
+            allow: ['describe', 'expect', 'it'],
+          },
         ],
       },
     },

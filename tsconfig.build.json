@@ -1,0 +1,4 @@
+{
+  "extends": "./tsconfig.json",
+  "exclude": ["snap", "proxy-server", "**/*.test.ts", "**/*.spec.ts"]
+}
