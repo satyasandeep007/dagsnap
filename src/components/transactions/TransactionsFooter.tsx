@@ -9,23 +9,40 @@ export const TransactionsFooter = ({
 }) => {
   return (
     <div className="py-3 flex justify-between items-center border-t border-gray-200">
-      <a
-        href={`https://testnet.dagexplorer.io/address/${userAddress}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center text-sm text-blue-600 hover:text-blue-800 transition-colors duration-200"
-      >
-        <span>View all transactions</span>
-        <svg
-          className="w-4 h-4 ml-1"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-        </svg>
-      </a>
+      <div className={`flex items-center ${!userAddress ? 'cursor-not-allowed' : ''}`}>
+        {userAddress ? (
+          <a
+            href={`https://testnet.dagexplorer.io/address/${userAddress}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center text-sm text-blue-600 hover:text-blue-800 transition-colors duration-200"
+          >
+            <span>View all transactions</span>
+            <svg
+              className="w-4 h-4 ml-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </a>
+        ) : (
+          <span className="flex items-center text-sm text-gray-400">
+            View all transactions
+            <svg
+              className="w-4 h-4 ml-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </span>
+        )}
+      </div>
       <button
         onClick={handleRefresh}
         className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
