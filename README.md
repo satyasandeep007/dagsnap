@@ -7,6 +7,22 @@
 
 ![DAG Snap Demo](./demo/dagsnap_main.png)
 
+## 🌟 Inspiration
+
+MetaMask's limited blockchain support inspired us to integrate DAG functionality using MetaMask Snaps, expanding crypto accessibility 🚀.
+
+## 🔧 What it does
+
+**DagSnap** enables users to:
+
+- 🪙 Create a DAG wallet
+- 💳 Buy, send, and manage DAG tokens
+- 📲 Directly interact with DAG through MetaMask
+
+## 🛠️ How we built it
+
+We developed a custom MetaMask Snap and integrated DAG chain into it by using `dag4.js`. We built everything from scratch, as there were no existing Next.js + Snap templates available, so we developed our own template 💡.
+
 ## 🛠️ Tech Stack
 
 - DAG4.js
