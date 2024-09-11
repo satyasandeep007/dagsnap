@@ -5,10 +5,10 @@ import Portfolio from './Portfolio';
 import Header from './Header';
 import BalanceCard from './BalanceCard';
 import MarketPrice from './MarketPrice';
-import ConnectModal from './ConnectModal';
-import SendModal from './SendModal';
-import ReceiveModal from './ReceiveModal';
-import Transactions from './Transactions';
+import ConnectModal from './modals/ConnectModal';
+import SendModal from './modals/SendModal';
+import ReceiveModal from './modals/ReceiveModal';
+import Transactions from './transactions/Transactions';
 import { useMetaMaskContext } from '@/hooks/MetamaskContext';
 import { useMetaMask } from '@/hooks/useMetaMask';
 import { getCoinData } from '@/utils/api';
@@ -32,6 +32,8 @@ const LandingPage = () => {
     setTimeout(() => {
       setIsRefreshing(false);
     }, 1000);
+    getBalance();
+    getTransactions();
     // toggleConnectModal();
   };
 
