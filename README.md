@@ -3,7 +3,7 @@
 ## 🚀 Quick Start
 
 **GitHub Repo**: [dagsnap](https://github.com/satyasandeep007/dagsnap)  
-**Demo Video**: [Watch on YouTube](https://www.youtube.com)
+**Demo Video**: [Watch on YouTube](https://www.youtube.com/watch?v=nQ4N-NUvzWQ)
 
 ![DAG Snap Demo](./demo/dagsnap_thumb.png)
 
