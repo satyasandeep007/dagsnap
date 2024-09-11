@@ -34,6 +34,7 @@ const sendDagTransaction = async (toAddress, amount, account) => {
     networkVersion: '2.0',
     testnet: true,
   });
+  //todo: pass signature instead of private key
   dag4.account.loginPrivateKey(account.replace('0x', ''));
   const tx = await dag4.account.transferDag(toAddress, amount, 0);
   return tx;
@@ -44,6 +45,7 @@ const getMetagraphBalanceViaAccount = async (account) => {
     networkVersion: '2.0',
     testnet: true,
   });
+  //todo: pass signature instead of private key
   dag4.account.loginPrivateKey(account.replace('0x', ''));
   console.log(account, 'account');
   const metagraphClient = dag4.account.createMetagraphTokenClient({
