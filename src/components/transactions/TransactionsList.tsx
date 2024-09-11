@@ -57,7 +57,7 @@ export const TransactionsList = ({ transactions, userAddress, marketPrice }: any
                     )}
                   </div>
                   <div>
-                    <p className="font-medium  ">{transaction.source === userAddress ? 'Recieved DAG' : 'Sent DAG'}</p>
+                    <p className="font-medium  ">{transaction.source === userAddress ? 'Sent DAG' : 'Received DAG'}</p>
                     <p className="text-sm text-gray-400">{formatDate(transaction.timestamp)}</p>
                   </div>
                 </div>

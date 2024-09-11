@@ -15,7 +15,7 @@ export const TransactionsFooter = ({
             href={`https://testnet.dagexplorer.io/address/${userAddress}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center text-sm text-blue-600 hover:text-blue-800 transition-colors duration-200"
+            className="flex items-center text-sm text-black hover:text-blue-800 transition-colors duration-200"
           >
             <span>View all transactions</span>
             <svg
