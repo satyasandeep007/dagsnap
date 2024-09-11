@@ -65,7 +65,7 @@ export const makeTransaction = async ({
       content: panel([
         heading('Confirm transaction'),
         divider(),
-        text('Send the following amount in DOGE:'),
+        text('Send the following amount in DAG:'),
         copyable(amount.toString()),
         text('To the following address:'),
         copyable(toAddress),
