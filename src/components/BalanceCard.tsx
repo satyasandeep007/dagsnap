@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import logo from '@/images/dag.png';
+import bg from '@/images/group.png';
 import React from 'react';
 
 interface BalanceCardProps {
@@ -12,7 +13,10 @@ interface BalanceCardProps {
 const BalanceCard: React.FC<BalanceCardProps> = ({ toggleSendModal, toggleReceiveModal, balance, marketPrice }) => {
   return (
     <div className="grid grid-cols-5 gap-6 mb-6">
-      <div className="col-span-3 bg-gray-900 text-white p-6 rounded-xl relative overflow-hidden h-full">
+      <div
+        className="col-span-3 bg-gray-900 text-white p-6 rounded-xl relative overflow-hidden h-full bg-center"
+        style={{ backgroundImage: `url(${bg.src})` }}
+      >
         <div className="absolute right-4 top-4 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
           <Image src={logo} alt="Logo" />
         </div>
