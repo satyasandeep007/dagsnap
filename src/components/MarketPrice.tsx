@@ -8,7 +8,7 @@ const MarketPrice: React.FC<{ marketPrice: number }> = ({ marketPrice }) => {
       </div>
       <button
         className="bg-white text-gray-700 px-4 py-2 rounded-full flex items-center gap-3 border border-gray-200 hover:bg-blue-50 transition-colors duration-200"
-        onClick={() => console.log('Buy Now clicked')} // Add an onClick handler
+        onClick={() => window.open('https://lattice.is/swap-buy/buy/simplex', '_blank')} // Add an onClick handler
       >
         <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
