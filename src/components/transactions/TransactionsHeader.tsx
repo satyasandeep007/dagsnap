@@ -26,11 +26,11 @@ export const TransactionsHeader = ({
       <div className="relative">
         <button
           onClick={toggleDropdown}
-          className="bg-gray-800 text-white px-4 py-4 rounded-2xl text-sm font-medium flex items-center justify-between w-36 hover:bg-gray-700 transition-colors duration-200"
+          className="bg-gray-800 text-white px-4 py-4 rounded-2xl text-sm font-medium flex items-center justify-between w-36 hover:bg-gray-700 transition-all duration-300 ease-in-out"
         >
           <span>TestNet 2.0</span>
           <svg
-            className={`w-4 h-4 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`}
+            className={`w-4 h-4 transition-transform duration-300 ease-in-out ${isDropdownOpen ? 'rotate-180' : ''}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -39,24 +39,26 @@ export const TransactionsHeader = ({
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
           </svg>
         </button>
-        {isDropdownOpen && (
-          <div className="absolute mt-2 w-64 bg-white rounded-lg shadow-lg z-10 overflow-hidden border border-gray-100">
-            <div className="px-4 py-3 text-xs text-gray-500 flex items-center justify-between">
-              <span>IntegrationNet 2.0</span>
-              <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">Coming Soon</span>
-            </div>
-            <div className="px-4 py-3 text-xs text-gray-500 flex items-center justify-between">
-              <span>MainNet 2.0</span>
-              <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">Coming Soon</span>
-            </div>
+        <div
+          className={`absolute mt-2 w-64 bg-white rounded-lg shadow-lg z-10 overflow-hidden border border-gray-100 transition-all duration-300 ease-in-out ${
+            isDropdownOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'
+          }`}
+        >
+          <div className="px-4 py-3 text-xs text-gray-500 flex items-center justify-between">
+            <span>IntegrationNet 2.0</span>
+            <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">Coming Soon</span>
           </div>
-        )}
+          <div className="px-4 py-3 text-xs text-gray-500 flex items-center justify-between">
+            <span>MainNet 2.0</span>
+            <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">Coming Soon</span>
+          </div>
+        </div>
       </div>
       <button
         onClick={() => window.open(`https://testnet.dagexplorer.io/address/${userAddress}`, '_blank')}
-        className="text-blue bg-white px-4 py-4 text-sm rounded-2xl flex items-center border border-gray-200"
+        className="bg-white border border-gray-200 px-4 py-4 text-sm rounded-xl flex items-center justify-between transition-all duration-300 ease-in-out hover:border-blue-500"
       >
-        <span className="text-md font-semibold mr-2">DAG Explorer</span> {/* Add margin to the right */}
+        <span className="text-md font-semibold mr-2">DAG Explorer</span>
         <Image src={logo} alt="Company Logo" width={20} height={20} className="object-contain" />
       </button>
       <div className="relative" ref={menuRef}>

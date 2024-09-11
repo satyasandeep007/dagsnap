@@ -4,7 +4,7 @@ const MarketPrice: React.FC<{ marketPrice: number }> = ({ marketPrice }) => {
   return (
     <div className="flex justify-between items-center">
       <div className="text-gray-500 text-sm">
-        Market Price: <span className="text-blue-500 font-medium"> {marketPrice || 0} USD</span>
+        Market Price: <span className="text-blue-500 font-medium"> {marketPrice.toFixed(4) || 0} USD</span>
       </div>
       <button
         className="bg-white text-gray-700 px-4 py-2 rounded-full flex items-center gap-3 border border-gray-200 hover:bg-blue-50 transition-colors duration-200"

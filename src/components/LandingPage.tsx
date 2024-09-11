@@ -89,7 +89,7 @@ const LandingPage = () => {
       <div className="max-w-6xl m-auto bg-white w-4/6 rounded-2xl shadow-sm flex  h-4/5  ">
         {/* LEFT SIDE */}
         <div className="h-full w-3/5 p-6 flex flex-col justify-between">
-          <Header />
+          <Header isConnected={installedSnap ? true : false} />
           <BalanceCard
             toggleSendModal={toggleSendModal}
             toggleReceiveModal={toggleReceiveModal}
