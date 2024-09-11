@@ -5,7 +5,7 @@
 **GitHub Repo**: [dagsnap](https://github.com/satyasandeep007/dagsnap)  
 **Demo Video**: [Watch on YouTube](https://www.youtube.com)
 
-![DAG Snap Demo](./demo/app.png)
+![DAG Snap Demo](./demo/app_logo.png)
 
 ## 🛠️ Tech Stack
 
